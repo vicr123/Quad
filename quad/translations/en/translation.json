@@ -1,3 +1,10 @@
 {
-  "Welcome to {{BOT_NAME}}!": ""
+  "Welcome to {{BOT_NAME}}!": "",
+  "Locked and loaded!": "",
+  "Loading module {{MODULE}}": "",
+  "Ping!": "",
+  "**Invalid Locale**\nSorry, that's not a valid locale.": "",
+  "**Locale Updated**\nYour locale was updated.": "",
+  "Couldn't set your locale.": "",
+  "**Locales**\nYou can choose from the following locales:\n{{locales}}": ""
 }

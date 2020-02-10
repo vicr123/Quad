@@ -1,5 +1,10 @@
 {
     "bot": {
         "name": "Quad"
+    },
+    "database": {
+        "host": "localhost",
+        "username": "quad",
+        "database": "quad"
     }
 }

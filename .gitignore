@@ -1,2 +1,5 @@
-./node_modules/*
-./quad/config/local.json
+quad/config/local.json
+node_modules/*
+!node_modules/db.js
+!quad/node_modules
+!quadctl/node_modules

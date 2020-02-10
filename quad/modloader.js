@@ -15,7 +15,7 @@ class Modloader {
         log(t("Loading module {{MODULE}}", {"MODULE": module}));
         if (fs.lstatSync(`./modules/${module}`).isDirectory()) {
             for (let submodule of fs.readdirSync(`modules/${module}`)) {
-                this.load(submodule);
+                this.load(`${module}/${submodule}`);
             }
         } else {
             let m = require(`./modules/${module}`);

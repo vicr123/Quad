@@ -1,5 +1,10 @@
 const handler = require("handler");
 
-handler.register("ping", {}, function(message) {
-    message.channel.createMessage("Ping!");
+handler.register("ping", {
+    opts: {
+        translatorRequired: true
+    }
+}, function(message, opts) {
+    console.log(opts);
+    message.channel.createMessage(opts.t("Ping!"));
 });
