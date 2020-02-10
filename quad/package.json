@@ -1,0 +1,17 @@
+{
+  "name": "quad",
+  "version": "1.0.0",
+  "description": "Discord bot",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Victor Tran",
+  "license": "GPL-3.0-or-later",
+  "dependencies": {
+    "config": "^3.2.5",
+    "eris": "^0.11.2",
+    "i18next": "^19.1.0",
+    "i18next-node-fs-backend": "^2.1.3"
+  }
+}
