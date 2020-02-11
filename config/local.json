@@ -1,0 +1,11 @@
+{
+    "discord": {
+        "client_id": "676277282825830441",
+        "client_secret": "57ZX-dxqX54vbbKphTfirtWW013QhVhB",
+        "redirect_uri": "http://localhost:3000/popupCallback.html",
+        "token": "Njc2Mjc3MjgyODI1ODMwNDQx.XkE6yQ.InvdJxlHxY1tDrgdUqLJqX9cUUQ"
+    },
+    "database": {
+        "password": "password"
+    }
+}

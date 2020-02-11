@@ -6,5 +6,8 @@
         "host": "localhost",
         "username": "quad",
         "database": "quad"
+    },
+    "server": {
+        "port": 3000
     }
 }

@@ -1,3 +1,6 @@
+//Set up the configuration files
+process.env["NODE_CONFIG_DIR"] = "../config/";
+
 const Eris = require('eris');
 const config = require('config');
 const i18n = require('i18n');
@@ -14,7 +17,7 @@ const t = i18n.t;
     await db.init();
     modloader.init();
     
-    let bot = new Eris(config.get('bot.token'));
+    let bot = new Eris(config.get('discord.token'));
     bot.on("ready", () => {
         log(t("Locked and loaded!"));
     });

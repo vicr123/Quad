@@ -1,3 +1,8 @@
 #!/bin/bash
 
-node_modules/gulp/bin/gulp.js i18next
+export PATH=$(pwd)/node_modules/.bin/:$PATH
+gulp i18next
+
+pushd quadweb
+webpack --mode production
+popd

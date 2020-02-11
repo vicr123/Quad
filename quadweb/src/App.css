@@ -1,0 +1,129 @@
+@font-face {
+    font-family: 'Contemporary';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Contemporary'), local('Contemporary-Regular'), url('/typeface/Contemporary-Regular.ttf');
+}
+
+body {
+    background: rgb(40, 40, 40);
+    color: white;
+    font-family: Contemporary;
+    cursor: default;
+    
+    margin: 0px;
+}
+
+h1 {
+    font-weight: normal;
+    font-size: 20pt;
+    margin: 0px;
+}
+
+p {
+    margin-top: 3px;
+    margin-bottom: 3px;
+}
+
+.mainContainer {
+    width: 100vw;
+    height: 100vh;
+}
+
+.containerVertical {
+    display: flex;
+    flex-direction: column;
+}
+
+.containerHorizontal {
+    display: flex;
+    flex-direction: row;
+}
+
+.containerCenter {
+    align-items: center;
+    justify-content: center;
+}
+
+.horizontalLine {
+    background-color: white;
+    height: 1px;
+    min-height: 1px;
+}
+
+.grow {
+    flex-grow: 1;
+}
+
+.button {
+    display: inline-flex;
+    background-color: rgb(0, 0, 200);
+    color: white;
+    padding: 7px;
+    text-decoration: none;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.button:hover {
+    background-color: rgb(0, 0, 255);
+}
+
+.button.flat {
+    background-color: rgb(40, 40, 40);
+}
+
+.button.flat:hover {
+    background-color: rgb(60, 60, 60);
+}
+
+.button.flat:active {
+    background-color: rgb(20, 20, 20);
+}
+
+.header {
+    border-bottom: 1px solid white;
+}
+
+.headerTitle {
+    font-size: 20pt;
+    padding: 9px;
+}
+
+.sidebar {
+    max-width: 300px;
+    width: 300px;
+    border-right: 1px solid white;
+}
+
+.sidebar .listItem {
+    padding: 3px;
+    margin: 0px;
+}
+
+.sidebar .listItem:hover {
+    background-color: rgb(20, 60, 105);
+}
+
+.sidebar .listItem.selected {
+    background-color: rgb(0, 80, 170);
+}
+
+.heading {
+    padding: 9px;
+    font-size: 15pt;
+    border-bottom: 1px solid white;
+}
+
+.paneGroup {
+    padding: 9px;
+    border-bottom: 1px solid white;
+}
+
+.paneGroupTitle {
+    display: block;
+    font-weight: bold;
+    text-transform: uppercase;
+    padding-bottom: 6px;
+}
