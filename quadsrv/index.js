@@ -7,6 +7,7 @@ const path = require('path');
 const api = require('./api/api');;
 const db = require("db");
 const tokens = require("./tokens");
+const bot = require("bot");
 
 (async () => {
     await db.init();

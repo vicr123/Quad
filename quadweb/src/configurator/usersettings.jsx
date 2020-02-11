@@ -37,7 +37,7 @@ class UserSettings extends React.Component {
     
     render() {
         if (this.state.settings) {
-            return <div className="verticalContainer grow">
+            return <div className="containerVertical grow">
                 <Heading title="User Settings" />
                 <PaneGroup title="Locale">
                     <p>Set the language that Quad will use on Discord</p>

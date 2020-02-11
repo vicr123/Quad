@@ -3,6 +3,7 @@ import Sidebar from './sidebar';
 import Header from './header';
 import Fetch from 'fetch';
 import UserSettings from './usersettings';
+import GuildSettings from './guildsettings';
 import LoadingPane from './loadingpane';
 
 class Configurator extends React.Component {
@@ -41,7 +42,7 @@ class Configurator extends React.Component {
         if (this.state.panePage === "userSettings") {
             return <UserSettings />
         } else {
-            return <div />
+            return <GuildSettings key={this.state.panePage} guildId={this.state.panePage} />
         }
     }
     

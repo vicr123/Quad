@@ -1,6 +1,7 @@
 {
     "bot": {
-        "name": "Quad"
+        "name": "Quad",
+        "prefix": "quad:"
     },
     "database": {
         "host": "localhost",

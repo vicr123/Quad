@@ -1,4 +1,4 @@
-quad/config/local.json
+config/local.json
 node_modules/*
 !node_modules/db.js
 !quad/node_modules

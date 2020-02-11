@@ -8,6 +8,7 @@ const log = require('log');
 const handler = require('handler');
 const modloader = require("./modloader");
 const db = require("db");
+const prefix = require("prefix");
 
 const t = i18n.t;
 
@@ -21,11 +22,12 @@ const t = i18n.t;
     bot.on("ready", () => {
         log(t("Locked and loaded!"));
     });
-    bot.on("messageCreate", (msg) => {
+    bot.on("messageCreate", async (msg) => {
         if (msg.author.bot) return;
         
-        if (msg.content.startsWith("quad:")) {
-            handler.process("quad:", msg);
+        let pf = await prefix(msg.channel.guild);
+        if (msg.content.startsWith(pf)) {
+            handler.process(pf, msg);
         }
     });
     bot.connect();
