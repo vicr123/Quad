@@ -31,7 +31,7 @@ class Login extends React.Component {
     }
     
     login() {
-        loginWin = window.open("https://discordapp.com/api/oauth2/authorize?client_id=676277282825830441&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2FpopupCallback.html&response_type=code&scope=identify%20guilds", "_blank", "dependent");
+        loginWin = window.open(`https://discordapp.com/api/oauth2/authorize?client_id=${CONFIG.discord.client_id}&redirect_uri=${encodeURIComponent(`${CONFIG.server.rootAddress}/popupCallback.html`)}&response_type=code&scope=identify%20guilds`, "_blank", "dependent,height=700,width=500");
     }
     
     performLogin() {
@@ -40,7 +40,7 @@ class Login extends React.Component {
     
     render() {
         return <div className="mainContainer containerVertical containerCenter">
-            <h1>Welcome to Quad</h1>
+            <h1>Welcome to {CONFIG.bot.name}</h1>
             <p>Let's get you logged in</p>
             <a className="button" onClick={this.login.bind(this)}>Log in to Discord</a>
         </div>

@@ -1,5 +1,10 @@
+//Set up the configuration files
+process.env["NODE_CONFIG_DIR"] = "../config/";
+
 const path = require("path");
 const webpack = require("webpack");
+const config = require("config");
+const ConfigWebpack = require("config-webpack");
 
 module.exports = {
   entry: "./src/index.jsx",
@@ -26,9 +31,12 @@ module.exports = {
   },
   devServer: {
     contentBase: path.join(__dirname, "public/"),
-    port: 3000,
-    publicPath: "http://localhost:3000/dist/",
+    port: config.get("server.port"),
+    publicPath: `${config.get("server.rootAddress")}/dist/`,
     hotOnly: true
   },
-  plugins: [new webpack.HotModuleReplacementPlugin()]
+  plugins: [
+      new webpack.HotModuleReplacementPlugin(),
+      new ConfigWebpack()
+  ]
 };

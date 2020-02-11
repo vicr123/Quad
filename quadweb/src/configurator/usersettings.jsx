@@ -40,7 +40,7 @@ class UserSettings extends React.Component {
             return <div className="containerVertical grow">
                 <Heading title="User Settings" />
                 <PaneGroup title="Locale">
-                    <p>Set the language that Quad will use on Discord</p>
+                    <p>Set the language that {CONFIG.bot.name} will use on Discord</p>
                     <select value={this.state.settings.locale} onChange={this.onLocaleChange.bind(this)}>
                         {this.state.settings.availableLocales.map(value => {
                             return <option value={value} key={value}>{value}</option>

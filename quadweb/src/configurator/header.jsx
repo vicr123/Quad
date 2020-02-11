@@ -7,7 +7,7 @@ class Header extends React.Component {
     
     render() {
         return <div className="header containerHorizontal">
-            <span className="headerTitle">Quad</span>
+            <span className="headerTitle">{CONFIG.bot.name}</span>
             <div className="grow" />
             <div className="button flat">{this.username()}</div>
         </div>
