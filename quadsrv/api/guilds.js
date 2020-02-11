@@ -111,20 +111,34 @@ router.post("/:id/set", async function(req, res) {
         await client.query("INSERT INTO guildPrefix(id, prefix) VALUES($1, $2) ON CONFLICT ON CONSTRAINT guildPrefix_pkey DO UPDATE SET prefix=$2", [req.params.id, req.body.prefix]);
     }
     if (req.body.chatlogs) {
-        let channel = req.guild.channels.find(channel => {
-            return channel.id === req.body.chatlogs;
-        });
-        if (channel) {
+        let set = false;
+        if (req.body.chatlogs === "disabled") {
+            req.body.chatlogs = null;
+            set = true;
+        } else {
+            let channel = req.guild.channels.find(channel => {
+                return channel.id === req.body.chatlogs;
+            });
+            if (channel) set = true;
+        }
+        if (set) {
             await client.query("INSERT INTO guildLogs(id, logs) VALUES($1, $2) ON CONFLICT ON CONSTRAINT guildLogs_pkey DO UPDATE SET logs=$2", [req.params.id, req.body.chatlogs]);
         } else {
             fails.push("Invalid Chat Logs channel");
         }
     }
     if (req.body.alerts) {
-        let channel = req.guild.channels.find(channel => {
-            return channel.id === req.body.alerts;
-        });
-        if (channel) {
+        let set = false;
+        if (req.body.alerts === "disabled") {
+            req.body.alerts = null;
+            set = true;
+        } else {
+            let channel = req.guild.channels.find(channel => {
+                return channel.id === req.body.alerts;
+            });
+            if (channel) set = true;
+        }
+        if (set) {
             await client.query("INSERT INTO guildLogs(id, alerts) VALUES($1, $2) ON CONFLICT ON CONSTRAINT guildLogs_pkey DO UPDATE SET alerts=$2", [req.params.id, req.body.alerts]);
         } else {
             fails.push("Invalid Alerts channel");

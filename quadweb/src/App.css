@@ -5,10 +5,14 @@
     src: local('Contemporary'), local('Contemporary-Regular'), url('/typeface/Contemporary-Regular.ttf');
 }
 
+* {
+    font-family: Contemporary;
+}
+
 body {
     background: rgb(40, 40, 40);
     color: white;
-    font-family: Contemporary;
+    font-size: 10pt;
     cursor: default;
     
     margin: 0px;
