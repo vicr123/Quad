@@ -31,4 +31,6 @@ const t = i18n.t;
         }
     });
     bot.connect();
+    
+    handler.setBot(bot);
 })();
