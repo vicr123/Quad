@@ -21,7 +21,7 @@ const t = i18n.t;
     
     let bot = new Eris(config.get('discord.token'));
     bot.on("ready", () => {
-        log(t("Locked and loaded!"));
+        log(t("Locked and loaded!"), log.success);
     });
     bot.on("messageCreate", async (msg) => {
         if (msg.author.bot) return;
