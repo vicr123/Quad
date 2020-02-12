@@ -1,5 +1,6 @@
 const handler = require("handler");
-const config = require("config")
+const config = require("config");
+const Dialog = require("dialog");
 
 let t = str => str;
 
