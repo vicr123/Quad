@@ -25,7 +25,7 @@ handler.register("kick", {
     if (!higherMember || higherMember.id !== message.member.id) {
         //Fail
         message.channel.createMessage(opts.t("**Kick a member**\nSorry, you can't kick {{member}}, because their role is higher than or equal to yours.", {
-            member: `${args[0].username}#${args[0].discriminator}`
+            member: MemberUtils.tag(args[0])
         }));
         return;
     }
@@ -39,7 +39,7 @@ handler.register("kick", {
             fields: [
                 {
                     name: opts.t("Member"),
-                    value: `${args[0].username}#${args[0].discriminator}`
+                    value: MemberUtils.tag(args[0])
                 }
             ],
             timeout: 10000
@@ -56,13 +56,13 @@ handler.register("kick", {
         await message.channel.guild.kickMember(args[0].id);
         if (flags.now) {
             message.channel.createMessage(opts.t("**Kick a member**\n{{member}} was kicked from the server.", {
-                member: `${args[0].username}#${args[0].discriminator}`
+                member: MemberUtils.tag(args[0])
             }));
         }
     } catch (err) {
         message.channel.createMessage(opts.t("**Kick Failed**\nSorry, {{botname}} couldn't kick {{member}}. Go ahead and check that {{botname}} has permissions to kick members in this server.", {
             botname: config.get("bot.name"),
-            member: `${args[0].username}#${args[0].discriminator}`
+            member: MemberUtils.tag(args[0])
         }));
     }
 });

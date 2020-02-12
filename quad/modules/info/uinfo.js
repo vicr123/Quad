@@ -52,7 +52,7 @@ handler.register("uinfo", {
 
 handler.register("uinfo", {
     args: [
-        {name: "user", type: "user"}
+        {name: "user", type: "globaluser"}
     ],
     opts: {
         translatorRequired: true
