@@ -1,5 +1,8 @@
 config/local.json
+
 node_modules/*
 !node_modules/db.js
 !quad/node_modules
 !quadctl/node_modules
+
+quadweb/dist
