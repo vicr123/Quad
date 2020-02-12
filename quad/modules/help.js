@@ -3,8 +3,9 @@ const config = require("config")
 
 let t = str => str;
 
-function getMatchingCommands(commandName) {
+function getMatchingCommands(commandName, member) {
     return handler.commands.filter(command => {
+        if (!command.canRun(member)) return false;
         return command.name === commandName;
     });
 }
@@ -19,6 +20,8 @@ handler.register("help", {
 }, function(message, opts, args) {
     let commandsString = [];
     for (let command of handler.commands) {
+        if (!command.canRun(message.member)) continue;
+        
         let s = `\`${command.name}\``;
         if (!commandsString.includes(s)) commandsString.push(s);
     }
@@ -50,7 +53,7 @@ handler.register("help", {
         {name: "command", type: "string", description: t("The command to acquire usage information about")}
     ]
 }, function(message, opts, args) {
-    let matching = getMatchingCommands(args[0]);
+    let matching = getMatchingCommands(args[0], message.member);
     
     if (matching.length === 0) {
         message.channel.createMessage(opts.t("**Help**\nThat command couldn't be found."));
@@ -87,7 +90,7 @@ handler.register("help", {
         {name: "index", type: "number", description: t("The index of the command, if there is more than one command with the same name")}
     ]
 }, function(message, opts, args) {
-    let matching = getMatchingCommands(args[0]);
+    let matching = getMatchingCommands(args[0], message.member);
     
     if (matching.length > args[1]) {
         message.channel.createMessage({
