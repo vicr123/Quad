@@ -30,6 +30,19 @@ handler.register("kick", {
         return;
     }
     
+    let me = message.channel.guild.members.find(member => {
+        return member.id === handler.bot.user.id
+    });
+    higherMember = MemberUtils.higherMember(me, args[0]);
+    if (!higherMember || higherMember.id !== me.id) {
+        //Fail
+        message.channel.createMessage(opts.t("**Kick a member**\nSorry, {{botname}} can't kick {{member}}, because {{member}}'s role is higher than {{botname}}'s.", {
+            botname: config.get("bot.name"),
+            member: MemberUtils.tag(args[0])
+        }));
+        return;
+    }
+    
     if (!flags.now) {
         let d = new Dialog(message.author, message.channel, opts.t, {
             title: opts.t("Kick a member"),
