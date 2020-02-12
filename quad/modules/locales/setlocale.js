@@ -1,9 +1,23 @@
 const handler = require("handler");
 const i18n = require("i18n");
 
+const t = str => str;
+
+handler.register("setlocale", {
+    opts: {
+        translatorRequired: true
+    }
+}, async function(message, opts) {
+    let locales = [];
+    for (let locale of i18n.availableTranslations) {
+        locales.push(`\`${locale}\``);
+    }
+    message.channel.createMessage(opts.t("**Locales**\nYou can choose from the following locales:\n{{locales}}", {locales: locales.join(" ")}));
+});
+
 handler.register("setlocale", {
     args: [
-        {name: "newLocale", type: "string"}
+        {name: "newLocale", type: "string", description: t("The new locale to use")}
     ],
     opts: {
         translatorRequired: true,
@@ -26,16 +40,4 @@ handler.register("setlocale", {
     } catch (err) {
         message.channel.createMessage(opts.t("Couldn't set your locale."));
     }
-});
-
-handler.register("setlocale", {
-    opts: {
-        translatorRequired: true
-    }
-}, async function(message, opts) {
-    let locales = [];
-    for (let locale of i18n.availableTranslations) {
-        locales.push(`\`${locale}\``);
-    }
-    message.channel.createMessage(opts.t("**Locales**\nYou can choose from the following locales:\n{{locales}}", {locales: locales.join(" ")}));
 });
