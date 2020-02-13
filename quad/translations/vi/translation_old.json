@@ -1,5 +1,6 @@
 {
   "Description": "Mô tả",
   "Arguments (in order)": "Tập (theo thứ tự)",
-  "Mistake? React with {{emoji}} within 5 seconds.": ""
+  "Mistake? React with {{emoji}} within 5 seconds.": "",
+  "The message ID to pin": ""
 }
