@@ -1,7 +1,11 @@
 {
     "bot": {
         "name": "Quad",
-        "prefix": "q:"
+        "prefix": "q:",
+        "ratelimit": {
+            "commands": 12,
+            "per": 60000
+        }
     },
     "database": {
         "host": "localhost",

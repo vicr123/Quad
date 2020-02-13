@@ -164,6 +164,7 @@ router.delete("/:id/set", async function(req, res) {
     let client = await db.get();
     await client.query("DELETE FROM guildPrefix WHERE id=$1", [req.params.id]);
     await client.query("DELETE FROM guildLogs WHERE id=$1", [req.params.id]);
+    await client.query("DELETE FROM guildPins WHERE id=$1", [req.params.id]);
     client.release();
 
     res.status(204).send();    
