@@ -31,6 +31,15 @@ const t = i18n.t;
             handler.process(pf, msg);
         }
     });
+
+    process.on("SIGINT", () => {
+        console.log(); // Make text appear on line after ^C
+        log(t("Shutting down {{BOT_NAME}}..."), {"BOT_NAME": config.get("bot.name")});
+        bot.disconnect({reconnect: false});
+        log(t("See you next time!"), log.success);
+        process.exit(0);
+    });
+
     bot.connect();
     
     handler.setBot(bot);
