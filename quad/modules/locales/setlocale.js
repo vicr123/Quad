@@ -10,9 +10,9 @@ handler.register("setlocale", {
 }, async function(message, opts) {
     let locales = [];
     for (let locale of i18n.availableTranslations) {
-        locales.push(`\`${locale}\``);
+        locales.push(`\`${locale}\` ${(await i18n(locale)).t("TRANSLATORS: Please replace this string with the name of your language (in your native language.)")}`);
     }
-    message.channel.createMessage(opts.t("**Locales**\nYou can choose from the following locales:\n{{locales}}", {locales: locales.join(" ")}));
+    message.channel.createMessage(opts.t("**Locales**\nYou can choose from the following locales:\n{{locales}}", {locales: locales.join("\n")}));
 });
 
 handler.register("setlocale", {
