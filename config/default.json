@@ -1,10 +1,19 @@
 {
     "bot": {
         "name": "Quad",
+        "version": "0.1",
+        "repo": "https://github.com/vicr123/Quad",
         "prefix": "q:",
         "ratelimit": {
             "commands": 12,
             "per": 60000
+        },
+        "about": {
+            "gitservice": "GitHub",
+            "contributors": [
+                "vicr123#4567",
+                "Akribes#1056"
+            ]
         }
     },
     "database": {

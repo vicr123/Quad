@@ -4,7 +4,7 @@ const i18n = require('i18n');
 
 const t = i18n.t;
 
-class Modloader {
+class ModLoader {
     init() {
         for (let module of fs.readdirSync("modules")) {
             this.load(module);
@@ -23,5 +23,5 @@ class Modloader {
     }
 }
 
-let m = new Modloader();
+let m = new ModLoader();
 module.exports = m;

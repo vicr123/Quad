@@ -30,9 +30,7 @@ handler.register("kick", {
         return;
     }
     
-    let me = message.channel.guild.members.find(member => {
-        return member.id === handler.bot.user.id
-    });
+    let me = MemberUtils.botMember(message.channel.guild);
     higherMember = MemberUtils.higherMember(me, args[0]);
     if (!higherMember || higherMember.id !== me.id) {
         //Fail
