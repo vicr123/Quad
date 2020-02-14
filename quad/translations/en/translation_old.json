@@ -1,5 +1,6 @@
 {
   "Description": "",
   "Arguments (in order)": "",
-  "Mistake? React with {{emoji}} within 5 seconds.": ""
+  "Mistake? React with {{emoji}} within 5 seconds.": "",
+  "The message ID to pin": ""
 }
