@@ -3,6 +3,7 @@ import Heading from './heading';
 import PaneGroup from './panegroup';
 import LoadingPane from './loadingpane';
 import Fetch from 'fetch';
+import Modal from 'modal';
 
 class UserSettings extends React.Component {
     constructor(props) {
@@ -35,6 +36,12 @@ class UserSettings extends React.Component {
         });
     }
     
+    execSetLatLng() {
+        Modal.mount(<Modal title="Set Latitude and Longitude" width={400} cancelable={true} renderBack={true}>
+            Set lat and lng here
+        </Modal>)
+    }
+    
     render() {
         if (this.state.settings) {
             return <div className="containerVertical grow">
@@ -46,6 +53,12 @@ class UserSettings extends React.Component {
                             return <option value={value} key={value}>{value}</option>
                         })}
                     </select>
+                </PaneGroup>
+                <PaneGroup title="Geography">
+                    <p>Set the location that {CONFIG.bot.name} will use for location based commands.</p>
+                    <p><b>IMPORTANT:</b> To alleviate privacy concerns, you should not point {CONFIG.bot.name} too close to your residence. It's recommended that you use a nearby major city.</p>
+                    <a className="button">Search on map</a>
+                    <a className="button" onClick={this.execSetLatLng.bind(this)}>Enter Latitude/Longitude</a>
                 </PaneGroup>
             </div>
         } else {

@@ -1,0 +1,5 @@
+
+.icon-go-previous:before { content: '\3c'; } /* '&lt;' */
+.icon-go-next:before { content: '\3e'; } /* '&gt;' */
+.icon-dialog-ok:before { content: '\6b'; } /* 'k' */
+.icon-dialog-cancel:before { content: '\6e'; } /* 'n' */

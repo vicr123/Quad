@@ -28,6 +28,10 @@ class App extends Component {
         });
     }
     
+    mainPage() {
+        
+    }
+    
     render() {
         if (this.state.page === "login") {
             return <Login tokenChanged={this.reload.bind(this)} />

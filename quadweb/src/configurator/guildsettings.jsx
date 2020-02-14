@@ -3,6 +3,7 @@ import Heading from './heading';
 import PaneGroup from './panegroup';
 import LoadingPane from './loadingpane';
 import Fetch from 'fetch';
+import Modal from 'modal';
 
 class GuildSettings extends React.Component {
     constructor(props) {
@@ -67,12 +68,20 @@ class GuildSettings extends React.Component {
     }
     
     resetServer() {
-        //TODO: Add a confirmation warning
-        if (confirm(`Ready to reset ${CONFIG.bot.name} in ${this.state.guild.name}?`)) {
+        let performReset = () => {
             Fetch.delete(`/guilds/${this.props.guildId}/set`).then(response => {
                 this.retrieveServerInformation();
+                Modal.unmount();
             });
         }
+        
+        Modal.mount(<Modal title={`Reset ${this.state.guild.name}`} cancelable={true} renderBack={true} width={400}>
+            <div className="containerVertical containerPadded">
+                <p>All configuration will be reset as if {CONFIG.bot.name} joined the server for the first time.</p>
+                <p>You'll need to configure {CONFIG.bot.name} in {this.state.guild.name} again once it's been reset.</p>
+                <a className="button destructive" onClick={performReset}>Reset {CONFIG.bot.name} in {this.state.guild.name}</a>
+            </div>
+        </Modal>)
     }
     
     getTextChannels() {
@@ -153,7 +162,7 @@ class GuildSettings extends React.Component {
                 </PaneGroup>
                 <PaneGroup title="Reset">
                     <p>Reset {CONFIG.bot.name} back to the default settings.</p>
-                    <a className="button" onClick={this.resetServer.bind(this)}>Reset {CONFIG.bot.name}</a>
+                    <a className="button destructive" onClick={this.resetServer.bind(this)}>Reset {CONFIG.bot.name}</a>
                 </PaneGroup>
             </div>
         }

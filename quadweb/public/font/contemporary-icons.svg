@@ -1,0 +1,18 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg">
+<metadata>Copyright (C) 2020 by original authors @ fontello.com</metadata>
+<defs>
+<font id="contemporary-icons" horiz-adv-x="1000" >
+<font-face font-family="contemporary-icons" font-weight="400" font-stretch="normal" units-per-em="1000" ascent="850" descent="-150" />
+<missing-glyph horiz-adv-x="1000" />
+<glyph glyph-name="go-previous" unicode="&#x3c;" d="M703 756l0-812-406 406z" horiz-adv-x="1000" />
+
+<glyph glyph-name="go-next" unicode="&#x3e;" d="M297 756l0-812 406 406z" horiz-adv-x="1000" />
+
+<glyph glyph-name="dialog-ok" unicode="&#x6b;" d="M843 603a34 34 0 0 1-23-10l-445-444-194 194a34 34 0 1 1-49-48l219-219a34 34 0 0 1 48 0l469 469a34 34 0 0 1-25 58z" horiz-adv-x="1000" />
+
+<glyph glyph-name="dialog-cancel" unicode="&#x6e;" d="M500 850a500 500 0 0 1-500-500 500 500 0 0 1 500-500 500 500 0 0 1 500 500 500 500 0 0 1-500 500z m218-250a31 31 0 0 0 23-53l-438-438a31 31 0 1 0-44 44l438 438a31 31 0 0 0 21 9z" horiz-adv-x="1000" />
+</font>
+</defs>
+</svg>

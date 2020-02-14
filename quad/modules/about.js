@@ -20,6 +20,12 @@ handler.register("about", {
             },
             fields: [
                 {
+                    name: opts.t("Settings"),
+                    value: opts.t("Change Quad at the [website]({{website}}).", {
+                        website: config.get("server.rootAddress")
+                    })
+                },
+                {
                     name: opts.t("File a bug"),
                     value: opts.t("File a bug at the [{{gitservice}} Repository]({{repository}}) for {{botname}}.", {
                         gitservice: config.get("bot.about.gitservice"),

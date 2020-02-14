@@ -29,6 +29,38 @@ p {
     margin-bottom: 3px;
 }
 
+[class^="icon-"]:before {
+    font-size: 16px;
+}
+
+#modalContainer {
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    
+    display: none;
+}
+
+#modalContainer.active {
+    display: block;
+}
+
+.modalBackground {
+    width: 100%;
+    height: 100%;
+    background: rgba(40, 40, 40, 0.75);
+}
+
+.modalBox {
+    right: 0px;
+    height: 100vh;
+    position: fixed;
+    background: rgb(40, 40, 40);
+    border-left: 1px solid white;
+}
+
 .mainContainer {
     width: 100vw;
     height: 100vh;
@@ -47,6 +79,10 @@ p {
 .containerCenter {
     align-items: center;
     justify-content: center;
+}
+
+.containerPadded {
+    padding: 9px;
 }
 
 .horizontalLine {
@@ -115,9 +151,14 @@ p {
 }
 
 .heading {
+    display: flex;
+    border-bottom: 1px solid white;
+}
+
+.heading span {
     padding: 9px;
     font-size: 15pt;
-    border-bottom: 1px solid white;
+    flex-grow: 1;
 }
 
 .paneGroup {
