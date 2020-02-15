@@ -33,6 +33,49 @@ p {
     font-size: 16px;
 }
 
+.button {
+    display: inline-flex;
+    background-color: rgb(0, 0, 200);
+    color: white;
+    padding: 7px;
+    text-decoration: none;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.button:hover {
+    background-color: rgb(0, 0, 255);
+}
+
+.button:active {
+    background-color: rgb(0, 0, 100);
+}
+
+.button.flat {
+    background-color: rgb(40, 40, 40);
+}
+
+.button.flat:hover {
+    background-color: rgb(60, 60, 60);
+}
+
+.button.flat:active {
+    background-color: rgb(20, 20, 20);
+}
+
+.button.destructive {
+    background-color: rgb(200, 0, 0);
+}
+
+.button.destructive:hover {
+    background-color: rgb(250, 0, 0);
+}
+
+.button.destructive:active {
+    background-color: rgb(150, 0, 0);
+}
+
 #modalContainer {
     position: fixed;
     left: 0px;
@@ -95,33 +138,6 @@ p {
     flex-grow: 1;
 }
 
-.button {
-    display: inline-flex;
-    background-color: rgb(0, 0, 200);
-    color: white;
-    padding: 7px;
-    text-decoration: none;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-}
-
-.button:hover {
-    background-color: rgb(0, 0, 255);
-}
-
-.button.flat {
-    background-color: rgb(40, 40, 40);
-}
-
-.button.flat:hover {
-    background-color: rgb(60, 60, 60);
-}
-
-.button.flat:active {
-    background-color: rgb(20, 20, 20);
-}
-
 .header {
     border-bottom: 1px solid white;
 }
@@ -171,6 +187,19 @@ p {
     font-weight: bold;
     text-transform: uppercase;
     padding-bottom: 6px;
+}
+
+.cmdlink {
+    padding-top: 9px;
+    padding-right: 9px;
+    padding-bottom: 9px;
+    padding-left: 4px;
+    
+    align-items: start;
+}
+
+.cmdlinkDescriptionIcon {
+    visibility: hidden;
 }
 
 input[type="text"] {
