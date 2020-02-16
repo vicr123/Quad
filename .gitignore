@@ -6,3 +6,4 @@ node_modules/*
 !quadctl/node_modules
 
 quadweb/dist
+quad/data

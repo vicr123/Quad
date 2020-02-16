@@ -18,10 +18,11 @@ handler.register("ping", {
 handler.register("locateme", {
     opts: {
         locationRequired: true,
+        locationCodedRequired: true,
         help: {
             description: t("Checks to see if {{botname}} is working")
         }
     }
 }, function(message, opts) {
-    message.channel.createMessage(`location: ${opts.geography}`);
+    message.channel.createMessage(`location: ${opts.geography} which is ${opts.geographyCoded.name} tz ${opts.geographyCoded.tz} country ${opts.geographyCoded.country}`);
 });
