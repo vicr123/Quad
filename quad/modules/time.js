@@ -34,7 +34,6 @@ handler.register("time", {
         }
     }
 }, async function(message, opts) {
-    console.log("what");
     if (opts.geographyCoded) {
         sendDateMessage(message, MemberUtils.tag(message.member), moment().tz(opts.geographyCoded.tz), opts.t);
     }
@@ -79,8 +78,8 @@ handler.register("time", {
     let geo = [args[0], args[1]]
     let coded = await Geo.getPlaceName(geo);
     if (coded) {
-        sendDateMessage(message, Geo.locationToString(geo, opts.t), moment().tz(coded.tz), opts.t);
+        sendDateMessage(message, `${Geo.locationToString(geo, opts.t)} (${coded.name})`, moment().tz(coded.tz), opts.t);
     } else {
-        sendDateMessage(message, Geo.locationToString(geo, opts.t), null, opts.t);
+        sendDateMessage(message, `${Geo.locationToString(geo, opts.t)} (${coded.name})`, null, opts.t);
     }
 });
