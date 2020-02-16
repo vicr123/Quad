@@ -106,6 +106,7 @@ class GuildSettings extends React.Component {
             channels[channel.position] = channel;
         }
         for (let channel of channels) {
+            if (!channel) continue;
             let el = <option value={channel.id} key={channel.id}>#{channel.name}</option>;
             if (channel.parent) {
                 categories[channel.parent].push(el);
