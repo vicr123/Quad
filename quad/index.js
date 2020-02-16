@@ -18,6 +18,7 @@ const t = i18n.t;
     
     await db.init();
     modloader.init();
+    handler.init();
     
     let bot = new Eris(config.get('discord.token'));
     bot.on("ready", () => {

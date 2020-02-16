@@ -13,3 +13,15 @@ handler.register("ping", {
 }, function(message, opts) {
     message.channel.createMessage(opts.t("Ping!"));
 });
+
+
+handler.register("locateme", {
+    opts: {
+        locationRequired: true,
+        help: {
+            description: t("Checks to see if {{botname}} is working")
+        }
+    }
+}, function(message, opts) {
+    message.channel.createMessage(`location: ${opts.geography}`);
+});
