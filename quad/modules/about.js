@@ -57,3 +57,5 @@ handler.register("about", {
         }
     });
 });
+
+handler.link("info", "about");

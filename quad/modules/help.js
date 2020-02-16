@@ -53,13 +53,15 @@ handler.register("help", {
         {name: "command", type: "string", description: t("The command to acquire usage information about")}
     ]
 }, function(message, opts, args) {
-    let matching = getMatchingCommands(args[0], message.member);
+    let commandName = args[0];
+    if (handler.readlink(commandName)) commandName = handler.readlink(commandName);
+    let matching = getMatchingCommands(commandName, message.member);
     
     if (matching.length === 0) {
         message.channel.createMessage(opts.t("**Help**\nThat command couldn't be found."));
     } else if (matching.length === 1) {
         message.channel.createMessage({
-            embed: matching[0].helpEmbed(opts.t, opts.prefix)
+            embed: matching[0].helpEmbed(opts.t, opts.prefix, args[0])
         });
     } else {
         let messageSend = opts.t("**Help**\nThere are multiple ways to run this command. Select the one you wanted:\n");
@@ -68,7 +70,7 @@ handler.register("help", {
             let command = matching[i];
             lines.push(opts.t("{{helpcommand}} for {{commandsignature}}", {
                 helpcommand: `• \`${opts.prefix}help ${args[0]} ${i}\``,
-                commandsignature: `\`${opts.prefix}${command.name} ${command.args.map(arg => {
+                commandsignature: `\`${opts.prefix}${args[0]} ${command.args.map(arg => {
                         return arg.name
                     }).join(" ")}\``
             }));
@@ -90,13 +92,17 @@ handler.register("help", {
         {name: "index", type: "number", description: t("The index of the command, if there is more than one command with the same name")}
     ]
 }, function(message, opts, args) {
-    let matching = getMatchingCommands(args[0], message.member);
+    let commandName = args[0];
+    if (handler.readlink(commandName)) commandName = handler.readlink(commandName);
+    let matching = getMatchingCommands(commandName, message.member);
     
     if (matching.length > args[1]) {
         message.channel.createMessage({
-            embed: matching[args[1]].helpEmbed(opts.t, opts.prefix)
+            embed: matching[args[1]].helpEmbed(opts.t, opts.prefix, args[0])
         });
     } else {
         message.channel.createMessage(opts.t("**Help**\nThat command couldn't be found."));
     }
 });
+
+handler.link("advice", "help");

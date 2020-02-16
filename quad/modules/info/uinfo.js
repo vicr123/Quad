@@ -62,3 +62,6 @@ handler.register("uinfo", {
         embed: getEmbed(args[0], opts.t)
     });
 });
+
+handler.link("userinfo", "uinfo");
+handler.link("ui", "uinfo");
