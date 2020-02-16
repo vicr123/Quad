@@ -69,7 +69,7 @@ class Configurator extends React.Component {
             </div>
         } else {
             return <div className="mainContainer containerVertical">
-                <Header user={this.state.user} />
+                <Header user={this.state.user} tokenChanged={this.props.tokenChanged}/>
                 {this.betaBar()}
                 <div className="containerHorizontal grow">
                     <Sidebar guilds={this.state.guilds} current={this.state.panePage} changePane={this.changePane.bind(this)} />
