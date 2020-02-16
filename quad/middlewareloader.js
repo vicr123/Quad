@@ -16,7 +16,7 @@ class MiddlewareLoader {
     }
     
     load(mw) {
-        log(t("Loading middlware {{MIDDLEWARE}}", {"MIDDLEWARE": mw}));
+        log(t("Loading middleware {{MIDDLEWARE}}", {"MIDDLEWARE": mw}));
         if (fs.lstatSync(`./middleware/${mw}`).isDirectory()) {
             for (let submodule of fs.readdirSync(`middleware/${mw}`)) {
                 this.load(`${mw}/${submodule}`);
