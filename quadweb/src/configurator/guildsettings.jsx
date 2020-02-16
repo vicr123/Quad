@@ -115,6 +115,7 @@ class GuildSettings extends React.Component {
         }
         
         for (let category of categoryDescriptors) {
+            if (!category) continue;
             if (categories[category.id].length > 0) {
                 els.push(<optgroup title={category.name} key={category.id}>
                     {categories[category.id]}
