@@ -52,6 +52,16 @@ class Configurator extends React.Component {
         });
     }
     
+    betaBar() {
+        if (CONFIG.unstable) {
+            return <div className="containerVertical containerPadded" style={{borderBottom: "1px solid white"}}>
+                <b>PREVIEW</b>
+                <span>Thanks for giving {CONFIG.bot.name} a go. Keep in mind you're running a preview, so not everything will work correctly.</span>
+            </div>
+        }
+        return null;
+    }
+    
     render() {
         if (this.state.mainPage === "loader") {
             return <div className="mainContainer containerVertical containerCenter">
@@ -60,6 +70,7 @@ class Configurator extends React.Component {
         } else {
             return <div className="mainContainer containerVertical">
                 <Header user={this.state.user} />
+                {this.betaBar()}
                 <div className="containerHorizontal grow">
                     <Sidebar guilds={this.state.guilds} current={this.state.panePage} changePane={this.changePane.bind(this)} />
                     {this.currentPane()}

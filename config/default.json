@@ -24,5 +24,6 @@
     "server": {
         "port": 3000,
         "rootAddress": "http://localhost:3000"
-    }
+    },
+    "unstable": true
 }

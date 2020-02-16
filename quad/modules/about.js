@@ -21,7 +21,8 @@ handler.register("about", {
             fields: [
                 {
                     name: opts.t("Settings"),
-                    value: opts.t("Change Quad at the [website]({{website}}).", {
+                    value: opts.t("Change {{botname}} at the [website]({{website}}).", {
+                        botname: config.get("bot.name"),
                         website: config.get("server.rootAddress")
                     })
                 },

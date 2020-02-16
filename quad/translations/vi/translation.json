@@ -9,7 +9,7 @@
   "Shows information about {{botname}}": "",
   "Discord Bot": "",
   "Settings": "",
-  "Change Quad at the [website]({{website}}).": "",
+  "Change {{botname}} at the [website]({{website}}).": "",
   "File a bug": "",
   "File a bug at the [{{gitservice}} Repository]({{repository}}) for {{botname}}.": "",
   "Source": "",

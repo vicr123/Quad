@@ -10,7 +10,7 @@
   "Shows information about {{botname}}": "Zeigt Informationen über {{botname}} an",
   "Discord Bot": "Discord Bot",
   "Settings": "Einstellungen",
-  "Change Quad at the [website]({{website}}).": "Ändere Quad auf der [Webseite]({{website}}).",
+  "Change {{botname}} at the [website]({{website}}).": "",
   "File a bug": "Melde einen Bug",
   "File a bug at the [{{gitservice}} Repository]({{repository}}) for {{botname}}.": "",
   "Source": "",

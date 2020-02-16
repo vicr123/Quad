@@ -8,5 +8,6 @@
   "{{count}} things": "{{count}} thing",
   "{{count}} things_plural": "{{count}} things",
   "**Cool it, buddy!**\nYou're using {{botname}} too fast. You'll be able to use Quad again in **{{count}} seconds**.": "",
-  "**Cool it, buddy!**\nYou're using {{botname}} too fast. You'll be able to use Quad again in **{{count}} seconds**._plural": ""
+  "**Cool it, buddy!**\nYou're using {{botname}} too fast. You'll be able to use Quad again in **{{count}} seconds**._plural": "",
+  "Change Quad at the [website]({{website}}).": ""
 }
