@@ -107,7 +107,7 @@ router.post("/:id/set", async function(req, res) {
     let fails = [];
     
     let client = await db.get();
-    if (req.body.prefix) {
+    if (req.body.hasOwnProperty("prefix")) {
         await client.query("INSERT INTO guildPrefix(id, prefix) VALUES($1, $2) ON CONFLICT ON CONSTRAINT guildPrefix_pkey DO UPDATE SET prefix=$2", [req.params.id, req.body.prefix]);
     }
     if (req.body.chatlogs) {

@@ -2,7 +2,7 @@
     font-family: 'Contemporary';
     font-style: normal;
     font-weight: 400;
-    src: local('Contemporary'), local('Contemporary-Regular'), url('/typeface/Contemporary-Regular.ttf');
+    src: local('Contemporary'), local('Contemporary-Regular'), url('https://vicr123.com/typeface/Contemporary-Regular.ttf');
 }
 
 * {

@@ -28,7 +28,7 @@ const t = i18n.t;
         if (msg.author.bot) return;
         
         let pf = await prefix(msg.channel.guild);
-        if (msg.content.startsWith(pf)) {
+        if (msg.content.startsWith(pf) || pf === "") {
             handler.process(pf, msg);
         }
     });
