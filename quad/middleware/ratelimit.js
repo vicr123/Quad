@@ -11,9 +11,9 @@ module.exports = async function(message, opts, cmdOpts, args, flags) {
         return true;
     } else if (count < commandRatelimit + 3) {
         let t = (await i18n(message.author)).t;
-        message.channel.createMessage(t("**Cool it, buddy!**\nYou're using {{botname}} too fast. You'll be able to use Quad again in **{{count}} seconds**.", {
+        message.channel.createMessage(t("**Cool it, buddy!**\nYou're using {{botname}} too fast. You'll be able to use Quad again in **{{count, dp1}} seconds**.", {
             botname: config.get("bot.name"),
-            count: (ratelimit.timeout(message.author.id) / 1000).toFixed(1)
+            count: ratelimit.timeout(message.author.id) / 1000
         }));
         return false;
     } else {

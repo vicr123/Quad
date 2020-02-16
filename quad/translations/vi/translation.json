@@ -5,7 +5,7 @@
   "See you next time!": "",
   "Loading middleware {{MIDDLEWARE}}": "",
   "Loading module {{MODULE}}": "Đang tải phần mở rộng {{MODULE}}",
-  "**Cool it, buddy!**\nYou're using {{botname}} too fast. You'll be able to use Quad again in **{{count}} seconds**.": "",
+  "**Cool it, buddy!**\nYou're using {{botname}} too fast. You'll be able to use Quad again in **{{count, dp1}} seconds**.": "",
   "Shows information about {{botname}}": "",
   "Discord Bot": "",
   "Settings": "",

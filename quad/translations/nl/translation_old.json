@@ -2,5 +2,9 @@
   "Mistake? React with {{emoji}} within 5 seconds.": "",
   "TRANSLATORS: Use one letter for the following translation: \"S\" for \"North\"": "",
   "TRANSLATORS: Use one letter for the following translation: \"W\" for \"North\"": "",
-  "TRANSLATORS: Use one letter for the following translation: \"E\" for \"North\"": ""
+  "TRANSLATORS: Use one letter for the following translation: \"E\" for \"North\"": "",
+  "{{count}} things": "{{count}} dutch thing",
+  "{{count}} things_plural": "{{count}} dutch things",
+  "**Cool it, buddy!**\nYou're using {{botname}} too fast. You'll be able to use Quad again in **{{count}} seconds**.": "**Rustig aan, vriend!**\nJe gebruikt {{botname}} te snel. Je kunt {{botname}} weer gebruiken over **{{count}} seconde**.",
+  "**Cool it, buddy!**\nYou're using {{botname}} too fast. You'll be able to use Quad again in **{{count}} seconds**._plural": "**Rustig aan, vriend!**\nJe gebruikt {{botname}} te snel. Je kunt {{botname}} weer gebruiken over **{{count}} seconden**."
 }

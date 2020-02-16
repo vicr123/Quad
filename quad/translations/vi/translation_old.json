@@ -4,5 +4,7 @@
   "Mistake? React with {{emoji}} within 5 seconds.": "",
   "TRANSLATORS: Use one letter for the following translation: \"S\" for \"North\"": "",
   "TRANSLATORS: Use one letter for the following translation: \"W\" for \"North\"": "",
-  "TRANSLATORS: Use one letter for the following translation: \"E\" for \"North\"": ""
+  "TRANSLATORS: Use one letter for the following translation: \"E\" for \"North\"": "",
+  "{{count}} things": "",
+  "**Cool it, buddy!**\nYou're using {{botname}} too fast. You'll be able to use Quad again in **{{count}} seconds**.": ""
 }
