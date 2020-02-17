@@ -33,7 +33,7 @@ class Modal extends React.Component {
             <div className="modalBox" style={{"width": this.props.width}} onClick={dummyHandler} >
                 <div className="modalBoxContainer" style={{"width": this.props.width}}>
                     {this.renderTitle()}
-                    <div>
+                    <div className="modalBoxContents">
                         {this.props.children}
                     </div>
                 </div>

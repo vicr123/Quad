@@ -5,6 +5,7 @@ import LoadingPane from './loadingpane';
 import Fetch from 'fetch';
 import Modal from 'modal';
 import Cmdlink from './cmdlink';
+import { Map, TileLayer, Marker, Popup } from 'react-leaflet';
 
 class SetLatLngDialog extends React.Component {
     constructor(props) {
@@ -61,6 +62,79 @@ class SetLatLngDialog extends React.Component {
             <div className="containerHorizontal"><span>Latitude:&nbsp;</span><input className="grow" type="text" name="lat" value={this.state.lat} onChange={this.set.bind(this)} onBlur={this.check.bind(this)}/></div>
             <div className="containerHorizontal"><span>Longitude:&nbsp;</span><input className="grow" type="text" name="lng" value={this.state.lng} onChange={this.set.bind(this)} onBlur={this.check.bind(this)}/></div>
             <a className="button" onClick={this.accept.bind(this)}>Set Location</a>
+        </div>
+    }
+}
+
+class MapDialog extends React.Component {
+    constructor(props) {
+        super(props);
+        
+        let latlng = {
+            lat: props.current ? props.current[0] : 0,
+            lng: props.current ? props.current[1] : 0,
+        }
+        
+        this.state = {
+            lat: latlng.lat,
+            lng: latlng.lng,
+            zoom: 3,
+            viewport: {
+                center: [latlng.lat, latlng.lng],
+                zoom: 3
+            }
+        }
+        
+    }
+    
+    mapClicked(event) {
+        let latlng = {
+            lat: event.latlng.lat,
+            lng: ((((event.latlng.lng + 180) % 360) + 360) % 360) - 180
+        }
+        console.log(event.latlng.lng + " -> " + latlng.lng);
+        this.props.accept([latlng.lat, latlng.lng]);
+        this.setState({
+            lat: latlng.lat,
+            lng: latlng.lng
+        });
+    }
+    
+    viewportChanged(viewport) {
+        if (viewport.center[1] < -180 || viewport.center[1] > 180) {
+            viewport = {
+                center: [
+                    viewport.center[0],
+                    ((((viewport.center[1] + 180) % 360) + 360) % 360) - 180
+                ],
+                zoom: viewport.zoom
+            }
+        }
+        
+        this.setState({
+            viewport: viewport
+        });
+    }
+    
+    renderMarker() {
+        if (this.state.lat) {
+            return <Marker position={[this.state.lat, this.state.lng]}>
+                <Popup isOpen={true}>
+                    <div className="verticalContainer">
+                        <span>Location: {this.state.lat} {this.state.lng}</span>
+                    </div>
+                </Popup>
+            </Marker>
+        }
+        return null;
+    }
+    
+    render() {
+        return <div className="containerVertical grow">
+            <Map viewport={this.state.viewport} onClick={this.mapClicked.bind(this)} onViewportChanged={this.viewportChanged.bind(this)}>
+                <TileLayer attribution={CONFIG.api.osmAttribution} url={CONFIG.api.osmTileMapUrl} />
+                {this.renderMarker()}
+            </Map>
         </div>
     }
 }
@@ -123,6 +197,12 @@ class UserSettings extends React.Component {
         })
     }
     
+    execSearchOnMap() {
+        Modal.mount(<Modal title="Select Location on map" width={900} cancelable={true} renderBack={true}>
+            <MapDialog current={this.state.settings.geography} accept={this.setLocation.bind(this)}/>
+        </Modal>)
+    }
+    
     execSetLatLng() {
         Modal.mount(<Modal title="Set Latitude and Longitude" width={400} cancelable={true} renderBack={true}>
             <SetLatLngDialog current={this.state.settings.geography} accept={this.setLocation.bind(this)}/>
@@ -142,11 +222,14 @@ class UserSettings extends React.Component {
     }
     
     execSetLocationPopover() {
+        let searchOnMapButton = null;
+        if (CONFIG.api && CONFIG.api.osmTileMapUrl) searchOnMapButton = <a className="button" onClick={this.execSearchOnMap.bind(this)}>Search on map</a>
+        
         Modal.mount(<Modal title="Set Location" width={400} cancelable={true} renderBack={true}>
             <div className="containerVertical containerPadded">
                 How do you want to set your location?
                 <a className="button" onClick={this.execUseGeolocation.bind(this)}>Use current location</a>
-                {/*<a className="button">Search on map</a>*/}
+                {searchOnMapButton}
                 <a className="button" onClick={this.execSetLatLng.bind(this)}>Enter Latitude/Longitude</a>
             </div>
         </Modal>)

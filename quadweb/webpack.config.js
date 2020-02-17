@@ -6,6 +6,9 @@ const webpack = require("webpack");
 const config = require("config");
 const ConfigWebpack = require("config-webpack");
 
+if (!config.has("api.osmTileMapUrl")) console.log("API: api.osmTileMapUrl not set; users will not be able to set their location using a map.");
+if (!config.has("api.osmAttribution")) console.log("API: api.osmAttribution not set; the map will not have any attribution.");
+
 module.exports = {
   entry: "./src/index.jsx",
   mode: "development",

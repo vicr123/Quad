@@ -8,7 +8,7 @@ let t = str => str;
 
 function sendDateMessage(message, name, date, t) {
     if (date) {
-        message.channel.createMessage(t("{{emoji}} **{{name}}** {{datetime, date}} at {{datetime, stime}}", {
+        message.channel.createMessage(t("{{emoji}} **{{name}}** {{datetime, datetime}}", {
             emoji: ":clock10:",
             name: name,
             datetime: {

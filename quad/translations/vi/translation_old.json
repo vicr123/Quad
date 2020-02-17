@@ -7,5 +7,6 @@
   "TRANSLATORS: Use one letter for the following translation: \"E\" for \"North\"": "",
   "{{count}} things": "",
   "**Cool it, buddy!**\nYou're using {{botname}} too fast. You'll be able to use Quad again in **{{count}} seconds**.": "",
-  "Change Quad at the [website]({{website}}).": ""
+  "Change Quad at the [website]({{website}}).": "",
+  "{{emoji}} **{{name}}** {{datetime, date}} at {{datetime, stime}}": ""
 }

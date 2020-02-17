@@ -6,5 +6,6 @@
   "{{count}} things_plural": "",
   "**Cool it, buddy!**\nYou're using {{botname}} too fast. You'll be able to use Quad again in **{{count}} seconds**.": "",
   "**Cool it, buddy!**\nYou're using {{botname}} too fast. You'll be able to use Quad again in **{{count}} seconds**._plural": "",
-  "Change Quad at the [website]({{website}}).": "Ändere Quad auf der [Webseite]({{website}})."
+  "Change Quad at the [website]({{website}}).": "Ändere Quad auf der [Webseite]({{website}}).",
+  "{{emoji}} **{{name}}** {{datetime, date}} at {{datetime, stime}}": ""
 }

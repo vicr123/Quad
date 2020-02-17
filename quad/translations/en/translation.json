@@ -42,7 +42,7 @@
   "Internet Explorer": "",
   "with {{BOT_NAME}}": "",
   "Updating status": "",
-  "{{emoji}} **{{name}}** {{datetime, date}} at {{datetime, stime}}": "",
+  "{{emoji}} **{{name}}** {{datetime, datetime}}": "",
   "{{emoji}} **{{name}}** location not set.": "",
   "Acquire the time at your location": "",
   "Acquire the time at a user's location": "",

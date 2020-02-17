@@ -97,11 +97,19 @@ p {
 }
 
 .modalBox {
+    display: flex;
+    flex-direction: column;
     right: 0px;
     height: 100vh;
     position: fixed;
     background: rgb(40, 40, 40);
     border-left: 1px solid white;
+}
+
+.modalBoxContainer, .modalBoxContents {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
 }
 
 .mainContainer {
@@ -211,4 +219,8 @@ input[type="text"] {
     border-right: none;
     padding: 3px;
     outline: none;
+}
+
+.leaflet-container {
+    flex-grow: 1;
 }
