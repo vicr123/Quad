@@ -22,10 +22,14 @@ module.exports = async function(req, res, next) {
             if (users.hasOwnProperty(user.access)) {
                 user.id = users[user.access];
             } else {
-                let userResp = await Fetch.req(user, "/users/@me", {
-                    method: "GET"
-                });
-                user.id = userResp.id;
+                try {
+                    let userResp = await Fetch.req(user, "/users/@me", {
+                        method: "GET"
+                    });
+                    user.id = userResp.id;
+                } catch (err) {
+                    //Ignore for the time being
+                }
             }
             
             req.user = user;

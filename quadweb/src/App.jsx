@@ -28,11 +28,31 @@ class App extends Component {
         });
     }
     
+    componentDidCatch(error, info) {
+        console.log(error);
+        console.log(info);
+        this.setState({
+            page: "error",
+            error: error,
+            info: info
+        });
+    }
+    
     render() {
         if (this.state.page === "login") {
             return <Login tokenChanged={this.reload.bind(this)} />
         } else if (this.state.page === "configurator") {
             return <Configurator tokenChanged={this.reload.bind(this)} />
+        } else if (this.state.page === "error") {
+
+            return <div className="mainContainer containerVertical containerCenter">
+                <h1>Ouch</h1>
+                <p>Looks like something strange happened.</p>
+                <pre>{this.state.error.message}</pre>
+                <a className="button" onClick={() => {
+                    window.location.reload();
+                }}>Reload</a>
+            </div>
         }
     }
 }

@@ -70,18 +70,26 @@ router.get("/me", async function(req, res) {
     if (!req.user) {
         res.status(401).send();
     } else {
-        //Get guilds and user information from Discord
-        let user = await Fetch.req(req.user, "/users/@me", {
-            method: "GET"
-        });
-                
-        let guilds = await Fetch.req(req.user, "/users/@me/guilds", {
-            method: "GET"
-        });
-        
-        res.status(200).send({
-            user: user,
-            guilds: guilds
-        });
+        try {
+            //Get guilds and user information from Discord
+            let user = await Fetch.req(req.user, "/users/@me", {
+                method: "GET"
+            });
+                    
+            let guilds = await Fetch.req(req.user, "/users/@me/guilds", {
+                method: "GET"
+            });
+            
+            res.status(200).send({
+                user: user,
+                guilds: guilds
+            });
+        } catch (err) {
+            if (err.message === "Unauthorized") {
+                res.status(401).send();
+            } else {
+                res.status(500).send();
+            }
+        }
     }
 });

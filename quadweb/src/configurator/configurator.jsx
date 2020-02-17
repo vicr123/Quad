@@ -35,6 +35,16 @@ class Configurator extends React.Component {
                 guilds: guilds,
                 mainPage: "configurator"
             });
+        }).catch(err => {
+            if (err.status === 401) {
+                //Log out and try again
+                localStorage.removeItem("token");
+                this.props.tokenChanged();
+            } else {
+                this.setState({
+                    mainPage: "error"
+                });
+            }
         });
     }
     
@@ -66,6 +76,14 @@ class Configurator extends React.Component {
         if (this.state.mainPage === "loader") {
             return <div className="mainContainer containerVertical containerCenter">
                 <LoadingPane />
+            </div>
+        } else if (this.state.mainPage === "error") {
+            return <div className="mainContainer containerVertical containerCenter">
+                <h1>Hmm...</h1>
+                <p>Looks like the server isn't working correctly. Give it a bit and reload the page to try again.</p>
+                <a className="button" onClick={() => {
+                    window.location.reload();
+                }}>Reload</a>
             </div>
         } else {
             return <div className="mainContainer containerVertical">
