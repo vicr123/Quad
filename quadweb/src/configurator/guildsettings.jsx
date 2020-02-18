@@ -4,6 +4,7 @@ import PaneGroup from './panegroup';
 import LoadingPane from './loadingpane';
 import Fetch from 'fetch';
 import Modal from 'modal';
+import Cmdlink from './cmdlink';
 
 class GuildSettings extends React.Component {
     constructor(props) {
@@ -80,6 +81,24 @@ class GuildSettings extends React.Component {
                 <p>All configuration will be reset as if {CONFIG.bot.name} joined the server for the first time.</p>
                 <p>You'll need to configure {CONFIG.bot.name} in {this.state.guild.name} again once it's been reset.</p>
                 <a className="button destructive" onClick={performReset}>Reset {CONFIG.bot.name} in {this.state.guild.name}</a>
+            </div>
+        </Modal>)
+    }
+    
+    leaveServer() {
+        let performLeave = (eraseSettings) => {
+            Fetch.delete(`/guilds/${this.props.guildId}?eraseSettings=${eraseSettings}`).then(response => {
+                this.retrieveServerInformation();
+                Modal.unmount();
+            });
+        }
+        
+        Modal.mount(<Modal title={`Leave ${this.state.guild.name}`} cancelable={true} renderBack={true} width={400}>
+            <div className="containerVertical containerPadded">
+                <p>{CONFIG.bot.name} will leave {this.state.guild.name}. To use {CONFIG.bot.name} again, you'll need to add it back to the server.</p>
+                <Cmdlink className="destructive" title={`Leave ${this.state.guild.name}`} description={`Your settings won't be erased`} onClick={performLeave.bind(this, false)} />
+                <Cmdlink className="destructive" title={`Leave ${this.state.guild.name} and erase settings`} description={`You'll need to configure ${CONFIG.bot.name} again should you want to use it.`} onClick={performLeave.bind(this, true)} />
+                <p>TIP: You can also get {CONFIG.bot.name} to leave the server without erasing settings by kicking it from the server.</p>
             </div>
         </Modal>)
     }
@@ -162,9 +181,10 @@ class GuildSettings extends React.Component {
                         </select>
                     </div>
                 </PaneGroup>
-                <PaneGroup title="Reset">
-                    <p>Reset {CONFIG.bot.name} back to the default settings.</p>
-                    <a className="button destructive" onClick={this.resetServer.bind(this)}>Reset {CONFIG.bot.name}</a>
+                <PaneGroup title="Danger">
+                    <p>Ensure absolute certainty and exercise caution before you hit one of these buttons. They're not for the faint of heart!</p>
+                    <Cmdlink className="destructive" title={`Reset ${CONFIG.bot.name}`} description={`Reset ${CONFIG.bot.name} back to the default settings.`} onClick={this.resetServer.bind(this)} />
+                    <Cmdlink className="destructive" title={`Leave ${this.state.guild.name}`} description={`Requests ${CONFIG.bot.name} to leave the server.`} onClick={this.leaveServer.bind(this)} />
                 </PaneGroup>
             </div>
         }

@@ -7,6 +7,14 @@ const config = require("config");
 let router = express.Router();
 module.exports = router;
 
+async function eraseSettings(guildId) {
+    let client = await db.get();
+    await client.query("DELETE FROM guildPrefix WHERE id=$1", [guildId]);
+    await client.query("DELETE FROM guildLogs WHERE id=$1", [guildId]);
+    await client.query("DELETE FROM guildPins WHERE id=$1", [guildId]);
+    client.release();
+}
+
 router.use("/:id", async function(req, res, next) {
     if (!req.user) {
         res.status(401).send();
@@ -98,6 +106,21 @@ router.get("/:id", async function(req, res) {
     res.status(200).send(resp);
 });
 
+//Leave the guild
+router.delete("/:id", async function(req, res) {
+    if (!req.canManage) {
+        res.status(401).send();
+        return;
+    }
+    
+    await req.guild.leave();
+    if (req.query.eraseSettings === "true") {
+        await eraseSettings(req.params.id);
+    }
+    
+    res.status(204).send();
+});
+
 router.post("/:id/set", async function(req, res) {
     if (!req.canManage) {
         res.status(401).send();
@@ -161,11 +184,7 @@ router.delete("/:id/set", async function(req, res) {
         return;
     }
     
-    let client = await db.get();
-    await client.query("DELETE FROM guildPrefix WHERE id=$1", [req.params.id]);
-    await client.query("DELETE FROM guildLogs WHERE id=$1", [req.params.id]);
-    await client.query("DELETE FROM guildPins WHERE id=$1", [req.params.id]);
-    client.release();
+    await eraseSettings(req.params.id);
 
     res.status(204).send();    
 })
