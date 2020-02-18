@@ -36,6 +36,12 @@ handler.register("help", {
                 {
                     name: opts.t("Commands"),
                     value: commandsString.join("\n")
+                },
+                {
+                    name: opts.t("Configuration"),
+                    value: opts.t("If you need to change any settings, you can visit [{{website}}]({{website}})", {
+                        website: config.get("server.rootAddress")
+                    })
                 }
             ]
         }
