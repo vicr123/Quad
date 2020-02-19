@@ -16,7 +16,7 @@ const t = i18n.t;
 (async () => {
     log(t("Welcome to {{BOT_NAME}}!", {"BOT_NAME": config.get("bot.name")}));
     
-    await db.init();
+    if (!await db.init()) return; //Die if something happens when initialising the database
     modloader.init();
     handler.init();
     
