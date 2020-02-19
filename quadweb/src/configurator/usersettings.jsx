@@ -239,20 +239,22 @@ class UserSettings extends React.Component {
         if (this.state.settings) {
             return <div className="containerVertical grow">
                 <Heading title="User Settings" />
-                <PaneGroup title="Locale">
-                    <p>Set the language that {CONFIG.bot.name} will use on Discord</p>
-                    <select name="locale" value={this.state.settings.locale} onBlur={this.setUserSetting.bind(this)}>
-                        {this.state.settings.availableLocales.map(value => {
-                            return <option value={value} key={value}>{value}</option>
-                        })}
-                    </select>
-                </PaneGroup>
-                <PaneGroup title="Geography">
-                    <p>Set the location that {CONFIG.bot.name} will use for location based commands.</p>
-                    <p><b>IMPORTANT:</b> To alleviate privacy concerns, you should not point {CONFIG.bot.name} too close to your residence. It's recommended that you use a nearby major city.</p>
-                    <Cmdlink title="Set Location" description={this.currentLocString()} onClick={this.execSetLocationPopover.bind(this)}/>
-                    <Cmdlink className="destructive" title="Clear Saved Location" description="Clear your saved location" onClick={this.execClearLoc.bind(this)} />
-                </PaneGroup>
+                <div className="containerScrollable">
+                    <PaneGroup title="Locale">
+                        <p>Set the language that {CONFIG.bot.name} will use on Discord</p>
+                        <select name="locale" value={this.state.settings.locale} onBlur={this.setUserSetting.bind(this)}>
+                            {this.state.settings.availableLocales.map(value => {
+                                return <option value={value} key={value}>{value}</option>
+                            })}
+                        </select>
+                    </PaneGroup>
+                    <PaneGroup title="Geography">
+                        <p>Set the location that {CONFIG.bot.name} will use for location based commands.</p>
+                        <p><b>IMPORTANT:</b> To alleviate privacy concerns, you should not point {CONFIG.bot.name} too close to your residence. It's recommended that you use a nearby major city.</p>
+                        <Cmdlink title="Set Location" description={this.currentLocString()} onClick={this.execSetLocationPopover.bind(this)}/>
+                        <Cmdlink className="destructive" title="Clear Saved Location" description="Clear your saved location" onClick={this.execClearLoc.bind(this)} />
+                    </PaneGroup>
+                </div>
             </div>
         } else {
             return <LoadingPane />

@@ -33,9 +33,11 @@ class Sidebar extends React.Component {
     render() {
         return <div className="sidebar">
             <Heading title="Settings" />
-            <SidebarItem text="User Settings" key="userSettings" pane={"userSettings"} current={this.props.current} changePane={this.props.changePane} />
-            <div className="horizontalLine" />
-            {this.guilds()}
+            <div className="containerScrollable">
+                <SidebarItem text="User Settings" key="userSettings" pane={"userSettings"} current={this.props.current} changePane={this.props.changePane} />
+                <div className="horizontalLine" />
+                {this.guilds()}
+            </div>
         </div>
     }
 }

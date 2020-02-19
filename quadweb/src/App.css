@@ -136,6 +136,10 @@ p {
     padding: 9px;
 }
 
+.containerScrollable {
+    overflow-y: auto;
+}
+
 .horizontalLine {
     background-color: white;
     height: 1px;

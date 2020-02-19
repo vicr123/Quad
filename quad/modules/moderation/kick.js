@@ -15,6 +15,9 @@ handler.register("kick", {
     ],
     opts: {
         translatorRequired: true,
+        help: {
+            description: t("Kicks a user")
+        },
         permissionsRequired: [
             "mod",
             "kickMembers"

@@ -16,6 +16,9 @@ handler.register("ban", {
     ],
     opts: {
         translatorRequired: true,
+        help: {
+            description: t("Bans a user")
+        },
         permissionsRequired: [
             "mod",
             "banMembers"

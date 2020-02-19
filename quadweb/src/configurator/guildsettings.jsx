@@ -161,31 +161,33 @@ class GuildSettings extends React.Component {
         } else {
             return <div className="containerVertical grow">
                 <Heading title={this.state.guild.name} />
-                <PaneGroup title="Prefix">
-                    <p>Set the prefix for {CONFIG.bot.name} commands.</p>
-                    <input type="text" name="prefix" value={this.state.settings.prefix} onChange={this.onPrefixChange.bind(this)} onBlur={this.setGuildSetting.bind(this)} />
-                    <p>Example usage: {this.state.settings.prefix}ping</p>
-                </PaneGroup>
-                <PaneGroup title="Logs">
-                    <p>Set the channels {CONFIG.bot.name} should post informational messages in.</p>
-                    <div className="containerHorizontal">
-                        Alerts:&nbsp;
-                        <select className="grow" name="alerts" value={this.state.settings.alerts} onChange={this.setGuildSetting.bind(this)}>
-                            {this.getTextChannels()}
-                        </select>
-                    </div>
-                    <div className="containerHorizontal">
-                        Chat Logs:&nbsp;
-                        <select className="grow" name="chatlogs" value={this.state.settings.chatlogs} onChange={this.setGuildSetting.bind(this)}>
-                            {this.getTextChannels()}
-                        </select>
-                    </div>
-                </PaneGroup>
-                <PaneGroup title="Danger">
-                    <p>Ensure absolute certainty and exercise caution before you hit one of these buttons. They're not for the faint of heart!</p>
-                    <Cmdlink className="destructive" title={`Reset ${CONFIG.bot.name}`} description={`Reset ${CONFIG.bot.name} back to the default settings.`} onClick={this.resetServer.bind(this)} />
-                    <Cmdlink className="destructive" title={`Leave ${this.state.guild.name}`} description={`Requests ${CONFIG.bot.name} to leave the server.`} onClick={this.leaveServer.bind(this)} />
-                </PaneGroup>
+                <div className="containerScrollable">
+                    <PaneGroup title="Prefix">
+                        <p>Set the prefix for {CONFIG.bot.name} commands.</p>
+                        <input type="text" name="prefix" value={this.state.settings.prefix} onChange={this.onPrefixChange.bind(this)} onBlur={this.setGuildSetting.bind(this)} />
+                        <p>Example usage: {this.state.settings.prefix}ping</p>
+                    </PaneGroup>
+                    <PaneGroup title="Logs">
+                        <p>Set the channels {CONFIG.bot.name} should post informational messages in.</p>
+                        <div className="containerHorizontal">
+                            Alerts:&nbsp;
+                            <select className="grow" name="alerts" value={this.state.settings.alerts} onChange={this.setGuildSetting.bind(this)}>
+                                {this.getTextChannels()}
+                            </select>
+                        </div>
+                        <div className="containerHorizontal">
+                            Chat Logs:&nbsp;
+                            <select className="grow" name="chatlogs" value={this.state.settings.chatlogs} onChange={this.setGuildSetting.bind(this)}>
+                                {this.getTextChannels()}
+                            </select>
+                        </div>
+                    </PaneGroup>
+                    <PaneGroup title="Danger">
+                        <p>Ensure absolute certainty and exercise caution before you hit one of these buttons. They're not for the faint of heart!</p>
+                        <Cmdlink className="destructive" title={`Reset ${CONFIG.bot.name}`} description={`Reset ${CONFIG.bot.name} back to the default settings.`} onClick={this.resetServer.bind(this)} />
+                        <Cmdlink className="destructive" title={`Leave ${this.state.guild.name}`} description={`Requests ${CONFIG.bot.name} to leave the server.`} onClick={this.leaveServer.bind(this)} />
+                    </PaneGroup>
+                </div>
             </div>
         }
     }
