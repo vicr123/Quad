@@ -12,6 +12,7 @@ const db = require("db");
 const prefix = require("prefix");
 
 const t = i18n.t;
+process.exitCode = 1; //Assume error unless otherwise proven
 
 (async () => {
     log(t("Welcome to {{BOT_NAME}}!", {"BOT_NAME": config.get("bot.name")}));

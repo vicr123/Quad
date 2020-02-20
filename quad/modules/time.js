@@ -36,6 +36,8 @@ handler.register("time", {
 }, async function(message, opts) {
     if (opts.geographyCoded) {
         sendDateMessage(message, MemberUtils.tag(message.member), moment().tz(opts.geographyCoded.tz), opts.t);
+    } else {
+        sendDateMessage(message, MemberUtils.tag(message.member), null, opts.t);
     }
 });
 
