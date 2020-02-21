@@ -56,7 +56,6 @@ const confirmPin = async (t, message, user) => {
             confirmationCache.shift();
         }
         confirmationCache.push({userId: user.id, channelId: message.channel.id, messageId: message.id, confirmationMessageId: confirmationMessage.id});
-        console.log(confirmationCache);
     });
 };
 
@@ -89,13 +88,10 @@ handler.on("botAvailable", () => {
         if (await unpin(userId, message)) {
             let pos;
             for (i in confirmationCache) {
-                console.log(i);
                 let confirmation = confirmationCache[i];
-                console.log(confirmation);
                 if (confirmation.userId === userId &&
                     confirmation.channelId === message.channel.id &&
                     confirmation.messageId === message.id) {
-                    console.log("weee");
                     message.channel.unsendMessage(confirmation.confirmationMessageId);
                     pos = i;
                     break;
