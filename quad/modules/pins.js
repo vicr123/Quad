@@ -52,7 +52,7 @@ const confirmPin = async (t, message, user) => {
             icon_url: user.dynamicAvatarURL(undefined, 128)
         }
     }}).then(confirmationMessage => {
-        if (confirmationCache.length >= 2) { // TODO put this in config?
+        if (confirmationCache.length >= 500) { // TODO put this in config?
             confirmationCache.shift();
         }
         confirmationCache.push({userId: user.id, channelId: message.channel.id, messageId: message.id, confirmationMessageId: confirmationMessage.id});
