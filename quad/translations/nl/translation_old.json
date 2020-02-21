@@ -8,5 +8,6 @@
   "**Cool it, buddy!**\nYou're using {{botname}} too fast. You'll be able to use Quad again in **{{count}} seconds**.": "**Rustig aan, vriend!**\nJe gebruikt {{botname}} te snel. Je kunt {{botname}} weer gebruiken over **{{count}} seconde**.",
   "**Cool it, buddy!**\nYou're using {{botname}} too fast. You'll be able to use Quad again in **{{count}} seconds**._plural": "**Rustig aan, vriend!**\nJe gebruikt {{botname}} te snel. Je kunt {{botname}} weer gebruiken over **{{count}} seconden**.",
   "Change Quad at the [website]({{website}}).": "",
-  "{{emoji}} **{{name}}** {{datetime, date}} at {{datetime, stime}}": ""
+  "{{emoji}} **{{name}}** {{datetime, date}} at {{datetime, stime}}": "",
+  "The message ID to pin": ""
 }
