@@ -48,7 +48,7 @@ const confirmPin = async (t, message, user) => {
             value: message.content || t("(No content)")
         }],
         footer: {
-            text: t("{{USER}} pinned a message.", {"USER": message.author.username}),
+            text: t("{{USER}} pinned a message.", {"USER": user.username}),
             icon_url: user.dynamicAvatarURL(undefined, 128)
         }
     }}).then(confirmationMessage => {
