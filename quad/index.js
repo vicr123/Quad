@@ -18,7 +18,7 @@ process.exitCode = 1; //Assume error unless otherwise proven
 (async () => {
     log(t("Welcome to {{BOT_NAME}}!", {"BOT_NAME": config.get("bot.name")}));
     
-    if (!await db.init()) return; //Die if something happens when initialising the database
+    if (!await db.init()) throw new Error("Database Unavailable"); //Die if something happens when initialising the database
     modloader.init();
     handler.init();
     
@@ -43,4 +43,8 @@ process.exitCode = 1; //Assume error unless otherwise proven
     bot.connect();
     
     handler.setBot(bot);
-})();
+})().then(retval => {
+    
+}).catch(err => {
+    handler.exit(false);
+});
