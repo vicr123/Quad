@@ -10,6 +10,7 @@ const handler = require('handler');
 const modloader = require("./modloader");
 const db = require("db");
 const prefix = require("prefix");
+require("./ctlsrv/server.js");
 
 const t = i18n.t;
 process.exitCode = 1; //Assume error unless otherwise proven
@@ -36,10 +37,7 @@ process.exitCode = 1; //Assume error unless otherwise proven
 
     process.on("SIGINT", () => {
         console.log(); // Make text appear on line after ^C
-        log(t("Shutting down {{BOT_NAME}}..."), {"BOT_NAME": config.get("bot.name")});
-        bot.disconnect({reconnect: false});
-        log(t("See you next time!"), log.success);
-        process.exit(0);
+        handler.exit();
     });
 
     bot.connect();
