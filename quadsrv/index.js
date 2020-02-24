@@ -1,6 +1,8 @@
 #!/usr/bin/env node
+
 //Set up the configuration files
 process.env["NODE_CONFIG_DIR"] = "../config/";
+process.env["QUAD_TR_DIR"] = "../quad/translations";
 
 const express = require("express");
 const config = require('config');
