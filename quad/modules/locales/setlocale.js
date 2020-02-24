@@ -30,7 +30,7 @@ handler.register("setlocale", {
             return;
         }
         
-        await opts.db.query("INSERT INTO userlocales(id, locale) VALUES($1, $2) ON CONFLICT ON CONSTRAINT userlocales_pkey DO UPDATE SET locale=$2", [
+        await opts.db.query("INSERT INTO locales(id, locale) VALUES($1, $2) ON CONFLICT ON CONSTRAINT locales_pkey DO UPDATE SET locale=$2", [
             message.author.id,
             args[0]
         ]);

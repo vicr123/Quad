@@ -14,7 +14,7 @@ router.get("/settings", async function(req, res) {
         let response = {};
         
         let client = await db.get();
-        let row = await client.query("SELECT locale FROM userlocales WHERE id=$1", [req.user.id]);
+        let row = await client.query("SELECT locale FROM locales WHERE id=$1", [req.user.id]);
         if (row.rowCount > 0) {
             response.locale = row.rows[0].locale;
         } else {
@@ -45,7 +45,7 @@ router.post("/set", async function(req, res) {
         if (req.body.locale) {
             //Ensure the locale is valid
             if (availableTranslations.includes(req.body.locale)) {
-                await client.query("INSERT INTO userlocales(id, locale) VALUES($1, $2) ON CONFLICT ON CONSTRAINT userlocales_pkey DO UPDATE SET locale=$2", [req.user.id, req.body.locale]);
+                await client.query("INSERT INTO locales(id, locale) VALUES($1, $2) ON CONFLICT ON CONSTRAINT locales_pkey DO UPDATE SET locale=$2", [req.user.id, req.body.locale]);
             } else {
                 fails.push("Invalid Locale");
             }
