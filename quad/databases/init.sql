@@ -1,6 +1,5 @@
 -- Database version 2
 
-CREATE TABLE IF NOT EXISTS guildLocales(id TEXT PRIMARY KEY, locale TEXT DEFAULT 'en');
 CREATE TABLE IF NOT EXISTS guildPrefix(id TEXT PRIMARY KEY, prefix TEXT);
 CREATE TABLE IF NOT EXISTS guildPins(id TEXT PRIMARY KEY, enabled BOOLEAN, emoji TEXT, timeout INTEGER);
 CREATE TABLE IF NOT EXISTS guildLogs(id TEXT PRIMARY KEY, alerts TEXT, logs TEXT);

@@ -11,7 +11,7 @@ const tokens = require("./tokens");
 const bot = require("bot");
 
 (async () => {
-    await db.init();
+    await db.init(false);
     let client = await db.get();
     client.query("CREATE TABLE IF NOT EXISTS webTokens(token TEXT PRIMARY KEY, refreshToken TEXT, accessToken TEXT)");
     client.release();
