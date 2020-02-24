@@ -39,6 +39,10 @@ process.exitCode = 1; //Assume error unless otherwise proven
         console.log(); // Make text appear on line after ^C
         handler.exit();
     });
+    process.on("SIGTERM", () => {
+        console.log(); // Make text appear on line after ^C
+        handler.exit();
+    });
 
     bot.connect();
     
