@@ -13,7 +13,7 @@ function pictureEmbed(user, t) {
             height: 512
         },
         image: {
-            url: user.avatarURL.replace("size=128", "size=512")
+            url: user.avatarURL.replace("size=128", "size=2048")
         }
     }
 }
