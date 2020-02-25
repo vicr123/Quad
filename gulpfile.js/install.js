@@ -17,7 +17,7 @@ const fsLink = async (existingPath, newPath) => {
 }
 
 function copy() {
-    return gulp.src(["package.json", "package-lock.json", "quad/**", "quadctl/**", "quadsrv/**", "quadweb/**"], {
+    return gulp.src(["package.json", "package-lock.json", "config/default.json", "quad/**", "quadctl/**", "quadsrv/**", "quadweb/**"], {
         base: "."
     })
         .pipe(gulp.dest(baseDir))
