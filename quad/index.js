@@ -1,7 +1,8 @@
 #!/usr/bin/env node
+
 //Set up the configuration files
-process.env["NODE_CONFIG_DIR"] = "../config/";
-process.env["QUAD_TR_DIR"] = "./translations";
+process.env["NODE_CONFIG_DIR"] = "/etc/quad/:../config/";
+process.env["QUAD_TR_DIR"] = "./translations/";
 
 const Eris = require('eris');
 const config = require('config');

@@ -5,6 +5,7 @@ const i18n = require('i18n');
 const config = require('config');
 const handler = require('handler');
 const ServerConnection = require('./serverconnection');
+const fs = require('fs');
 
 const t = i18n.t;
 
@@ -21,6 +22,9 @@ process.on("uncaughtException", err => {
 });
 
 wss.on("listening", () => {
+    //Allow anyone to connect
+    fs.chmodSync(`/tmp/${config.get("bot.name")}-ctl`, 0o777);
+    
     log(t("Configuration server started."), log.success);
 });
 wss.on("connection", (socket, request) => {

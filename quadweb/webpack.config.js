@@ -1,6 +1,3 @@
-//Set up the configuration files
-process.env["NODE_CONFIG_DIR"] = "../config/";
-
 const path = require("path");
 const webpack = require("webpack");
 const config = require("config");
@@ -10,7 +7,7 @@ if (!config.has("api.osmTileMapUrl")) console.log("API: api.osmTileMapUrl not se
 if (!config.has("api.osmAttribution")) console.log("API: api.osmAttribution not set; the map will not have any attribution.");
 
 module.exports = {
-  entry: "./src/index.jsx",
+  entry: "./quadweb/src/index.jsx",
   mode: "development",
   module: {
     rules: [

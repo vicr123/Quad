@@ -1,0 +1,4 @@
+#!/bin/bash
+
+cd /opt/quad/quad
+node index.js

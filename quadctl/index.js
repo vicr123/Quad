@@ -1,5 +1,7 @@
+#!/usr/bin/env node
+
 //Set up the configuration files
-process.env["NODE_CONFIG_DIR"] = "../config/";
+process.env["NODE_CONFIG_DIR"] = "/etc/quad/:../config/";
 
 const Client = require("./client");
 const Screen = require("./screen");
