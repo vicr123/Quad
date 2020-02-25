@@ -1,0 +1,12 @@
+[Unit]
+Description=Quad Discord Bot (Web Server)
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=quadsrv
+Restart=on-failure
+RestartSec=5s
+
+[Install]
+WantedBy=multi-user.target
