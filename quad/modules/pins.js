@@ -62,47 +62,159 @@ const confirmPin = async (t, message, user) => {
 // Reactions
 handler.on("botAvailable", () => {
     bot = handler.bot;
-
-    bot.on("messageReactionAdd", async (message, emoji, userId) => {
-        if (emoji.name !== config.get("bot.pins.emoji")) return;
-
-        let user = getUserById(userId);
-        if (user.bot) return;
-
-        if (await pin(userId, message)) {
-            confirmPin(fakeT, message, user);
-        } else {
-            let t = fakeT;
-            message.channel.createMessage(t("{{USER}}, the message could not be pinned.", {"USER": user.mention}));
-        }
-    });
-
-    // userId will be the user who placed the reaction. This means that people with Manage Reactions
-    // permissions can unpin messages for others.
-    bot.on("messageReactionRemove", async (message, emoji, userId) => {
-        if (emoji.name !== config.get("bot.pins.emoji")) return;
-
-        let user = getUserById(userId);
-        if (user.bot) return;
-
-        if (await unpin(userId, message)) {
-            let pos;
-            for (i in confirmationCache) {
-                let confirmation = confirmationCache[i];
-                if (confirmation.userId === userId &&
-                    confirmation.channelId === message.channel.id &&
-                    confirmation.messageId === message.id) {
-                    message.channel.unsendMessage(confirmation.confirmationMessageId);
-                    pos = i;
-                    break;
-                }
-            }
-            if (pos) confirmationCache.splice(pos, 1);
-        } else {
-            let t = fakeT;
-            message.channel.createMessage(t("{{USER}}, the message could not be unpinned.", {"USER": user.mention}));
-        }
-    });
-
-    // Don't listen to messageReactionRemoveAll so messages aren't always unpinned by moderators
 });
+
+handler.listen("messageReactionAdd", async (message, emoji, userId) => {
+    if (emoji.name !== config.get("bot.pins.emoji")) return;
+
+    let user = getUserById(userId);
+    if (user.bot) return;
+
+    if (await pin(userId, message)) {
+        confirmPin(fakeT, message, user);
+    } else {
+        let t = fakeT;
+        message.channel.createMessage(t("{{USER}}, the message could not be pinned.", {"USER": user.mention}));
+    }
+});
+
+// userId will be the user who placed the reaction. This means that people with Manage Reactions
+// permissions can unpin messages for others.
+handler.listen("messageReactionRemove", async (message, emoji, userId) => {
+    if (emoji.name !== config.get("bot.pins.emoji")) return;
+
+    let user = getUserById(userId);
+    if (user.bot) return;
+
+    if (await unpin(userId, message)) {
+        let pos;
+        for (i in confirmationCache) {
+            let confirmation = confirmationCache[i];
+            if (confirmation.userId === userId &&
+                confirmation.channelId === message.channel.id &&
+                confirmation.messageId === message.id) {
+                message.channel.unsendMessage(confirmation.confirmationMessageId);
+                pos = i;
+                break;
+            }
+        }
+        if (pos) confirmationCache.splice(pos, 1);
+    } else {
+        let t = fakeT;
+        message.channel.createMessage(t("{{USER}}, the message could not be unpinned.", {"USER": user.mention}));
+    }
+});
+
+// Don't listen to messageReactionRemoveAll so messages aren't always unpinned by moderators
+
+// Commands
+const pageSize = 5;
+let t = fakeT;
+const handlePinsCommand = async (message, opts, args, flags) => {
+    if (args[0] === undefined) args[0] = 1;
+    if(args[0] < 1) {
+        message.channel.createMessage(opts.t("The page number can't 0 or less."));
+        return;
+    }
+
+    let response = await message.channel.createMessage(opts.t("Loading your pins..."));
+
+    let ascending = (flags.order || "d").startsWith("a");
+
+    let parameters = [message.author.id, (args[0] - 1) * pageSize, pageSize];
+    if (flags.category) parameters.push(flags.category);
+
+    // Get the pins from the database
+    let query;
+    if (flags.category) {
+        query = "SELECT p.* FROM userPins AS p, userPinsCategories AS pc, userCategories AS c WHERE p.id=pc.id AND p.id=c.id AND p.id=$1 AND p.pinid=pc.pinid AND pc.catid=c.catid AND c.name=$4 ORDER BY p.pinid " +
+        (ascending ? "ASC" : "DESC") +
+        " OFFSET $2 LIMIT $3";
+    } else {
+        query = "SELECT p.* FROM userPins AS p WHERE p.id=$1 ORDER BY p.pinid " +
+        (ascending ? "ASC" : "DESC") +
+        " OFFSET $2 LIMIT $3";
+    }
+    let result = await opts.db.query(query, parameters);
+
+    // Find the page count
+    let pageCount = Math.ceil(result.rowCount / pageSize);
+
+    // Make sure we have pins
+    if (result.rowCount === 0) {
+        response.edit(opts.t("{{USER}}, there are no results.", {"USER": message.author.mention}));
+        return;
+    }
+    
+    // Find categories for the results
+    let promises = [];  
+    for (row of result.rows) {
+        promises.push(opts.db.query("SELECT pinid, catid FROM userPinsCategories WHERE id=$1 AND pinid=$2", [message.author.id, row.pinid]));
+    }
+    
+    let promises2 = [];
+    let pinCategories = {};
+    let categoryNames = {};
+    for (res of await Promise.all(promises)) { for (row of res.rows) {
+        pinCategories[row.pinid] = pinCategories[row.pinid] || [];
+        pinCategories[row.pinid].push(row.catid);
+
+        if (!Object.keys(categoryNames).includes(row.catid)) {
+            promises2.push(opts.db.query("SELECT catid, name FROM userCategories WHERE id=$1 AND catid=$2", [message.author.id, row.catid]));
+        }}
+    }
+    
+    for (res of await Promise.all(promises2)) {
+        categoryNames[res.rows[0].catid] = res.rows[0].name;
+    }
+    
+    // Get contents
+    let pinFields = [];
+    
+    for (row of result.rows) {
+        let message = await handler.bot.getChannel(row.channel).getMessage(row.message);
+        pinFields.push({
+            name: `#${row.pinid}` + (pinCategories[row.pinid] ? ` | ${pinCategories[row.pinid].map(value => categoryNames[value]).join(", ")}` : ""),
+            value: `${message.content}
+                    — ${message.author.mention} ([Jump](https://discordapp.com/channels/${message.channel.guild.id}/${row.channel}/${row.message}))`
+        });
+    }
+
+    response.edit({content: "", embed: {
+        title: opts.t("{{USER}}'s pins", {"USER": message.author.username}),
+        fields: pinFields,
+        footer: {
+            text: t("{{USER}} is looking at their pins. | Page {{PAGE}} of {{PAGES}}", {"USER": message.author.username, "PAGE": args[0], "PAGES": pageCount}),
+            icon_url: message.author.dynamicAvatarURL(undefined, 128)
+        }
+    }});
+};
+
+
+handler.register("pins", {
+    opts: {
+        translatorRequired: true,
+        dbRequired: true,
+        help: {
+            descriptions: t("View your pinned messages")
+        }
+    },
+    flags: [
+        {name: "order", type: "string", description: t("The order to view pins in. Can be either `ascending` or `descending`.")},
+        {name: "category", type: "string", description: t("The category to view pins from")}
+    ]
+}, handlePinsCommand);
+handler.register("pins", {
+    opts: {
+        translatorRequired: true,
+        dbRequired: true,
+        help: {
+            descriptions: t("View your pinned messages")
+        }
+    },
+    args: [{name: "page", type: "number", description: t("The page to view")}], // Number (instead of integer) because apparently, 1.5 would display the second half of page 1 and the first half of page 2
+    flags: [
+        {name: "order", type: "string", description: t("The order to view pins in. Can be either `ascending` or `descending`.")},
+        {name: "category", type: "string", description: t("The category to view pins from")}
+    ]
+}, handlePinsCommand);
