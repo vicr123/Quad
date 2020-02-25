@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 //Set up the configuration files
 process.env["NODE_CONFIG_DIR"] = "../config/";
 

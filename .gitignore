@@ -7,3 +7,5 @@ node_modules/*
 
 quadweb/dist
 quad/data
+
+output/
