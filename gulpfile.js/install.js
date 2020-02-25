@@ -3,7 +3,8 @@ const install = require('gulp-install');
 const fs = require('fs');
 const util = require('util');
 
-let outputDir = "output/";
+let outputDir = "/";
+if (process.env["DESTDIR"]) outputDir = process.env["DESTDIR"];
 const baseDir = `${outputDir}/opt/quad`;
 const binDir = `${outputDir}/usr/bin/`;
 
