@@ -19,7 +19,7 @@ function i18next() {
 
 function quadweb() {
     return gulp.src('quadweb/src/index.jsx')
-        .pipe(webpack(require('./quadweb/webpack.config.js')))
+        .pipe(webpack(require('../quadweb/webpack.config.js')))
         .pipe(gulp.dest('quadweb/dist'))
 }
 
