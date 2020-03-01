@@ -38,9 +38,9 @@ const unpinById = async (userId, pinId) => {
 };
 
 // Messages
-const confirmPin = async (t, message, user) => {
+const confirmPin = async (t, message, user, channelOverride) => {
     message = await message.channel.getMessage(message.id); // message argument isn't complete
-    message.channel.createMessage({embed: {
+    (channelOverride || message.channel).createMessage({embed: {
         title: t("Done!"),
         description: t("The message has been pinned."),
         fields: [{
@@ -121,34 +121,36 @@ const handlePinsCommand = async (message, opts, args, flags) => {
 
     let ascending = (flags.order || "d").startsWith("a");
 
-    let parameters = [message.author.id, (args[0] - 1) * pageSize, pageSize];
+    let parameters = [message.author.id];
     if (flags.category) parameters.push(flags.category);
 
     // Get the pins from the database
     let query;
     if (flags.category) {
-        query = "SELECT p.* FROM userPins AS p, userPinsCategories AS pc, userCategories AS c WHERE p.id=pc.id AND p.id=c.id AND p.id=$1 AND p.pinid=pc.pinid AND pc.catid=c.catid AND c.name=$4 ORDER BY p.pinid " +
-        (ascending ? "ASC" : "DESC") +
-        " OFFSET $2 LIMIT $3";
+        query = "SELECT p.* FROM userPins AS p, userPinsCategories AS pc, userCategories AS c WHERE p.id=pc.id AND p.id=c.id AND p.id=$1 AND p.pinid=pc.pinid AND pc.catid=c.catid AND c.name=$2 ORDER BY p.pinid " +
+        (ascending ? "ASC" : "DESC");
     } else {
         query = "SELECT p.* FROM userPins AS p WHERE p.id=$1 ORDER BY p.pinid " +
-        (ascending ? "ASC" : "DESC") +
-        " OFFSET $2 LIMIT $3";
+        (ascending ? "ASC" : "DESC");
     }
     let result = await opts.db.query(query, parameters);
-
-    // Find the page count
-    let pageCount = Math.ceil(result.rowCount / pageSize);
-
+    
     // Make sure we have pins
     if (result.rowCount === 0) {
         response.edit(opts.t("{{USER}}, there are no results.", {"USER": message.author.mention}));
         return;
     }
+
+    // Find the page count
+    let pageCount = Math.ceil(result.rowCount / pageSize);
+
+    let offset = (args[0] - 1) * pageSize;
+    let pins = result.rows.slice(offset, offset + pageSize);
+    //(args[0] - 1) * pageSize, pageSize
     
     // Find categories for the results
     let promises = [];  
-    for (row of result.rows) {
+    for (row of pins) {
         promises.push(opts.db.query("SELECT pinid, catid FROM userPinsCategories WHERE id=$1 AND pinid=$2", [message.author.id, row.pinid]));
     }
     
@@ -171,7 +173,7 @@ const handlePinsCommand = async (message, opts, args, flags) => {
     // Get contents
     let pinFields = [];
     
-    for (row of result.rows) {
+    for (row of pins) {
         let message = await handler.bot.getChannel(row.channel).getMessage(row.message);
         pinFields.push({
             name: `#${row.pinid}` + (pinCategories[row.pinid] ? ` | ${pinCategories[row.pinid].map(value => categoryNames[value]).join(", ")}` : ""),
@@ -196,7 +198,7 @@ handler.register("pins", {
         translatorRequired: true,
         dbRequired: true,
         help: {
-            descriptions: t("View your pinned messages")
+            description: t("View your pinned messages")
         }
     },
     flags: [
@@ -209,7 +211,7 @@ handler.register("pins", {
         translatorRequired: true,
         dbRequired: true,
         help: {
-            descriptions: t("View your pinned messages")
+            description: t("View your pinned messages")
         }
     },
     args: [{name: "page", type: "number", description: t("The page to view")}], // Number (instead of integer) because apparently, 1.5 would display the second half of page 1 and the first half of page 2
@@ -218,3 +220,54 @@ handler.register("pins", {
         {name: "category", type: "string", description: t("The category to view pins from")}
     ]
 }, handlePinsCommand);
+
+// Commands to pin
+//   Pin by messages back into chat
+handler.register("pin", {
+    opts: {
+        translatorRequired: true,
+        help: {
+            description: t("Pin the `n`th message back into the chat")
+        }
+    },
+    args: [{name: "n", type: "integer", description: t("The amount of messages back into the chat, or a the message id")}]
+}, async (message, opts, args, flags) => {
+    const maxMessages = 20;
+    
+    if (args[0] < 1) {
+        message.channel.createMessage(opts.t("{{USER}}, `n` must be greater than 0.", {"USER": message.author.mention}));
+        return;
+    }
+    if (args[0] > maxMessages) {
+        message.channel.createMessage(opts.t("{{USER}}, you can only pin up to {{maxMessages}} messages back into the chat! Please use a message link instead.", {"USER": message.author.mention, "maxMessages": maxMessages}));
+        return;
+    }
+    let target = (await message.channel.getMessages(maxMessages, message.id))[args[0] - 1];
+    
+    if (await pin(message.author.id, target)) {
+        confirmPin(opts.t, target, message.author);
+    } else {
+        message.channel.createMessage(opts.t("{{USER}}, the message could not be pinned.", {"USER": message.author.mention}));
+    }
+});
+
+//   Pin by link
+handler.register("pin", {
+    opts: {
+        translatorRequired: true,
+        help: {
+            description: t("Pin the message using a link to it")
+        }
+    },
+    args: [{name: "url", type: "string", description: t("The link to the message")}]
+}, async (message, opts, args, flags) => {
+    let result = /https?\:\/\/discordapp\.com\/channels\/\d+\/(\d+)\/(\d+)\/?/.exec(args[0]);
+    
+    let target;
+    if (result && (target = await (handler.bot.getChannel(result[1]).getMessage(result[2]))) && await pin(message.author.id, target)) {
+        confirmPin(opts.t, target, message.author, message.channel);
+    } else {
+        message.channel.createMessage(opts.t("{{USER}}, the message could not be pinned.", {"USER": message.author.mention}));
+        return;
+    }
+});
