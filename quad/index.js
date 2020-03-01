@@ -52,5 +52,6 @@ process.exitCode = 1; //Assume error unless otherwise proven
 })().then(retval => {
     
 }).catch(err => {
+    log(err.stack, log.error);
     handler.exit(false);
 });

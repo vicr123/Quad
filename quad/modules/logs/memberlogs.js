@@ -1,6 +1,7 @@
 const handler = require("handler");
 const db = require("db");
 const moment = require("moment");
+const MemberUtil = require("memberutils");
 
 async function alertsChannel(guild, client = null) {
     if (!guild) return null;
@@ -39,4 +40,19 @@ handler.listen('guildMemberUpdate', async (user, oldUser) => {
         if (channel) channel.createMessage(message);
     }
     client.release();
+});
+
+handler.listen('guildMemberAdd', async (guild, member) => {
+    let channel = await alertsChannel(guild);
+    if (channel) {
+        //TODO: Send extended user information
+        channel.createMessage(`:arrow_right: ${member.mention}`);
+    }
+});
+
+handler.listen('guildMemberRemove', async (guild, member) => {
+    let channel = await alertsChannel(guild);
+    if (channel) {
+        channel.createMessage(`:arrow_left: ${member.user.mention} (${MemberUtil.tag(member.user)})`);
+    }
 });
