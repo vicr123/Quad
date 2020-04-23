@@ -1,8 +1,8 @@
 {
-    "Welcome to {{BOT_NAME}}!": "",
-    "Locked and loaded!": "",
-    "Loading middleware {{MIDDLEWARE}}": "",
-    "Loading module {{MODULE}}": "",
+    "Welcome to {{BOT_NAME}}!": "Croeso i {{BOT_NAME}}!",
+    "Locked and loaded!": "Wedi'i cau ac ei llwythu!",
+    "Loading middleware {{MIDDLEWARE}}": "Llwytho nwyddau-canol {{MIDDLEWARE}}",
+    "Loading module {{MODULE}}": "Llwytho modiwl {{MODULE}}",
     "Configuration server started.": "",
     "Configuration server can't be started because the local socket is in use.": "",
     "quad: {{command}}: command not found": "",
