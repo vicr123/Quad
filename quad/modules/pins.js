@@ -135,19 +135,18 @@ const handlePinsCommand = async (message, opts, args, flags) => {
     }
     let result = await opts.db.query(query, parameters);
     
-    // Make sure we have pins
-    if (result.rowCount === 0) {
+    // Find the page count
+    let pageCount = Math.ceil(result.rows.length / pageSize);
+
+    let offset = (args[0] - 1) * pageSize;
+    let pins = result.rows.slice(offset, offset + pageSize);
+
+	// Make sure we have pins
+    if (pins.length === 0) {
         response.edit(opts.t("{{USER}}, there are no results.", {"USER": message.author.mention}));
         return;
     }
 
-    // Find the page count
-    let pageCount = Math.ceil(result.rowCount / pageSize);
-
-    let offset = (args[0] - 1) * pageSize;
-    let pins = result.rows.slice(offset, offset + pageSize);
-    //(args[0] - 1) * pageSize, pageSize
-    
     // Find categories for the results
     let promises = [];  
     for (row of pins) {
@@ -230,7 +229,7 @@ handler.register("pin", {
             description: t("Pin the `n`th message back into the chat")
         }
     },
-    args: [{name: "n", type: "integer", description: t("The amount of messages back into the chat, or a the message id")}]
+    args: [{name: "n", type: "integer", description: t("The number of messages back into the chat")}]
 }, async (message, opts, args, flags) => {
     const maxMessages = 20;
     
