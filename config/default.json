@@ -22,7 +22,8 @@
     "database": {
         "host": "localhost",
         "username": "quad",
-        "database": "quad"
+        "database": "quad",
+		"connectionTimeoutMillis": 5000
     },
     "server": {
         "port": 3000,
