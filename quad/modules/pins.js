@@ -1,21 +1,10 @@
 const handler = require("handler");
 const config = require("config");
 const db = require("db");
-const log = require("log");
-const eris = require("eris");
+const i18n = require("i18n")
 
 let bot;
 let confirmationCache = [];
-
-// Temporary translation function, will eventually be replaced with i18n module
-const fakeT = (str, params) => {
-    if (!params) return str;
-    let res = str;
-    for (key of Object.keys(params)) {
-        res = res.replace(new RegExp("{{"+key+"}}", "g"), params[key]);
-    }
-    return res;
-};
 
 const getUserById = (userId) => bot.users.find(user => user.id === userId);
 
@@ -23,7 +12,7 @@ const getUserById = (userId) => bot.users.find(user => user.id === userId);
 const pin = async (userId, message) => {
     await db.getPool().query("INSERT INTO userPins(pinId, id, channel, message) VALUES(pinIdIncrement($1), $1, $2, $3)",
         [userId, message.channel.id, message.id])
-        .catch(err => { return false; /* We don't care, message may have been pinned already */ });
+        .catch(() => { return false; /* We don't care, message may have been pinned already */ });
     return true;
 };
 
@@ -38,17 +27,23 @@ const unpinById = async (userId, pinId) => {
 };
 
 // Messages
-const confirmPin = async (t, message, user, channelOverride) => {
+const confirmPin = async (message, user, channelOverride) => {
     message = await message.channel.getMessage(message.id); // message argument isn't complete
-    (channelOverride || message.channel).createMessage({embed: {
-        title: t("Done!"),
-        description: t("The message has been pinned."),
+    let channel = (channelOverride || message.channel);
+
+    const guildT = await i18n(channel.guild.id);
+    const userT = await i18n(user);
+
+    channel.createMessage({embed: {
+        title: userT.t("Done!"),
+        description: userT.t("The message has been pinned."),
         fields: [{
             name: message.author.username + "#" + message.author.discriminator,
-            value: message.content || t("(No content)")
+            value: message.content || userT.t("(No content)")
         }],
         footer: {
-            text: t("{{USER}} pinned a message.", {"USER": user.username}),
+            // Use guild translator instead of user's translator
+            text: guildT.t("{{USER}} pinned a message.", {"USER": user.username}),
             icon_url: user.dynamicAvatarURL(undefined, 128)
         }
     }}).then(confirmationMessage => {
@@ -71,10 +66,9 @@ handler.listen("messageReactionAdd", async (message, emoji, userId) => {
     if (user.bot) return;
 
     if (await pin(userId, message)) {
-        confirmPin(fakeT, message, user);
+        await confirmPin(message, user);
     } else {
-        let t = fakeT;
-        message.channel.createMessage(t("{{USER}}, the message could not be pinned.", {"USER": user.mention}));
+        await message.channel.createMessage(i18n(user).t("{{USER}}, the message could not be pinned.", {"USER": user.mention}));
     }
 });
 
@@ -88,20 +82,19 @@ handler.listen("messageReactionRemove", async (message, emoji, userId) => {
 
     if (await unpin(userId, message)) {
         let pos;
-        for (i in confirmationCache) {
+        for (let i in confirmationCache) {
             let confirmation = confirmationCache[i];
             if (confirmation.userId === userId &&
                 confirmation.channelId === message.channel.id &&
                 confirmation.messageId === message.id) {
-                message.channel.unsendMessage(confirmation.confirmationMessageId);
+                await message.channel.unsendMessage(confirmation.confirmationMessageId);
                 pos = i;
                 break;
             }
         }
         if (pos) confirmationCache.splice(pos, 1);
     } else {
-        let t = fakeT;
-        message.channel.createMessage(t("{{USER}}, the message could not be unpinned.", {"USER": user.mention}));
+        await message.channel.createMessage(i18n(user).t("{{USER}}, the message could not be unpinned.", {"USER": user.mention}));
     }
 });
 
@@ -109,11 +102,11 @@ handler.listen("messageReactionRemove", async (message, emoji, userId) => {
 
 // Commands
 const pageSize = 5;
-let t = fakeT;
+let t = (string) => string; // fake translator
 const handlePinsCommand = async (message, opts, args, flags) => {
     if (args[0] === undefined) args[0] = 1;
     if(args[0] < 1) {
-        message.channel.createMessage(opts.t("The page number can't 0 or less."));
+        await message.channel.createMessage(opts.t("The page number can't 0 or less."));
         return;
     }
 
@@ -143,20 +136,20 @@ const handlePinsCommand = async (message, opts, args, flags) => {
 
 	// Make sure we have pins
     if (pins.length === 0) {
-        response.edit(opts.t("{{USER}}, there are no results.", {"USER": message.author.mention}));
+        await response.edit(opts.t("{{USER}}, there are no results.", {"USER": message.author.mention}));
         return;
     }
 
     // Find categories for the results
     let promises = [];  
-    for (row of pins) {
+    for (let row of pins) {
         promises.push(opts.db.query("SELECT pinid, catid FROM userPinsCategories WHERE id=$1 AND pinid=$2", [message.author.id, row.pinid]));
     }
     
     let promises2 = [];
     let pinCategories = {};
     let categoryNames = {};
-    for (res of await Promise.all(promises)) { for (row of res.rows) {
+    for (let res of await Promise.all(promises)) { for (let row of res.rows) {
         pinCategories[row.pinid] = pinCategories[row.pinid] || [];
         pinCategories[row.pinid].push(row.catid);
 
@@ -165,14 +158,14 @@ const handlePinsCommand = async (message, opts, args, flags) => {
         }}
     }
     
-    for (res of await Promise.all(promises2)) {
+    for (let res of await Promise.all(promises2)) {
         categoryNames[res.rows[0].catid] = res.rows[0].name;
     }
     
     // Get contents
     let pinFields = [];
     
-    for (row of pins) {
+    for (let row of pins) {
         let message = await handler.bot.getChannel(row.channel).getMessage(row.message);
         pinFields.push({
             name: `#${row.pinid}` + (pinCategories[row.pinid] ? ` | ${pinCategories[row.pinid].map(value => categoryNames[value]).join(", ")}` : ""),
@@ -181,11 +174,14 @@ const handlePinsCommand = async (message, opts, args, flags) => {
         });
     }
 
-    response.edit({content: "", embed: {
+    const guildT = await i18n(message.channel.guild.id);
+
+    await response.edit({content: "", embed: {
         title: opts.t("{{USER}}'s pins", {"USER": message.author.username}),
         fields: pinFields,
         footer: {
-            text: t("{{USER}} is looking at their pins. | Page {{PAGE}} of {{PAGES}}", {"USER": message.author.username, "PAGE": args[0], "PAGES": pageCount}),
+            // Use guild translator instead of user's translator
+            text: guildT.t("{{USER}} is looking at their pins. [ {{PAGE}} / {{PAGES}} ]", {"USER": message.author.username, "PAGE": args[0], "PAGES": pageCount}),
             icon_url: message.author.dynamicAvatarURL(undefined, 128)
         }
     }});
@@ -230,23 +226,23 @@ handler.register("pin", {
         }
     },
     args: [{name: "n", type: "integer", description: t("The number of messages back into the chat")}]
-}, async (message, opts, args, flags) => {
+}, async (message, opts, args) => {
     const maxMessages = 20;
     
     if (args[0] < 1) {
-        message.channel.createMessage(opts.t("{{USER}}, `n` must be greater than 0.", {"USER": message.author.mention}));
+        await message.channel.createMessage(opts.t("{{USER}}, `n` must be greater than 0.", {"USER": message.author.mention}));
         return;
     }
     if (args[0] > maxMessages) {
-        message.channel.createMessage(opts.t("{{USER}}, you can only pin up to {{maxMessages}} messages back into the chat! Please use a message link instead.", {"USER": message.author.mention, "maxMessages": maxMessages}));
+        await message.channel.createMessage(opts.t("{{USER}}, you can only pin up to {{maxMessages}} messages back into the chat! Please use a message link instead.", {"USER": message.author.mention, "maxMessages": maxMessages}));
         return;
     }
     let target = (await message.channel.getMessages(maxMessages, message.id))[args[0] - 1];
     
     if (await pin(message.author.id, target)) {
-        confirmPin(opts.t, target, message.author);
+        await confirmPin(target, message.author);
     } else {
-        message.channel.createMessage(opts.t("{{USER}}, the message could not be pinned.", {"USER": message.author.mention}));
+        await message.channel.createMessage(opts.t("{{USER}}, the message could not be pinned.", {"USER": message.author.mention}));
     }
 });
 
@@ -259,14 +255,13 @@ handler.register("pin", {
         }
     },
     args: [{name: "url", type: "string", description: t("The link to the message")}]
-}, async (message, opts, args, flags) => {
-    let result = /https?\:\/\/discordapp\.com\/channels\/\d+\/(\d+)\/(\d+)\/?/.exec(args[0]);
+}, async (message, opts, args) => {
+    let result = /https?:\/\/discord(?:app)?\.com\/channels\/\d+\/(\d+)\/(\d+)\/?/.exec(args[0]);
     
     let target;
     if (result && (target = await (handler.bot.getChannel(result[1]).getMessage(result[2]))) && await pin(message.author.id, target)) {
-        confirmPin(opts.t, target, message.author, message.channel);
+        await confirmPin(target, message.author, message.channel);
     } else {
-        message.channel.createMessage(opts.t("{{USER}}, the message could not be pinned.", {"USER": message.author.mention}));
-        return;
+        await message.channel.createMessage(opts.t("{{USER}}, the message could not be pinned.", {"USER": message.author.mention}));
     }
 });
