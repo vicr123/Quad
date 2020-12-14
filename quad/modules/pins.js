@@ -166,11 +166,28 @@ const handlePinsCommand = async (message, opts, args, flags) => {
     let pinFields = [];
     
     for (let row of pins) {
-        let message = await handler.bot.getChannel(row.channel).getMessage(row.message);
+        let pMessage;
+        let messageContent;
+        try {
+            let pChannel = await handler.bot.getChannel(row.channel);
+            pMessage = await pChannel.getMessage(row.message);
+            
+            if (pChannel.nsfw && !message.channel.nsfw) {
+                messageContent = opts.t("(NSFW)");
+            } else if (false) {
+                // pass
+            } else {
+                messageContent = `${pMessage.content || opts.t("(No content)")}
+                            — ${pMessage.author.mention} ([${opts.t("Jump")}](https://discordapp.com/channels/${pMessage.channel.guild.id}/${row.channel}/${row.message}))`;
+            }
+        } catch (e) {
+            if (e.name !== "DiscordRESTError [10008]")
+                throw e;
+            messageContent = opts.t("(Deleted)");
+        }
         pinFields.push({
             name: `#${row.pinid}` + (pinCategories[row.pinid] ? ` | ${pinCategories[row.pinid].map(value => categoryNames[value]).join(", ")}` : ""),
-            value: `${message.content}
-                    — ${message.author.mention} ([Jump](https://discordapp.com/channels/${message.channel.guild.id}/${row.channel}/${row.message}))`
+            value: messageContent
         });
     }
 
