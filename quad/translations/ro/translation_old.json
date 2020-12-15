@@ -3,5 +3,6 @@
   "**Cool it, buddy!**\nYou're using {{botname}} too fast. You'll be able to use Quad again in **{{count, dp1}} seconds**._plural": "**Ia-o mai incet, prietene!**\nFolosesti {{botname}} prea rapid. Vei putea utiliza din nou Quad in **{{count,dp1}} secunde**._plural",
   "{{USER}} is looking at their pins. | Page {{PAGE}} of {{PAGES}}": "",
   "The amount of messages back into the chat, or a the message id": "Numarul mesajelor care au revenit in conversatie, sau codul de identificare(ID-ul) mesajului",
-  "Mistake? React with {{emoji}} within {{count}} seconds.": "Greseala? Reactioneaza cu {{emoji}} in {{count}} secunde."
+  "Mistake? React with {{emoji}} within {{count}} seconds.": "Greseala? Reactioneaza cu {{emoji}} in {{count}} secunde.",
+  "(No content)": "(Fara continut)"
 }

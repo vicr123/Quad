@@ -3,5 +3,6 @@
   "**Cool it, buddy!**\nYou're using {{botname}} too fast. You'll be able to use Quad again in **{{count, dp1}} seconds**._plural": "",
   "{{USER}} is looking at their pins. | Page {{PAGE}} of {{PAGES}}": "",
   "The amount of messages back into the chat, or a the message id": "",
-  "Mistake? React with {{emoji}} within {{count}} seconds.": ""
+  "Mistake? React with {{emoji}} within {{count}} seconds.": "",
+  "(No content)": ""
 }
