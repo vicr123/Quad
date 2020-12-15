@@ -8,6 +8,29 @@ let confirmationCache = [];
 
 const getUserById = (userId) => bot.users.find(user => user.id === userId);
 
+// Utilities
+const formatMessage = (m, allowNsfw, t) => {
+    let res = "";
+    if (m.channel.nsfw && !allowNsfw) {
+        res = t("(NSFW)");
+    } else {
+        // Attachments and embeds
+        if (m.attachments.length > 0 && m.embeds.length === 0)
+            res = t("({{ATTACHMENTS}} attachment(s))", {"ATTACHMENTS": m.attachments.length});
+        else if (m.attachments.length === 0 && m.embeds.length > 0)
+            res = t("({{EMBEDS}} embed(s))", {"EMBEDS": m.embeds.length});
+        else if (m.attachments.length > 0 && m.embeds.length > 0)
+            res = t("({{ATTACHMENTS}} attachment(s), {{EMBEDS}} embed(s))", {"ATTACHMENTS": m.attachments.length, "EMBEDS": m.embeds.length});
+
+        if (m.content)
+            res += "\n" + m.content;
+
+        res += `\n— ${m.author.mention} ([${t("Jump")}](https://discordapp.com/channels/${m.channel.guild.id}/${m.channel.id}/${m.id}))`;
+        // Messages must have contents, attachments, or embeds, so no need for a "No contents" case
+    }
+    return res;
+}
+
 // Pinning and unpinning
 const pin = async (userId, message) => {
     await db.getPool().query("INSERT INTO userPins(pinId, id, channel, message) VALUES(pinIdIncrement($1), $1, $2, $3)",
@@ -39,7 +62,7 @@ const confirmPin = async (message, user, channelOverride) => {
         description: userT.t("The message has been pinned."),
         fields: [{
             name: message.author.username + "#" + message.author.discriminator,
-            value: message.content || userT.t("(No content)")
+            value: formatMessage(message, !channel.nsfw, userT.t)
         }],
         footer: {
             // Use guild translator instead of user's translator
@@ -169,17 +192,8 @@ const handlePinsCommand = async (message, opts, args, flags) => {
         let pMessage;
         let messageContent;
         try {
-            let pChannel = await handler.bot.getChannel(row.channel);
-            pMessage = await pChannel.getMessage(row.message);
-            
-            if (pChannel.nsfw && !message.channel.nsfw) {
-                messageContent = opts.t("(NSFW)");
-            } else if (false) {
-                // pass
-            } else {
-                messageContent = `${pMessage.content || opts.t("(No content)")}
-                    — ${pMessage.author.mention} ([${opts.t("Jump")}](https://discordapp.com/channels/${pMessage.channel.guild.id}/${row.channel}/${row.message}))`;
-            }
+            pMessage = await handler.bot.getChannel(row.channel).getMessage(row.message);
+            messageContent = formatMessage(pMessage, !pMessage.channel.nsfw, opts.t)
         } catch (e) {
             if (e.name !== "DiscordRESTError [10008]")
                 throw e;
