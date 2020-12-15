@@ -38,11 +38,11 @@
   "Shows a user's profile picture": "Laat de profielfoto zien van een gebruiker",
   "Checks to see if {{botname}} is working": "Controleren of {{botname}} werkt",
   "Ping!": "Ping!",
-  "(NSFW)": "",
-  "({{ATTACHMENTS}} attachment(s))": "",
-  "({{EMBEDS}} embed(s))": "",
-  "({{ATTACHMENTS}} attachment(s), {{EMBEDS}} embed(s))": "",
-  "Jump": "",
+  "(NSFW)": "(NSFW)",
+  "({{ATTACHMENTS}} attachment(s))": "({{ATTACHMENTS}} bijlage(n))",
+  "({{EMBEDS}} embed(s))": "({{EMBEDS}} embed(s))",
+  "({{ATTACHMENTS}} attachment(s), {{EMBEDS}} embed(s))": "({{ATTACHMENTS}} bijlage(n), {{EMBEDS}} embed(s))",
+  "Jump": "Spring",
   "Done!": "Klaar!",
   "The message has been pinned.": "Het bericht is gepind.",
   "{{USER}} pinned a message.": "{{USER}} pinde een bericht.",
@@ -51,7 +51,7 @@
   "The page number can't 0 or less.": "Het paginanummer kan geen 0 of minder zijn.",
   "Loading your pins...": "Je gepinde berichten aan het laden...",
   "{{USER}}, there are no results.": "{{USER}}, er zijn geen resultaten.",
-  "(Deleted)": "",
+  "(Deleted)": "(Verwijderd)",
   "{{USER}}'s pins": "{{USER}}'s gepinde berichten",
   "{{USER}} is looking at their pins. [ {{PAGE}} / {{PAGES}} ]": "{{USER}} bekijkt zijn gepinde berichten. [ {{PAGE}} / {{PAGES}} ]",
   "View your pinned messages": "Je gepinde berichten bekijken",
@@ -140,5 +140,5 @@
   "Arguments (in order)": "Argumenten (op volgorde)",
   "Optional Flags": "Optionele opties",
   "for {{command}}": "voor {{command}}",
-  "(linked to {{linkedCommand}})": "(verbonden met {{linkedCommand}})"
+  "(linked to {{linkedCommand}})": "(verbonden aan {{linkedCommand}})"
 }
