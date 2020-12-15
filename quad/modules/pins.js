@@ -178,7 +178,7 @@ const handlePinsCommand = async (message, opts, args, flags) => {
                 // pass
             } else {
                 messageContent = `${pMessage.content || opts.t("(No content)")}
-                            — ${pMessage.author.mention} ([${opts.t("Jump")}](https://discordapp.com/channels/${pMessage.channel.guild.id}/${row.channel}/${row.message}))`;
+                    — ${pMessage.author.mention} ([${opts.t("Jump")}](https://discordapp.com/channels/${pMessage.channel.guild.id}/${row.channel}/${row.message}))`;
             }
         } catch (e) {
             if (e.name !== "DiscordRESTError [10008]")
