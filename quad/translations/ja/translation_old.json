@@ -2,5 +2,6 @@
   "PostgreSQL returned errors while we were trying to create the tables.": "",
   "{{USER}} is looking at their pins. | Page {{PAGE}} of {{PAGES}}": "{{{user}}さんが自分のピンを見ています。| {{{PAGES}}のページ{{{PAGE}}}",
   "The amount of messages back into the chat, or a the message id": "",
-  "(No content)": "(コンテンツはありません)"
+  "(No content)": "(コンテンツはありません)",
+  "Ping!": ""
 }

@@ -11,5 +11,5 @@ handler.register("ping", {
         }
     }
 }, function(message, opts) {
-    message.channel.createMessage(opts.t("Ping!"));
+    message.channel.createMessage(opts.t("Pong!"));
 });

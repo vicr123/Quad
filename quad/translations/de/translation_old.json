@@ -12,5 +12,6 @@
   "PostgreSQL returned errors while we were trying to create the tables.": "",
   "{{USER}} is looking at their pins. | Page {{PAGE}} of {{PAGES}}": "",
   "The amount of messages back into the chat, or a the message id": "",
-  "(No content)": ""
+  "(No content)": "",
+  "Ping!": "Ping!"
 }

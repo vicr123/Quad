@@ -4,5 +4,6 @@
   "{{USER}} is looking at their pins. | Page {{PAGE}} of {{PAGES}}": "",
   "The amount of messages back into the chat, or a the message id": "",
   "Mistake? React with {{emoji}} within {{count}} seconds.": "",
-  "(No content)": ""
+  "(No content)": "",
+  "Ping!": ""
 }
