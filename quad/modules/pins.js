@@ -16,12 +16,11 @@ const formatMessage = (m, allowNsfw, t) => {
     } else {
         // Attachments and embeds
         if (m.attachments.length > 0 && m.embeds.length === 0)
-            res = t("({{ATTACHMENTS}} attachment(s))", {"ATTACHMENTS": m.attachments.length});
+            res = `(${t("{{count}} attachment", {count: m.attachments.length})})`;
         else if (m.attachments.length === 0 && m.embeds.length > 0)
-            res = t("({{EMBEDS}} embed(s))", {"EMBEDS": m.embeds.length});
+            res = `(${t("{{count}} embed", {count: m.embeds.length})})`;
         else if (m.attachments.length > 0 && m.embeds.length > 0)
-            res = t("({{ATTACHMENTS}} attachment(s), {{EMBEDS}} embed(s))", {"ATTACHMENTS": m.attachments.length, "EMBEDS": m.embeds.length});
-
+			res = `(${t("{{count}} attachment", {count: m.attachments.length})}, ${t("{{count}} embed", {count: m.embeds.length})})`;
         if (m.content)
             res += "\n" + m.content;
 

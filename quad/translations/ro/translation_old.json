@@ -5,5 +5,8 @@
   "The amount of messages back into the chat, or a the message id": "Numarul mesajelor care au revenit in conversatie, sau codul de identificare(ID-ul) mesajului",
   "Mistake? React with {{emoji}} within {{count}} seconds.": "Greseala? Reactioneaza cu {{emoji}} in {{count}} secunde.",
   "(No content)": "(Fara continut)",
-  "Ping!": "Ping!"
+  "Ping!": "Ping!",
+  "({{ATTACHMENTS}} attachment(s))": "",
+  "({{EMBEDS}} embed(s))": "",
+  "({{ATTACHMENTS}} attachment(s), {{EMBEDS}} embed(s))": ""
 }

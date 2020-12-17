@@ -5,5 +5,8 @@
   "The amount of messages back into the chat, or a the message id": "Količina sporočil nazaj v klepet ali ID sporočila",
   "Mistake? React with {{emoji}} within {{count}} seconds.": "",
   "(No content)": "",
-  "Ping!": ""
+  "Ping!": "",
+  "({{ATTACHMENTS}} attachment(s))": "",
+  "({{EMBEDS}} embed(s))": "",
+  "({{ATTACHMENTS}} attachment(s), {{EMBEDS}} embed(s))": ""
 }
