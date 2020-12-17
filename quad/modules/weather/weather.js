@@ -288,7 +288,7 @@ async function weatherImage(data, t) {
     ctx.drawImage(mainData.condition.image, 100, yOffsetWhileWeDontHaveExtraData + 50);
     // drawSquashedText(ctx, 10, 45, `${mainData.temp}°`, 80, data.pen, 325, false);
     drawSquashedText(ctx, 350 / 2, yOffsetWhileWeDontHaveExtraData + 220, mainData.location.toUpperCase(), "bold 20", data.pen, 325);
-    drawSquashedText(ctx, 350 / 2, yOffsetWhileWeDontHaveExtraData + 250, `${mainData.temp}° - ${mainData.condition.text}`, 20, data.pen, 325);
+    drawSquashedText(ctx, 350 / 2, yOffsetWhileWeDontHaveExtraData + 250, `${mainData.temp}° - ${t(mainData.condition.text)}`, 20, data.pen, 325);
 
     //Draw the five aux weather panes
     for (let i = 1; i < 6; i++) {
