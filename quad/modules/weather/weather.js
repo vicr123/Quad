@@ -387,7 +387,7 @@ async function handleWeather(channel, geography, coded, userName, t) {
                 }
             },
                 {
-                    file: await weatherImage(fullWeatherData, userName, t),
+                    file: await weatherImage(fullWeatherData, t),
                     name: "weather.png"
                 }
             );
