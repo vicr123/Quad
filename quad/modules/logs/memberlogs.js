@@ -20,6 +20,8 @@ async function alertsChannel(guild, client = null) {
 }
 
 handler.listen('guildMemberUpdate', async (guild, member, oldMember) => {
+    if (!oldMember || !member) return;
+    
     if (oldMember.nick === member.nick) return;
     let channel = await alertsChannel(guild);
     if (channel) {

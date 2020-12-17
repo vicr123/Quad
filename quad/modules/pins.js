@@ -85,7 +85,7 @@ handler.listen("messageReactionAdd", async (message, emoji, userId) => {
     if (emoji.name !== config.get("bot.pins.emoji")) return;
 
     let user = getUserById(userId);
-    if (user.bot) return;
+    if (user?.bot) return;
 
     if (await pin(userId, message)) {
         await confirmPin(message, user);

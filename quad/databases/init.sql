@@ -40,6 +40,8 @@ CREATE TABLE IF NOT EXISTS userPinsCategories(id TEXT, pinId BIGINT, catId BIGIN
                                               FOREIGN KEY (id, pinId) REFERENCES userPins(id, pinId),
                                               FOREIGN KEY (id, catId) REFERENCES userCategories(id, catId));
 
+CREATE TABLE IF NOT EXISTS userGeography(id TEXT PRIMARY KEY, coords POINT);
+
 CREATE TABLE IF NOT EXISTS databaseVersion(version INTEGER PRIMARY KEY);
 DELETE FROM databaseVersion;
-INSERT INTO databaseVersion(version) VALUES(2);
+INSERT INTO databaseVersion(version) VALUES(3);

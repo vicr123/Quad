@@ -18,7 +18,13 @@ class ModLoader {
                 this.load(`${module}/${submodule}`);
             }
         } else {
-            let m = require(`./modules/${module}`);
+            if (!module.endsWith(".js")) return;
+            try {
+                let m = require(`./modules/${module}`);
+            } catch (e) {
+                log(t("Loading module {{MODULE}} failed!", {"MODULE": module}), log.error);
+                log(e.stack, log.error);
+            }
         }
     }
 }
