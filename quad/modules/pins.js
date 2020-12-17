@@ -193,7 +193,7 @@ const handlePinsCommand = async (message, opts, args, flags) => {
         let messageContent;
         try {
             pMessage = await handler.bot.getChannel(row.channel).getMessage(row.message);
-            messageContent = formatMessage(pMessage, !pMessage.channel.nsfw, opts.t)
+            messageContent = formatMessage(pMessage, message.channel.nsfw, opts.t)
         } catch (e) {
             if (e.name !== "DiscordRESTError [10008]")
                 throw e;
