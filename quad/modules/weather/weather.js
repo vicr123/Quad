@@ -9,7 +9,7 @@ const Geo = require("geo");
 
 let t = str => str;
 
-let sunnyImage, moonyImage, cloudyImage, thunderImage, rainImage, windImage, fogImage, humidImage, pressureImage, sunriseImage, sunsetImage, compassImage, snowImage, rainsnowImage, questionImage, unavailImage;
+let sunnyImage, moonyImage, cloudyImage, thunderImage, rainImage, windImage, fogImage, humidImage, pressureImage, sunriseImage, sunsetImage, compassImage, snowImage, rainsnowImage, questionImage, unavailImage, manImage;
 
 function conditionForSymbol(symbol) {
     const codes = {
@@ -303,6 +303,12 @@ async function weatherImage(data, t) {
         drawSquashedText(ctx, 450, (i - 1) * 82 + 30, `${dayData.temp}°`, 20, data.pen, 40, false);
     }
 
+
+    //Trigger the weird man
+    if (Math.random() < 0.01 && manImage) {
+        ctx.drawImage(manImage, 0, 0);
+    }
+
     return canvas.toBuffer();
 }
 
@@ -518,6 +524,11 @@ fs.readFile("./modules/weather/images/unavail.png", function (err, data) {
     unavailImage.src = data;
 });
 
+fs.readFile("./modules/weather/images/man.png", function (err, data) {
+    if (err) return;
+    manImage = new Canvas.Image();
+    manImage.src = data;
+});
 
 handler.register("weather", {
     opts: {
