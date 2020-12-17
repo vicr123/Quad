@@ -247,7 +247,7 @@ function drawSquashedText(ctx, x, y, text, fontSize, pen, maxWidth, alignCenter 
 
     let drawAt = [];
     if (alignCenter) {
-        drawAt.push(x - metrics.width / 2);
+        drawAt.push(x - Math.min(metrics.width, maxWidth) / 2);
         drawAt.push(y - metrics.height / 2);
     } else {
         drawAt.push(x);
