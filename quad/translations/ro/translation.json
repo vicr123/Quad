@@ -38,7 +38,7 @@
   "The user to get the picture of": "Utilizatorul pentru a obtine poza",
   "Shows a user's profile picture": "Arata poza de profil a unui utilizator",
   "Checks to see if {{botname}} is working": "Verifica daca {{botname}} functioneaza",
-  "Ping!": "Ping!",
+  "Pong!": "",
   "(NSFW)": "",
   "({{ATTACHMENTS}} attachment(s))": "",
   "({{EMBEDS}} embed(s))": "",

@@ -4,5 +4,6 @@
   "{{USER}} is looking at their pins. | Page {{PAGE}} of {{PAGES}}": "{{UPORABNIK}} gleda njihove zatiče. | stran {{stran}} od {{strani}}",
   "The amount of messages back into the chat, or a the message id": "Količina sporočil nazaj v klepet ali ID sporočila",
   "Mistake? React with {{emoji}} within {{count}} seconds.": "",
-  "(No content)": ""
+  "(No content)": "",
+  "Ping!": ""
 }

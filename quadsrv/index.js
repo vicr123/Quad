@@ -27,10 +27,12 @@ app.use(tokens);
 app.use("/api", api);
 app.use(express.static(path.normalize(`${process.cwd()}/../quadweb/public`)));
 app.use("/dist", express.static(path.normalize(`${process.cwd()}/../quadweb/dist`)));
-app.listen(config.get("server.port"), err => {
+
+let port = config.get("server.port");
+app.listen(port, err => {
     if (err) {
         console.log("Couldn't start the server");
     } else {
-        console.log("Server running");
+        console.log(`Server running on port ${port}`);
     }
 });

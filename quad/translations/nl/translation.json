@@ -37,7 +37,7 @@
   "The user to get the picture of": "De gebruiker om de profielfoto van te zien",
   "Shows a user's profile picture": "Laat de profielfoto zien van een gebruiker",
   "Checks to see if {{botname}} is working": "Controleren of {{botname}} werkt",
-  "Ping!": "Ping!",
+  "Pong!": "",
   "(NSFW)": "(NSFW)",
   "({{ATTACHMENTS}} attachment(s))": "({{ATTACHMENTS}} bijlage(n))",
   "({{EMBEDS}} embed(s))": "({{EMBEDS}} embed(s))",
