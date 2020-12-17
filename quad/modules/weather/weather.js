@@ -309,7 +309,11 @@ async function weatherImage(data, t) {
 async function handleWeather(channel, geography, coded, userName, t) {
     let message = await channel.createMessage(t("Retrieving the weather..."));
     try {
-        let weatherDetailsResponse = await fetch(`https://api.met.no/weatherapi/locationforecast/2.0/complete?lat=${geography[0]}&lon=${geography[1]}`);
+        let weatherDetailsResponse = await fetch(`https://api.met.no/weatherapi/locationforecast/2.0/complete?lat=${geography[0]}&lon=${geography[1]}`, {
+            headers: {
+                "User-Agent": "Quad/1.0 github.com/vicr123/Quad"
+            }
+        });
         let weatherDetails = await weatherDetailsResponse.json();
     
         let units = weatherDetails.properties.meta.units;
@@ -359,14 +363,26 @@ async function handleWeather(channel, geography, coded, userName, t) {
             }
     
             fullWeatherData.byTime = weatherData;
+
+            const spiffy = [
+                t('Feel free to print this'),
+                t('Please tear on the perforated line'),
+                t('So hot outside...'),
+                t('Are the days getting longer?'),
+                t('I wonder if Victor would wear a ski jacket in this weather...')
+            ]
     
             await channel.createMessage({
                 embed: {
                     title: t("Weather"),
+                    url: "https://met.no/",
                     image: {
                         url: "attachment://weather.png",
                         width: 500,
                         height: 410
+                    },
+                    footer: {
+                        text: spiffy[Math.floor(Math.random() * spiffy.length)]
                     }
                 }
             },
