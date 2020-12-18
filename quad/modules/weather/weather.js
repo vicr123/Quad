@@ -263,7 +263,7 @@ handler.register("weather", {
         }
     },
     args: [
-        {name: "user", type: "city", description: "The city to get the weather for"}
+        {name: "city", type: "city", description: "The city to get the weather for"}
     ]
 }, async function(message, opts, args) {
     if (args[0]) {
