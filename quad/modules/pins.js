@@ -101,7 +101,8 @@ handler.listen("messageReactionRemove", async (message, emoji, userId) => {
     if (emoji.name !== config.get("bot.pins.emoji")) return;
 
     let user = getUserById(userId);
-    if (user.bot) return;
+    if (!user) return;
+    if (user?.bot) return;
 
     if (await unpin(userId, message)) {
         let pos;
