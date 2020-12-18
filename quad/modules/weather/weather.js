@@ -259,6 +259,26 @@ handler.register("weather", {
         locationRequired: true,
         locationCodedRequired: true,
         help: {
+            description: t("Acquire the weather at a specific city")
+        }
+    },
+    args: [
+        {name: "user", type: "city", description: "The city to get the weather for"}
+    ]
+}, async function(message, opts, args) {
+    if (args[0]) {
+        handleWeather(message.channel, args[0].location, args[0], null, opts.t);
+    } else {
+        handleWeatherError(message.channel, opts.t("Invalid City"), opts.t("Couldn't find that city in the database."));
+    }
+});
+
+handler.register("weather", {
+    opts: {
+        translatorRequired: true,
+        locationRequired: true,
+        locationCodedRequired: true,
+        help: {
             description: t("Acquire the weather at a location")
         }
     },
