@@ -315,6 +315,12 @@ fs.readFile("./modules/weather/images/unavail.png", function (err, data) {
     unavailImage.src = data;
 });
 
+fs.readFile("./modules/weather/images/man.png", function (err, data) {
+    if (err) return;
+    manImage = new Canvas.Image();
+    manImage.src = data;
+});
+
 module.exports = {
     conditionForSymbol: conditionForSymbol,
     manImage: () => {
