@@ -1,4 +1,4 @@
--- Database version 2
+-- Database version 4
 
 CREATE TABLE IF NOT EXISTS guildPrefix(id TEXT PRIMARY KEY, prefix TEXT);
 CREATE TABLE IF NOT EXISTS guildPins(id TEXT PRIMARY KEY, enabled BOOLEAN, emoji TEXT, timeout INTEGER);
@@ -42,6 +42,8 @@ CREATE TABLE IF NOT EXISTS userPinsCategories(id TEXT, pinId BIGINT, catId BIGIN
 
 CREATE TABLE IF NOT EXISTS userGeography(id TEXT PRIMARY KEY, coords POINT);
 
+CREATE TABLE IF NOT EXISTS guildAutobans(id TEXT, pattern TEXT, PRIMARY KEY (id, pattern));
+
 CREATE TABLE IF NOT EXISTS databaseVersion(version INTEGER PRIMARY KEY);
 DELETE FROM databaseVersion;
-INSERT INTO databaseVersion(version) VALUES(3);
+INSERT INTO databaseVersion(version) VALUES(4);
