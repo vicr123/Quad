@@ -37,7 +37,7 @@ router.use("/:id", async function(req, res, next) {
         return;
     }
     
-    let permissions = me.permission.json;
+    let permissions = me.permissions.json;
     req.canManage = (permissions.administrator || permissions.manageGuild);
     next();
 })
