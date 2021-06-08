@@ -39,7 +39,7 @@ handler.register("autoban", {
 		
 		message.channel.createMessage({embed: {
 			title: opts.t("Autoban a pattern"),
-			description: opts.t("Users with `{{PATTERN}}` in their username will no be banned automatically from now on.", {"PATTERN": args[0].toLowerCase()})
+			description: opts.t("Users with `{{PATTERN}}` in their username will not be banned automatically from now on.", {"PATTERN": args[0].toLowerCase()})
 		}});
 	} catch (e) {
 		message.channel.createMessage({embed: {
