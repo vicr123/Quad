@@ -21,7 +21,7 @@
     },
     "database": {
         "host": "localhost",
-        "username": "quad",
+        "user": "quad",
         "database": "quad",
 		"connectionTimeoutMillis": 5000
     },
