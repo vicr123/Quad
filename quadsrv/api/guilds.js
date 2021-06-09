@@ -20,7 +20,7 @@ router.use("/:id", async function(req, res, next) {
         res.status(401).send();
         return;
     }
-    
+
     req.guild = bot.guilds.find(guild => {
         return guild.id === req.params.id;
     });
@@ -28,7 +28,7 @@ router.use("/:id", async function(req, res, next) {
         res.status(404).send();
         return;
     }
-    
+
     await req.guild.fetchMembers({
         presences: false,
         userIDs: [req.user.id]
@@ -41,7 +41,7 @@ router.use("/:id", async function(req, res, next) {
         res.status(401).send();
         return;
     }
-    
+
     let permissions = me.permissions.json;
     req.canManage = (permissions.administrator || permissions.manageGuild);
     next();
@@ -49,35 +49,42 @@ router.use("/:id", async function(req, res, next) {
 
 router.get("/:id", async function(req, res) {
     let resp = {};
-    
+
     let settings = {};
     let client = await db.get();
-    
+
     let dbResp = await client.query("SELECT prefix FROM guildPrefix WHERE id=$1", [req.params.id]);
-    if (dbResp.rowCount > 0) {
+    if (dbResp.rows.length > 0) {
         settings.prefix = dbResp.rows[0].prefix;
     } else {
         settings.prefix = config.get("bot.prefix");
     }
-    
+
     dbResp = await client.query("SELECT alerts, logs FROM guildLogs WHERE id=$1", [req.params.id]);
     let logs;
-    if (dbResp.rowCount > 0) {
+    if (dbResp.rows.length > 0) {
         logs = dbResp.rows[0];
     } else {
         logs = {};
     }
     settings.alerts = logs.alerts;
     settings.chatlogs = logs.logs;
-    
+
+    dbResp = await client.query("SELECT pattern FROM guildAutobans WHERE id=$1", [req.params.id]);
+    if (dbResp.rows.length > 0) {
+        settings.autobans = dbResp.rows.map(row => row.pattern).join('\n');
+    } else {
+        settings.autobans = "";
+    }
+
     client.release();
     resp.settings = settings;
-    
+
     resp.guild = {
         name: req.guild.name,
         id: req.guild.id
     }
-    
+
     let channels = req.guild.channels.reduce((channels, channel) => {
         let descriptor = {
             id: channel.id,
@@ -86,7 +93,7 @@ router.get("/:id", async function(req, res) {
             parent: channel.parentID,
             type: channel.type
         }
-        
+
         if (channel.type === 0) {
             channels.text.push(descriptor);
         } else if (channel.type === 2) {
@@ -105,9 +112,9 @@ router.get("/:id", async function(req, res) {
         other: [],
         currentIndex: 0
     });
-    
+
     resp.channels = channels;
-    
+
     res.status(200).send(resp);
 });
 
@@ -117,12 +124,12 @@ router.delete("/:id", async function(req, res) {
         res.status(401).send();
         return;
     }
-    
+
     await req.guild.leave();
     if (req.query.eraseSettings === "true") {
         await eraseSettings(req.params.id);
     }
-    
+
     res.status(204).send();
 });
 
@@ -131,9 +138,9 @@ router.post("/:id/set", async function(req, res) {
         res.status(401).send();
         return;
     }
-    
+
     let fails = [];
-    
+
     let client = await db.get();
     if (req.body.hasOwnProperty("prefix")) {
         await client.query("INSERT INTO guildPrefix(id, prefix) VALUES($1, $2) ON CONFLICT ON CONSTRAINT guildPrefix_pkey DO UPDATE SET prefix=$2", [req.params.id, req.body.prefix]);
@@ -172,8 +179,18 @@ router.post("/:id/set", async function(req, res) {
             fails.push("Invalid Alerts channel");
         }
     }
+    if (req.body.hasOwnProperty("autobans")) {
+        await client.query("DELETE FROM guildAutobans WHERE id = $1", [req.params.id]);
+
+        let autobans = req.body.autobans.split('\n')
+            .filter(ban => ban.trim())
+            .map(ban => ban.trim());
+        await client.query("INSERT INTO guildAutobans(id, pattern) SELECT * FROM UNNEST ($1::TEXT[], $2::TEXT[]) ON CONFLICT ON CONSTRAINT guildAutobans_pkey DO NOTHING",
+            [Array(autobans.length).fill(req.params.id), autobans]
+        );
+    }
     client.release();
-    
+
     if (fails.length > 0) {
         res.status(200).send({
             fails: fails
@@ -188,7 +205,7 @@ router.delete("/:id/set", async function(req, res) {
         res.status(401).send();
         return;
     }
-    
+
     await eraseSettings(req.params.id);
 
     res.status(204).send();    
