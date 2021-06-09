@@ -242,7 +242,7 @@ class UserSettings extends React.Component {
                 <div className="containerScrollable">
                     <PaneGroup title="Locale">
                         <p>Set the language that {CONFIG.bot.name} will use on Discord</p>
-                        <select name="locale" value={this.state.settings.locale} onBlur={this.setUserSetting.bind(this)}>
+                        <select name="locale" value={this.state.settings.locale} onChange={this.setUserSetting.bind(this)}>
                             {this.state.settings.availableLocales.map(value => {
                                 return <option value={value} key={value}>{value}</option>
                             })}
