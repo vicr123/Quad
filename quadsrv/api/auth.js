@@ -36,7 +36,7 @@ router.post("/login", async function(req, res) {
                     client_secret: config.get("discord.client_secret"),
                     grant_type: "authorization_code",
                     code: req.body.code,
-                    redirect_uri: config.get("discord.redirect_uri"),
+                    redirect_uri: `${config.get("server.rootAddress")}/popupCallback.html`,
                     scope: "identify guilds"
                 })
             });
