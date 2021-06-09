@@ -29,6 +29,11 @@ router.use("/:id", async function(req, res, next) {
         return;
     }
     
+    await req.guild.fetchMembers({
+        presences: false,
+        userIDs: [req.user.id]
+    });
+
     let me = req.guild.members.find(member => {
         return member.id === req.user.id
     });
