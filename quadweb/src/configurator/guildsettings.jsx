@@ -52,6 +52,17 @@ class GuildSettings extends React.Component {
             };
         });
     }
+
+    onAutobansChange(event) {
+        let newAutobans = event.target.value;
+        this.setState(state => {
+            let settings = state.settings;
+            settings.autobans = newAutobans;
+            return {
+                settings: settings
+            };
+        });
+    }
     
     setGuildSetting(event) {
         let key = event.target.name;
@@ -181,6 +192,10 @@ class GuildSettings extends React.Component {
                                 {this.getTextChannels()}
                             </select>
                         </div>
+                    </PaneGroup>
+                    <PaneGroup title="Autobans">
+                        <p>Users joining {this.state.guild.name} who have any of the following patterns in their usernames will automatically be banned by {CONFIG.bot.name}. Put every pattern you wish to ban on a separate line.</p>
+						<textarea style={{resize: "vertical"}} rows={4} className="grow" name="autobans" value={this.state.settings.autobans} onChange={this.onAutobansChange.bind(this)} onBlur={this.setGuildSetting.bind(this)} />
                     </PaneGroup>
                     <PaneGroup title="Danger">
                         <p>Ensure absolute certainty and exercise caution before you hit one of these buttons. They're not for the faint of heart!</p>
