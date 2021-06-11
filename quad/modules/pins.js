@@ -81,14 +81,14 @@ handler.on("botAvailable", () => {
     bot = handler.bot;
 });
 
-handler.listen("messageReactionAdd", async (message, emoji, userId) => {
+handler.listen("messageReactionAdd", async (message, emoji, reactor) => {
     if (emoji.name !== config.get("bot.pins.emoji")) return;
 
-    let user = getUserById(userId);
+    let user = getUserById(reactor.id);
     if (!user) return;
     if (user?.bot) return;
 
-    if (await pin(userId, message)) {
+    if (await pin(reactor.id, message)) {
         await confirmPin(message, user);
     } else {
         await message.channel.createMessage(i18n(user).t("{{USER}}, the message could not be pinned.", {"USER": user.mention}));
