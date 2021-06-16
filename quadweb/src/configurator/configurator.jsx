@@ -3,6 +3,7 @@ import Sidebar from './sidebar';
 import Header from './header';
 import Fetch from 'fetch';
 import UserSettings from './usersettings';
+import UserPins from './userpins';
 import GuildSettings from './guildsettings';
 import LoadingPane from './loadingpane';
 
@@ -51,7 +52,9 @@ class Configurator extends React.Component {
     currentPane() {
         if (this.state.panePage === "userSettings") {
             return <UserSettings />
-        } else {
+        } else if (this.state.panePage === "userPins") {
+			return <UserPins />
+		} else {
             return <GuildSettings key={this.state.panePage} guildId={this.state.panePage} />
         }
     }

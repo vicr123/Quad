@@ -234,3 +234,49 @@ input[type="text"] {
 .leaflet-container {
     flex-grow: 1;
 }
+
+.pinsContainer {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(180pt, 1fr));
+	align-items: stretch;
+	gap: 7px;
+	margin: 7px;
+}
+
+.pinContainer {
+	border: 1px solid white;
+}
+
+.pinHeader {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.pinId {
+	padding-left: 7px;
+	font-size: 12pt;
+}
+
+.pinContent {
+	padding: 7px;
+}
+
+.pinFooter {
+	display: flex;
+	flex-direction: row;
+	justify-content: start;
+	align-items: center;
+}
+
+.pinFooter>img {
+	padding: 4px;
+	height: 15pt;
+	border-radius: 50%;
+}
+.pinFooter>span {
+	font-size: 8pt;
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
