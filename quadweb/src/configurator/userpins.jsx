@@ -14,7 +14,6 @@ class Pin extends React.Component {
 
 	async componentDidMount() {
         Fetch.get(`/user/pins/${this.props.pin}`).then(response => {
-			console.log(response);
 			this.setState({
 				pinData: response
 			});
@@ -103,7 +102,6 @@ class UserPins extends React.Component {
 
 	async componentDidMount() {
         Fetch.get("/user/pins").then(response => {
-			console.log(response);
 			this.setState({
 				pins: response
 			});
@@ -113,12 +111,14 @@ class UserPins extends React.Component {
 	pins() {
 		return this.state.pins.map(pin => {
 			let onUnpin = () => {
+				alert("Unpinning pin " + pin);
+				console.log(pin);
 				this.setState(oldState => ({
 					pins: oldState.pins.filter(pinId => pinId !== pin)
 				}));
 			};
 
-			return <Pin key={pin.id} pin={pin} onUnpin={onUnpin} />
+			return <Pin key={pin} pin={pin} onUnpin={onUnpin} />
 		})
 	}
 
