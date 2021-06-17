@@ -47,7 +47,7 @@ class Pin extends React.Component {
 					<span>{this.state.pinData.content}</span>
 				</div>);
 			}
-			
+
 			parts.push(<div className="pinFooter" key="pinFooter">
 				<img src={this.state.pinData.avatar} />
 				<span>{this.state.pinData.author}</span>
@@ -63,6 +63,11 @@ class Pin extends React.Component {
 		}
 	}
 
+	unpin() {
+        Fetch.delete(`/user/pins/${this.props.pin}`);
+		this.props.onUnpin();
+	}
+
 	render() {
 		if (this.state.pinData) {
 			return <div className="pinContainer">
@@ -71,7 +76,7 @@ class Pin extends React.Component {
 					<span className="pinId">#{this.props.pin}</span>
 					<div>
 						<a href={this.state.pinData.url} target={"_blank"}><div className="button">View on Discord</div></a>
-						<div className="button destructive" onClick={this.handleDeleteClick.bind(this)}>Unpin</div>
+						<div className="button destructive" onClick={this.unpin.bind(this)}>Unpin</div>
 					</div>
 				</div>
 				{this.renderContents()}
@@ -103,26 +108,18 @@ class UserPins extends React.Component {
 				pins: response
 			});
         });
-
-		// this.setState({
-		// 	pins: [
-		// 		{
-		// 			id: 1,
-		// 			content: "This is a pinned message.",
-		// 			author: "discordtag#1234",
-		// 			avatar: "https://cdn.discordapp.com/embed/avatars/0.png",
-		// 			url: "https://discord.com/"
-		// 		}
-		// 	]
-		// })
-	}
-
-	unpin(id) {
-		// TODO
 	}
 
 	pins() {
-		return this.state.pins.map(pin => <Pin key={pin.id} pin={pin} unpin={this.unpin.bind(this)} />)
+		return this.state.pins.map(pin => {
+			let onUnpin = () => {
+				this.setState(oldState => ({
+					pins: oldState.pins.filter(pinId => pinId !== pin)
+				}));
+			};
+
+			return <Pin key={pin.id} pin={pin} onUnpin={onUnpin} />
+		})
 	}
 
 	render() {

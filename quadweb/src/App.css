@@ -289,3 +289,8 @@ input[type="text"] {
 	text-overflow: ellipsis;
 	overflow: hidden;
 }
+
+.sidebarWrapper {
+    position: sticky;
+    top: 0px;
+}

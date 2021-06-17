@@ -69,14 +69,26 @@ router.get("/:pinid", async (req, res) => {
     } finally {
         client.release();
     }
+});
 
-    /*
-    				{
-					id: 1,
-					content: "This is a pinned message.",
-					author: "discordtag#1234",
-					avatar: "https://cdn.discordapp.com/embed/avatars/0.png",
-					url: "https://discord.com/"
-				}
-                */
+router.delete("/:pinid", async (req, res) => {
+    if (!req.user) {
+        res.status(401).send();
+        return;
+    }
+
+    let client = await db.get();
+    try {
+        let response = await client.query("DELETE FROM userpins WHERE id=$1 AND pinid=$2", [req.user.id, req.params.pinid]);
+        if (response.rowCount === 0) {
+            res.sendStatus(404);
+            return;
+        }
+
+        res.sendStatus(204);
+    } catch {
+        res.sendStatus(500);
+    } finally {
+        client.release();
+    }
 })
