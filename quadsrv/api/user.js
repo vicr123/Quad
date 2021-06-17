@@ -1,6 +1,7 @@
 const express = require('express');
 const db = require('db');
 const fs = require('fs');
+const AMImport = require('./amimport');
 
 let router = express.Router();
 module.exports = router;
@@ -12,6 +13,8 @@ router.get("/settings", async function(req, res) {
         res.status(401).send();
     } else {
         let response = {};
+
+        let amImport = new AMImport(req.user.id);
         
         let client = await db.get();
         let row = await client.query("SELECT locale FROM locales WHERE id=$1", [req.user.id]);
@@ -29,6 +32,13 @@ router.get("/settings", async function(req, res) {
         }
         
         response.availableLocales = availableTranslations;
+
+        if (amImport.canImport()) {
+            response.canImportAM = {
+                numPins: amImport.numPins()
+            }
+        }
+
         client.release();
         
         res.status(200).send(response);
@@ -73,4 +83,19 @@ router.post("/set", async function(req, res) {
             res.status(204).send();
         }
     }
-})
+});
+
+router.post("/importAM", async (req, res) => {
+    if (!req.user) {
+        res.status(401).send();
+    } else {
+        try {
+            let amImport = new AMImport(req.user.id);
+            await amImport.doImport();
+            
+            res.status(204).send();
+        } catch {
+            res.status(500).send();
+        }
+    }
+});

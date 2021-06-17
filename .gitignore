@@ -11,3 +11,5 @@ quad/data
 
 output/
 quad/modules/weather/images/man.png
+
+quadsrv/settingsdump.json

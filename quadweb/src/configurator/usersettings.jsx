@@ -234,6 +234,63 @@ class UserSettings extends React.Component {
             </div>
         </Modal>)
     }
+
+    async execImportAM() {
+        Modal.mount(<Modal title="Import Portable Pins from AstralMod" width={400} cancelable={false} renderBack={false}>
+            <div className="containerVertical containerPadded">
+                We're importing your Portable Pins now. Please don't leave this page...
+            </div>
+        </Modal>)
+
+        try {
+            await Fetch.post("/user/importAM", {});
+            // throw new Error();
+
+            let number = this.state.settings.canImportAM.numPins;
+            this.setState((state) => ({
+                settings: {
+                    ...state.settings,
+                    canImportAM: false
+                }
+            }));
+
+            Modal.mount(<Modal title="Import Portable Pins from AstralMod" width={400} cancelable={true} renderBack={true}>
+                <div className="containerVertical containerPadded">
+                    <p>{number} Portable Pins were imported into Quad.</p>
+                    <a className="button" onClick={Modal.unmount}>Finish</a>
+                </div>
+            </Modal>)
+        } catch {
+            Modal.mount(<Modal title="Import Portable Pins from AstralMod" width={400} cancelable={true} renderBack={true}>
+                <div className="containerVertical containerPadded">
+                    <p>Your Portable Pins could not be imported into Quad. Please try again later.</p>
+                    <a className="button" onClick={Modal.unmount}>Finish</a>
+                </div>
+            </Modal>)
+        }
+
+
+    }
+
+    execImportAMPopover() {
+        Modal.mount(<Modal title="Import Portable Pins from AstralMod" width={400} cancelable={true} renderBack={true}>
+            <div className="containerVertical containerPadded">
+                <p>{this.state.settings.canImportAM.numPins} Portable Pins from AstralMod will be imported into (and become available within) Quad.</p>
+                <p>Once your portable pins are imported, there's no easy way to remove them, short of unpinning each message one by one.</p>
+                <p>Each pin will be given a new pin ID inside Quad.</p>
+                <p>Your current portable pins will be kept and merged with your AstralMod Portable Pins.</p>
+                <a className="button" onClick={this.execImportAM.bind(this)}>Import AstralMod Pins</a>
+            </div>
+        </Modal>)
+    }
+
+    renderImportButton() {
+        if (this.state.settings.canImportAM) {
+            return <PaneGroup title="Advanced">
+                <Cmdlink title="Import Portable Pins from AstralMod" description="Import your old portable pins from AstralMod" onClick={this.execImportAMPopover.bind(this)}/>
+            </PaneGroup>
+        }
+    }
     
     render() {
         if (this.state.settings) {
@@ -254,6 +311,10 @@ class UserSettings extends React.Component {
                         <Cmdlink title="Set Location" description={this.currentLocString()} onClick={this.execSetLocationPopover.bind(this)}/>
                         <Cmdlink className="destructive" title="Clear Saved Location" description="Clear your saved location" onClick={this.execClearLoc.bind(this)} />
                     </PaneGroup>
+                    {/* <PaneGroup title="Advanced"> */}
+                        {this.renderImportButton()}
+                        {/* <Cmdlink className="destructive" title="Reset Settings" description="Reset all of your settings to defaults" onClick={this.execClearLoc.bind(this)} /> */}
+                    {/* </PaneGroup> */}
                 </div>
             </div>
         } else {
