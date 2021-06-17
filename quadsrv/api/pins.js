@@ -40,7 +40,14 @@ router.get("/:pinid", async (req, res) => {
 
         let data = response.rows[0];
         try {
-            let message = await bot.getMessage(data.channel, data.message);
+            let channel = bot.getChannel(data.channel);
+
+            let message = channel.messages.find(message => {
+                return message.id === data.message
+            });
+            if (!message) message = await channel.getMessage(data.message);
+
+            channel.messages.add(message);
 
             let reply = {
                 id: req.params.pinid,
