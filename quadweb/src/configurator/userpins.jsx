@@ -25,17 +25,35 @@ class Pin extends React.Component {
 		this.props.unpin(this.props.id);
 	}
 
+	renderPreheader() {
+		if (this.state.pinData.state === "available") {
+
+		}
+	}
+
 	renderContents() {
 		if (this.state.pinData.state === "available") {
-			return <>
-					<div className="pinContent">
-						<span>{this.state.pinData.content}</span>
-					</div>
-					<div className="pinFooter">
-						<img src={this.state.pinData.avatar} />
-						<span>{this.state.pinData.author}</span>
-					</div>
-				</>
+			let parts = [];
+			if (this.state.pinData.image) {
+				parts.push(<a key="pinImage" href={this.state.pinData.image} target="_blank" >
+					<div className="pinImage" style={{
+						backgroundImage: `url(${this.state.pinData.image})`
+					}} />
+				</a>)
+			}
+
+			if (this.state.pinData.content) {
+				parts.push(<div className="pinContent" key="pinContent">
+					<span>{this.state.pinData.content}</span>
+				</div>);
+			}
+			
+			parts.push(<div className="pinFooter" key="pinFooter">
+				<img src={this.state.pinData.avatar} />
+				<span>{this.state.pinData.author}</span>
+			</div>)
+
+			return parts;
 		} else {
 			return <>
 				<div className="pinContent">
@@ -48,6 +66,7 @@ class Pin extends React.Component {
 	render() {
 		if (this.state.pinData) {
 			return <div className="pinContainer">
+				{this.renderPreheader()}
 				<div className="pinHeader">
 					<span className="pinId">#{this.props.pin}</span>
 					<div>

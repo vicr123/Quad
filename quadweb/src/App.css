@@ -256,6 +256,12 @@ input[type="text"] {
 	justify-content: space-between;
 }
 
+.pinImage {
+    height: 100px;
+    background-position: center center;
+    background-size: cover;
+}
+
 .pinId {
 	padding-left: 7px;
 	font-size: 12pt;

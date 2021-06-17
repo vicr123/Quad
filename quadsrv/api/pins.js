@@ -42,14 +42,22 @@ router.get("/:pinid", async (req, res) => {
         try {
             let message = await bot.getMessage(data.channel, data.message);
 
-            res.send({
+            let reply = {
                 id: req.params.pinid,
                 content: message.content,
                 author: `${message.author.username}#${message.author.discriminator}`,
                 avatar: message.author.avatarURL,
                 url: message.jumpLink,
+                attachments: message.attachments.length,
                 state: "available"
-            });
+            };
+
+            let images = message.attachments.filter(attachment => attachment.content_type.startsWith("image/"));
+            if (images.length > 0) {
+                reply.image = images[0].url;
+            }
+
+            res.send(reply);
         } catch {
             res.send({
                 id: req.params.pinid,
