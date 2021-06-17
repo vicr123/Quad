@@ -245,6 +245,8 @@ input[type="text"] {
 
 .pinContainer {
 	border: 1px solid white;
+    display: flex;
+    flex-direction: column;
 }
 
 .pinHeader {
@@ -261,6 +263,7 @@ input[type="text"] {
 
 .pinContent {
 	padding: 7px;
+    flex-grow: 1;
 }
 
 .pinFooter {

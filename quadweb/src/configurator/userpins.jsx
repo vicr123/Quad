@@ -6,29 +6,65 @@ import Heading from './heading';
 class Pin extends React.Component {
 	constructor(props) {
 		super(props)
+
+		this.state = {
+			pinData: null
+		};
+	}
+
+	async componentDidMount() {
+        Fetch.get(`/user/pins/${this.props.pin}`).then(response => {
+			console.log(response);
+			this.setState({
+				pinData: response
+			});
+        });
 	}
 
 	handleDeleteClick() {
 		this.props.unpin(this.props.id);
 	}
 
-	render() {
-		return <div className="pinContainer">
-			<div className="pinHeader">
-				<span className="pinId">#{this.props.id}</span>
-				<div>
-					<a href={this.props.pin.url} target={"_blank"}><div className="button">View on Discord</div></a>
-					<div className="button destructive" onClick={this.handleDeleteClick.bind(this)}>Unpin</div>
+	renderContents() {
+		if (this.state.pinData.state === "available") {
+			return <>
+					<div className="pinContent">
+						<span>{this.state.pinData.content}</span>
+					</div>
+					<div className="pinFooter">
+						<img src={this.state.pinData.avatar} />
+						<span>{this.state.pinData.author}</span>
+					</div>
+				</>
+		} else {
+			return <>
+				<div className="pinContent">
+					<span>This pin is unavailable.</span>
 				</div>
+			</>
+		}
+	}
+
+	render() {
+		if (this.state.pinData) {
+			return <div className="pinContainer">
+				<div className="pinHeader">
+					<span className="pinId">#{this.props.pin}</span>
+					<div>
+						<a href={this.state.pinData.url} target={"_blank"}><div className="button">View on Discord</div></a>
+						<div className="button destructive" onClick={this.handleDeleteClick.bind(this)}>Unpin</div>
+					</div>
+				</div>
+				{this.renderContents()}
 			</div>
-			<div className="pinContent">
-				<span>{this.props.pin.content}</span>
+		} else {
+			return <div className="pinContainer">
+				<div className="pinHeader">
+					<span className="pinId">#{this.props.pin}</span>
+				</div>
+				{/* TODO: render a loader or something */}
 			</div>
-			<div className="pinFooter">
-				<img src={this.props.pin.avatar} />
-				<span>{this.props.pin.author}</span>
-			</div>
-		</div>
+		}
 	}
 }
 
@@ -37,22 +73,29 @@ class UserPins extends React.Component {
 		super(props);
 
 		this.state = {
-			pins: null
+			pins: []
 		};
 	}
 
-	componentDidMount() {
-		this.setState({pins: {
-			ids: [1],
-			pins: {
-				1: {
-					content: "This is a pinned message.",
-					author: "discordtag#1234",
-					avatar: "https://cdn.discordapp.com/embed/avatars/0.png",
-					url: "https://discord.com/"
-				}
-			}
-		}});
+	async componentDidMount() {
+        Fetch.get("/user/pins").then(response => {
+			console.log(response);
+			this.setState({
+				pins: response
+			});
+        });
+
+		// this.setState({
+		// 	pins: [
+		// 		{
+		// 			id: 1,
+		// 			content: "This is a pinned message.",
+		// 			author: "discordtag#1234",
+		// 			avatar: "https://cdn.discordapp.com/embed/avatars/0.png",
+		// 			url: "https://discord.com/"
+		// 		}
+		// 	]
+		// })
 	}
 
 	unpin(id) {
@@ -60,13 +103,7 @@ class UserPins extends React.Component {
 	}
 
 	pins() {
-		let els = [];
-
-		for (let id in this.state.pins.pins) {
-			els.push(<Pin key={id} id={id} pin={this.state.pins.pins[id]} unpin={this.unpin.bind(this)} />);
-		}
-
-		return els;
+		return this.state.pins.map(pin => <Pin key={pin.id} pin={pin} unpin={this.unpin.bind(this)} />)
 	}
 
 	render() {
