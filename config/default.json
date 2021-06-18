@@ -1,7 +1,7 @@
 {
     "bot": {
         "name": "Quad",
-        "version": "1.0",
+        "version": "1.1",
         "repo": "https://github.com/vicr123/Quad",
         "prefix": "q:",
         "ratelimit": {
