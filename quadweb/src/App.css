@@ -270,6 +270,7 @@ input[type="text"] {
 .pinContent {
 	padding: 7px;
     flex-grow: 1;
+	white-space: pre-wrap;
 }
 
 .pinFooter {
@@ -288,6 +289,55 @@ input[type="text"] {
 	font-size: 8pt;
 	text-overflow: ellipsis;
 	overflow: hidden;
+}
+
+.codeBlock {
+	background-color: rgb(20, 20, 20);
+	border-radius: 7px;
+	padding: 4px;
+	margin: 3px 0;
+}
+
+.codeBlock, .codeBlock * {
+	font-family: monospace;
+	font-size: 8pt;
+}
+
+.blockquoteContainer {
+	position: relative;
+}
+
+.blockquoteDivider {
+	position: absolute;
+	left: 0;
+	height: 100%;
+	width: 3pt;
+	border-radius: 1.5pt;
+	background-color: rgb(150, 150, 150);
+}
+
+blockquote {
+	margin-left: 9pt;
+}
+
+.spoiler {
+	background-color: rgb(20, 20, 20);
+	padding: 2px;
+	border-radius: 2px;
+	transition: all 0.1s ease;
+}
+
+.spoiler.spoiler-shown {
+	background-color: rgb(40, 40, 40);
+}
+
+.spoiler span {
+	opacity: 0;
+	transition: all 0.1 ease;
+}
+
+.spoiler.spoiler-shown span {
+	opacity: 1;
 }
 
 .sidebarWrapper {

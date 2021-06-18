@@ -1,5 +1,6 @@
 import React from 'react';
 import Fetch from 'fetch';
+import Markdown from 'markdown';
 import LoadingPane from './loadingpane';
 import Heading from './heading';
 
@@ -43,7 +44,7 @@ class Pin extends React.Component {
 
 			if (this.state.pinData.content) {
 				parts.push(<div className="pinContent" key="pinContent">
-					<span>{this.state.pinData.content}</span>
+					<Markdown md={this.state.pinData.content} />
 				</div>);
 			}
 
@@ -111,7 +112,6 @@ class UserPins extends React.Component {
 	pins() {
 		return this.state.pins.map(pin => {
 			let onUnpin = () => {
-				alert("Unpinning pin " + pin);
 				console.log(pin);
 				this.setState(oldState => ({
 					pins: oldState.pins.filter(pinId => pinId !== pin)
