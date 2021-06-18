@@ -1,7 +1,7 @@
 {
     "bot": {
         "name": "Quad",
-        "version": "0.1",
+        "version": "1.0",
         "repo": "https://github.com/vicr123/Quad",
         "prefix": "q:",
         "ratelimit": {
@@ -16,7 +16,7 @@
             ]
         },
         "pins": {
-            "emoji": "👺"
+            "emoji": "📌"
         }
     },
     "database": {
