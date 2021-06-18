@@ -235,3 +235,113 @@ input[type="text"] {
 .leaflet-container {
     flex-grow: 1;
 }
+
+.pinsContainer {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(180pt, 1fr));
+	align-items: stretch;
+	gap: 7px;
+	margin: 7px;
+}
+
+.pinContainer {
+	border: 1px solid white;
+    display: flex;
+    flex-direction: column;
+}
+
+.pinHeader {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.pinImage {
+    height: 100px;
+    background-position: center center;
+    background-size: cover;
+}
+
+.pinId {
+	padding-left: 7px;
+	font-size: 12pt;
+}
+
+.pinContent {
+	padding: 7px;
+    flex-grow: 1;
+	white-space: pre-wrap;
+}
+
+.pinFooter {
+	display: flex;
+	flex-direction: row;
+	justify-content: start;
+	align-items: center;
+}
+
+.pinFooter>img {
+	padding: 4px;
+	height: 15pt;
+	border-radius: 50%;
+}
+.pinFooter>span {
+	font-size: 8pt;
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
+
+.codeBlock {
+	background-color: rgb(20, 20, 20);
+	border-radius: 7px;
+	padding: 4px;
+	margin: 3px 0;
+}
+
+.codeBlock, .codeBlock * {
+	font-family: monospace;
+	font-size: 8pt;
+}
+
+.blockquoteContainer {
+	position: relative;
+}
+
+.blockquoteDivider {
+	position: absolute;
+	left: 0;
+	height: 100%;
+	width: 3pt;
+	border-radius: 1.5pt;
+	background-color: rgb(150, 150, 150);
+}
+
+blockquote {
+	margin-left: 9pt;
+}
+
+.spoiler {
+	background-color: rgb(20, 20, 20);
+	padding: 2px;
+	border-radius: 2px;
+	transition: all 0.1s ease;
+}
+
+.spoiler.spoiler-shown {
+	background-color: rgb(40, 40, 40);
+}
+
+.spoiler span {
+	opacity: 0;
+	transition: all 0.1 ease;
+}
+
+.spoiler.spoiler-shown span {
+	opacity: 1;
+}
+
+.sidebarWrapper {
+    position: sticky;
+    top: 0px;
+}

@@ -5,7 +5,7 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "command": "./build",
+            "command": "exec ./build",
             "name": "Build Assets",
             "request": "launch",
             "type": "node-terminal"
@@ -21,7 +21,7 @@
             "cwd": "${workspaceFolder}/quad"
         },
         {
-            "name": "Launch Quad Web Server",
+            "name": "Quad Backend Server",
             "program": "${workspaceFolder}/quadsrv/index.js",
             "cwd": "${workspaceFolder}/quadsrv",
             "request": "launch",
@@ -29,6 +29,6 @@
                 "<node_internals>/**"
             ],
             "type": "pwa-node"
-        }
+        },
     ]
 }

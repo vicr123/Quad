@@ -3,10 +3,14 @@ const db = require('db');
 const fs = require('fs');
 const AMImport = require('./amimport');
 
+const pins = require('./pins');
+
 let router = express.Router();
 module.exports = router;
 
 let availableTranslations = fs.readdirSync("../quad/translations");
+
+router.use("/pins", pins);
 
 router.get("/settings", async function(req, res) {
     if (!req.user) {
