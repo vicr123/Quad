@@ -79,6 +79,12 @@ router.get("/me", async function(req, res) {
             let guilds = await Fetch.req(req.user, "/users/@me/guilds", {
                 method: "GET"
             });
+
+			if (user.avatar) {
+				user.avatarurl = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png?height=256`;
+			} else {
+				user.avatarurl = `https://cdn.discordapp.com/embed/avatars/${user.discriminator % 5}.png`;
+			}
             
             res.status(200).send({
                 user: user,
