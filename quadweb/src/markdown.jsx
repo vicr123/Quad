@@ -42,24 +42,17 @@ const rules = {
 	},
 	codeBlock: {
 		order: ++currentOrder,
-		match: SimpleMarkdown.inlineRegex(/^```(\w*)\n+([\s\S]+)\n+```/),
+		match: SimpleMarkdown.inlineRegex(/^```(?:(\w+)\n)?\n*([\s\S]*?[^\n])\n*```/),
 		parse: (capture, parse, state) => {
-			console.log(hljs.getLanguage(capture[1]));
+			let block = {lang: null, content: capture[2]};
 			if (hljs.getLanguage(capture[1])) {
-				return {
-					lang: capture[1],
-					content: capture[2]
-				}
-			} else {
-				return {
-					lang: null,
-					content: capture[1] + capture[2]
-				}
+				block.lang = capture[1];
 			}
+			return block;
 		},
 		react: (node, output, state) => {
 			let html;
-			if (node.lang !== null) {
+			if (node.lang) {
 				html = {__html: hljs.highlight(node.content, {language: node.lang, ignoreIllegals: true}).value};
 			} else {
 				html = {__html: node.content}

@@ -291,6 +291,11 @@ input[type="text"] {
 	font-size: 8pt;
 }
 
+code {
+	background-color: rgb(20, 20, 20);
+	padding: 2px;
+}
+
 .codeBlock {
 	background-color: rgb(20, 20, 20);
 	border-radius: 7px;
@@ -298,7 +303,7 @@ input[type="text"] {
 	margin: 3px 0;
 }
 
-.codeBlock, .codeBlock * {
+.codeBlock, .codeBlock *, code {
 	font-family: monospace;
 	font-size: 8pt;
 }
