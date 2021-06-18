@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import {hot} from "react-hot-loader";
+import Helmet from 'react-helmet';
 import "./App.css";
 import Login from "./login"
 import Configurator from "./configurator/configurator"
@@ -37,8 +38,8 @@ class App extends Component {
             info: info
         });
     }
-    
-    render() {
+
+    renderApp() {
         if (this.state.page === "login") {
             return <Login tokenChanged={this.reload.bind(this)} />
         } else if (this.state.page === "configurator") {
@@ -55,6 +56,15 @@ class App extends Component {
             </div>
         }
     }
+
+	render() {
+		return <>
+			<Helmet>
+				<title>{CONFIG.bot.name}</title>
+			</Helmet>
+			{this.renderApp()}
+		</>
+	}
 }
 
 export default hot(module)(App);

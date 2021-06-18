@@ -30,6 +30,7 @@
     "pg": "^8.3.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-helmet": "^6.1.0",
     "react-hot-loader": "^4.12.21",
     "react-leaflet": "^2.7.0",
     "react-scripts": "^4.0.1",
