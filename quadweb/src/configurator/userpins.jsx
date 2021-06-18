@@ -110,6 +110,10 @@ class UserPins extends React.Component {
 	}
 
 	pins() {
+		if (this.state.pins.length === 0) {
+			return <p>There's nothing here yet!</p>
+		}
+
 		return this.state.pins.map(pin => {
 			let onUnpin = () => {
 				console.log(pin);
