@@ -272,6 +272,7 @@ input[type="text"] {
 	padding: 7px;
     flex-grow: 1;
 	white-space: pre-wrap;
+	overflow-wrap: anywhere;
 }
 
 .pinFooter {
@@ -288,8 +289,6 @@ input[type="text"] {
 }
 .pinFooter>span {
 	font-size: 8pt;
-	text-overflow: ellipsis;
-	overflow: hidden;
 }
 
 .codeBlock {
@@ -334,7 +333,7 @@ blockquote {
 
 .spoiler span {
 	opacity: 0;
-	transition: all 0.1 ease;
+	transition: all 0.1s ease;
 }
 
 .spoiler.spoiler-shown span {

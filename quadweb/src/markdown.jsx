@@ -44,13 +44,26 @@ const rules = {
 		order: ++currentOrder,
 		match: SimpleMarkdown.inlineRegex(/^```(\w*)\n+([\s\S]+)\n+```/),
 		parse: (capture, parse, state) => {
-			return {
-				lang: capture[1],
-				content: capture[2]
+			console.log(hljs.getLanguage(capture[1]));
+			if (hljs.getLanguage(capture[1])) {
+				return {
+					lang: capture[1],
+					content: capture[2]
+				}
+			} else {
+				return {
+					lang: null,
+					content: capture[1] + capture[2]
+				}
 			}
 		},
 		react: (node, output, state) => {
-			let html = {__html: hljs.highlight(node.content, {language: node.lang, ignoreIllegals: true}).value};
+			let html;
+			if (node.lang !== null) {
+				html = {__html: hljs.highlight(node.content, {language: node.lang, ignoreIllegals: true}).value};
+			} else {
+				html = {__html: node.content}
+			}
 			return <div key={state.key} className="codeBlock" dangerouslySetInnerHTML={html} />
 		}
 	},
