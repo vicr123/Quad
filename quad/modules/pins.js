@@ -39,13 +39,13 @@ const pin = async (userId, message) => {
 };
 
 const unpin = async (userId, message) => {
-    return await db.getPool().query("DELETE FROM userPins WHERE (id, channel, message) = ($1, $2, $3)",
-        [userId, message.channel.id, message.id]).rowCount !== 0;
+    return (await db.getPool().query("DELETE FROM userPins WHERE (id, channel, message) = ($1, $2, $3)",
+        [userId, message.channel.id, message.id])).rowCount !== 0;
 };
 
 const unpinById = async (userId, pinId) => {
-    return await db.getPool().query("DELETE FROM userPins WHERE (pinId, id) = ($1, $2)",
-        [pinId, userId]).rowCount !== 0;
+    return (await db.getPool().query("DELETE FROM userPins WHERE (pinId, id) = ($1, $2)",
+        [pinId, userId])).rowCount !== 0;
 };
 
 // Messages
@@ -118,7 +118,7 @@ handler.listen("messageReactionRemove", async (message, emoji, userId) => {
         }
         if (pos) confirmationCache.splice(pos, 1);
     } else {
-        await message.channel.createMessage(i18n(user).t("{{USER}}, the message could not be unpinned.", {"USER": user.mention}));
+        await message.channel.createMessage(i18n(user.id).t("{{USER}}, the message could not be unpinned.", {"USER": user.mention}));
     }
 });
 
@@ -296,4 +296,22 @@ handler.register("pin", {
     } else {
         await message.channel.createMessage(opts.t("{{USER}}, the message could not be pinned.", {"USER": message.author.mention}));
     }
+});
+
+//   Unpin by pin id
+handler.register("unpin", {
+	opts: {
+		translatorRequired: true,
+		help: {
+			description: t("Unpin a message")
+		}
+	},
+	args: [{name: "id", type: "integer", description: t("A pin id")}]
+}, async (message, opts, args) => {
+	let user = message.author;
+    if (await unpinById(user.id, args[0])) {
+        await message.channel.createMessage(opts.t("{{USER}}, the message was unpinned.", {"USER": user.mention}));
+    } else {
+        await message.channel.createMessage(opts.t("{{USER}}, the message could not be unpinned.", {"USER": user.mention}));
+	}
 });
