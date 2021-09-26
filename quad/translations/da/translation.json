@@ -94,7 +94,7 @@
     "**Joined Server** {{joindate, datetime}}": "**Tilsuttede sig til server** {{joindate, datetime}}",
     "Timestamps": "Tidsstempler",
     "User Information": "Information om bruger",
-    "User ID: {{userid}}": "Bruger-id: {{userId}}",
+    "User ID: {{userid}}": "Bruger-id: {{userid}}",
     "TRANSLATORS: Please replace this string with the name of your language (in your native language.)": "Dansk",
     "**Locales**\nYou can choose from the following locales:\n{{locales}}": "**Sprog**\nDu kan vælge mellem de følgende sprog:\n{{locales}}",
     "The new locale to use": "Det nye sprog der skal bruges",
