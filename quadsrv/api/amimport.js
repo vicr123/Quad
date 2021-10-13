@@ -21,7 +21,7 @@ class AMImport {
     }
 
     canImport() {
-        return Object.keys(amSettings.users).includes(this.user) && !amSettings.users[this.user].quadImported;
+        return Object.keys(amSettings.users).includes(this.user) && Object.keys(amSettings.users[this.user]).includes("flags") && !amSettings.users[this.user].quadImported;
     }
 
     numPins() {
