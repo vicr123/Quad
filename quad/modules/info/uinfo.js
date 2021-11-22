@@ -49,7 +49,7 @@ handler.register("uinfo", {
 		{name: "user", type: "user", description: t("The user to get information about"), optional: true}
 	]
 }, function(interaction, opts, args) {
-	let user = args.user || interaction.user;
+	let user = args.user ?? interaction.user;
     interaction.reply({embeds: [
         getEmbed(user, opts.t)
     ]});

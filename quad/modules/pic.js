@@ -26,6 +26,6 @@ handler.register("pic", {
         {name: "user", type: "user", description: t("The user to get the picture of"), optional: true}
     ],
 }, async function(interaction, opts, args) {
-	let user = args.user || interaction.user;
+	let user = args.user ?? interaction.user;
 	interaction.reply({embeds: [pictureEmbed(user, opts.t)]});
 });
