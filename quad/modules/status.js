@@ -10,15 +10,12 @@ let bot;
 // 2: Listening to
 // 3: Watching
 const statuses = [
-    [3, t("{{BOT_PREFIX}}help", {"BOT_PREFIX": config.get("bot.prefix")})],
-    [3, t("you")],
-    [0, t("Ski jacket shopping")],
-    [3, t("Google Pay")],
-    [0, t("with 🦆")],
-    [2, t("Sent from my iPhone")],
-    [0, t("Entertaining Mines")],
-    [0, t("AlienEdit")],
-    [0, t("Internet Explorer")]
+	{type: 3, name: t("you")},
+	{type: 0, name: t("Ski jacket shopping")},
+	{type: 3, name: t("Google Pay")},
+	{type: 0, name: t("with 🦆")},
+	{type: 2, name: t("Sent from my iPhone")},
+	{type: 0, name: t("Entertaining Chess")}
 ];
 
 const name = config.get("bot.name");
@@ -32,17 +29,13 @@ let currentStatus;
 const updateStatus = async () => {
     log(t("Updating status"), log.debug);
 
-    let newStatus;
-    do {
-        newStatus = statuses[Math.floor(Math.random() * statuses.length)];
-    } while (newStatus === currentStatus);
-    currentStatus = newStatus;
+	while (currentStatus === (currentStatus = Math.floor(Math.random() * statuses.length)));
 
-    bot.editStatus("online", {type: currentStatus[0], name: currentStatus[1]});
+    bot.user.setPresence({activities: [statuses[currentStatus]]});
     setTimeout(updateStatus, 120000);
 }
 
 handler.once("botAvailable", () => {
     bot = handler.bot;
-    updateStatus();
+	updateStatus();
 });
