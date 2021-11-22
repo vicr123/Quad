@@ -7,9 +7,9 @@ if (!fs.existsSync("./data/geonames.txt")) {
     log("Geonames data is required for geocoding.", log.warn)
 }
 
-module.exports = async function(message, opts, cmdOpts, args, flags) {
-    if (cmdOpts.locationRequired) {
-        opts.geography = await Geo.getUser(message.author.id);
+module.exports = async function(interaction, actualOpts, opts, args) {
+    if (opts.locationRequired) {
+        opts.geography = await Geo.getUser(interaction.user.id);
         if (opts.geography && cmdOpts.locationCodedRequired && Geo.canGeocode) {
             opts.geographyCoded = await Geo.getPlaceName(opts.geography);
         }

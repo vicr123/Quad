@@ -26,10 +26,10 @@ class MiddlewareLoader {
         }
     }
     
-    async run(message, opts, cmdOpts, args, flags) {
+    async run(interaction, opts, cmdOpts, args) {
         try {
             for (let mw of this.#middleware) {
-                if (!await mw(message, opts, cmdOpts, args, flags)) return false;
+                if (!await mw(interaction, opts, cmdOpts, args)) return false;
             }
             return true;
         } catch (err) {

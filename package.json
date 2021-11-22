@@ -9,10 +9,11 @@
   "author": "Victor Tran",
   "license": "GPL-3.0-or-later",
   "dependencies": {
+    "@discordjs/rest": "^0.1.0-canary.0",
     "canvas": "^2.6.1",
     "config": "^3.3.1",
     "config-webpack": "^1.0.4",
-    "eris": "^0.15.1",
+    "discord.js": "^13.3.1",
     "express": "^4.17.1",
     "gulp": "^4.0.2",
     "gulp-install": "^1.1.0",

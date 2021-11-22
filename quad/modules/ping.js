@@ -6,10 +6,8 @@ let t = str => str;
 handler.register("ping", {
     opts: {
         translatorRequired: true,
-        help: {
-            description: t("Checks to see if {{botname}} is working")
-        }
+        description: t("Checks to see if {{botname}} is working")
     }
-}, function(message, opts) {
-    message.channel.createMessage(opts.t("Pong!"));
+}, async (interaction, opts) => {
+	interaction.reply(opts.t("Pong!"));
 });

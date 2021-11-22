@@ -1,5 +1,4 @@
 const handler = require("handler");
-const MemberUtils = require("memberutils");
 
 const t = str => str;
 
@@ -7,13 +6,13 @@ function pictureEmbed(user, t) {
     return {
         title: t("Profile Picture"),
         author: {
-            name: MemberUtils.tag(user),
-            icon_url: user.avatarURL,
+            name: user.tag,
+            icon_url: user.avatarURL(),
             width: 512,
             height: 512
         },
         image: {
-            url: user.avatarURL.replace("size=128", "size=2048")
+            url: user.avatarURL({dynamic: true, size: 2048})
         }
     }
 }
@@ -21,34 +20,12 @@ function pictureEmbed(user, t) {
 handler.register("pic", {
     opts: {
         translatorRequired: true,
-        help: {
-            description: t("Shows your profile picture")
-        }
-    }
-}, async function(message, opts, args, flags) {
-    message.channel.createMessage({
-        embed: pictureEmbed(message.author, opts.t)
-    })
-});
-
-handler.register("pic", {
+        description: t("Shows a profile picture")
+    },
     args: [
-        {name: "user", type: "globaluser", description: t("The user to get the picture of")}
+        {name: "user", type: "user", description: t("The user to get the picture of"), optional: true}
     ],
-    opts: {
-        translatorRequired: true,
-        help: {
-            description: t("Shows a user's profile picture")
-        }
-    }
-}, async function(message, opts, args, flags) {
-    message.channel.createMessage({
-        embed: pictureEmbed(args[0], opts.t)
-    })
+}, async function(interaction, opts, args) {
+	let user = args.user || interaction.user;
+	interaction.reply({embeds: [pictureEmbed(user, opts.t)]});
 });
-
-handler.link("picture", "pic");
-handler.link("profilepicture", "pic");
-handler.link("profilepic", "pic");
-handler.link("pfp", "pic");
-handler.link("avatar", "pic");
