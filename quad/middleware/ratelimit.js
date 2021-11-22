@@ -11,10 +11,13 @@ module.exports = async function(interaction, actualOpts, opts, args) {
         return true;
     } else if (count < commandRatelimit + 3) {
         let t = (await i18n(interaction.user)).t;
-        interaction.reply(t("**Cool it, buddy!**\nYou're using {{botname}} too fast. You'll be able to use Quad again in **{{count, dp1}} seconds**.", {
-            botname: config.get("bot.name"),
-            count: ratelimit.timeout(interaction.user.id) / 1000
-        }));
+        interaction.reply({
+			content: t("**Cool it, buddy!**\nYou're using {{botname}} too fast. You'll be able to use Quad again in **{{count, dp1}} seconds**.", {
+            	botname: config.get("bot.name"),
+            	count: ratelimit.timeout(interaction.user.id) / 1000
+        	}),
+			ephemeral: true
+		});
         return false;
     } else {
         //Ignore the user now; they've been told enough
