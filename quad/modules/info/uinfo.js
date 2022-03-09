@@ -13,7 +13,7 @@ function getEmbed(user, t) {
             user: user
         }
     }));
-    if (user.guild) {
+    if (user.guild && user.joinedAt) {
         timestamps.push(t("**Joined Server** {{joindate, datetime}}", {
             joindate: {
                 date: moment.utc(user.joinedAt),
