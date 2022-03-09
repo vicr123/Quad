@@ -25,9 +25,29 @@ process.exitCode = 1; //Assume error unless otherwise proven
     handler.init();
     
     let bot = new Eris(config.get('discord.token'));
-    bot.on("ready", () => {
+    bot.on("ready", async () => {
+		// Join all threads we can find
+		let joins = [];
+		bot.guilds.forEach(guild => {
+			guild.threads.forEach((thr, id) => {
+				joins.push(bot.joinThread(id));
+			});
+		});
+		await Promise.all(joins);
+
         log(t("Locked and loaded!"), log.success);
     });
+
+	bot.on("threadCreate", channel => bot.joinThread(channel.id));
+	// When we can see new threads, simply try to join all threads
+	bot.on("threadListSync", guild => {
+		let joins = [];
+		guild.threads.forEach((thr, id) => {
+			joins.push(bot.joinThread(id));
+		});
+		return Promise.all(joins);
+	});
+
     bot.on("messageCreate", async (msg) => {
         if (msg.author.bot) return;
         
