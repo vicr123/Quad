@@ -196,9 +196,7 @@ const handlePinsCommand = async (message, opts, args, flags) => {
             pMessage = await handler.bot.getChannel(row.channel).getMessage(row.message);
             messageContent = formatMessage(pMessage, message.channel.nsfw, opts.t)
         } catch (e) {
-            if (e.name !== "DiscordRESTError [10008]")
-                throw e;
-            messageContent = opts.t("(Deleted)");
+            messageContent = opts.t("(Unavailable)");
         }
         pinFields.push({
             name: `#${row.pinid}` + (pinCategories[row.pinid] ? ` | ${pinCategories[row.pinid].map(value => categoryNames[value]).join(", ")}` : ""),

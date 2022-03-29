@@ -75,7 +75,7 @@ class Pin extends React.Component {
 				<div className="pinHeader">
 					<span className="pinId">#{this.props.pin}</span>
 					<div>
-						<a href={this.state.pinData.url} target={"_blank"}><div className="button">View on Discord</div></a>
+						{ this.state.pinData.state === "available" && <a href={this.state.pinData.url} target={"_blank"}><div className="button">View on Discord</div></a> }
 						<div className="button destructive" onClick={this.unpin.bind(this)}>Unpin</div>
 					</div>
 				</div>

@@ -31,7 +31,7 @@ class Login extends React.Component {
     }
     
     login() {
-        loginWin = window.open(`https://discordapp.com/api/oauth2/authorize?client_id=${CONFIG.discord.client_id}&redirect_uri=${encodeURIComponent(`${CONFIG.server.rootAddress}/popupCallback.html`)}&response_type=code&scope=identify%20guilds`, "_blank", "dependent,height=700,width=500");
+        loginWin = window.open(`https://discord.com/api/oauth2/authorize?client_id=${CONFIG.discord.client_id}&redirect_uri=${encodeURIComponent(`${CONFIG.server.rootAddress}/popupCallback.html`)}&response_type=code&scope=identify%20guilds`, "_blank", "dependent,height=700,width=500");
     }
     
     performLogin() {
