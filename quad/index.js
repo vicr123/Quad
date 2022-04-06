@@ -13,6 +13,7 @@ const modloader = require("./modloader");
 const db = require("db");
 const prefix = require("prefix");
 require("./ctlsrv/server.js");
+const {GuildChannel} = require("eris");
 
 const t = i18n.t;
 process.exitCode = 1; //Assume error unless otherwise proven
@@ -25,8 +26,7 @@ process.exitCode = 1; //Assume error unless otherwise proven
     handler.init();
 
     const Intents = Eris.Constants.Intents;
-    const ERIS_OPTIONS = {intents: Intents.guilds | Intents.guildMembers | Intents.guildBans | Intents.guildMessages |
-            Intents.guildMessageReactions | Intents.directMessages | Intents.directMessageReactions};
+    const ERIS_OPTIONS = {intents: Intents.guilds | Intents.guildMembers | Intents.guildBans | Intents.guildMessages | Intents.guildMessageReactions};
     
     let bot = new Eris(config.get('discord.token'), ERIS_OPTIONS);
     bot.on("ready", async () => {
@@ -54,6 +54,9 @@ process.exitCode = 1; //Assume error unless otherwise proven
 
     bot.on("messageCreate", async (msg) => {
         if (msg.author.bot) return;
+
+        // Ignore DMs for now
+        if (!(msg.channel instanceof GuildChannel)) return;
         
         let pf = await prefix(msg.channel.guild);
         if (msg.content.startsWith(pf) || pf === "") {
