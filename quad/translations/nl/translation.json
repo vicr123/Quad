@@ -217,7 +217,7 @@
   "Location Not Set": "Geen Locatie Ingesteld",
   "Set your location using the\nQuad Configuration first!": "Stel eerst je locatie in met\nde Quad-configuratie!",
   "Acquire the weather at a user's location": "Het weer ophalen op de locatie van een gebruiker",
-  "{{member}} needs to set their location\nusing the Quad configuration first.": "{{member}} moet eerst een locatie\ninstallen met de Quad-configuratie.",
+  "{{member}} needs to set their location\nusing the Quad configuration first.": "{{member}} moet eerst een locatie\ninstellen met de Quad-configuratie.",
   "Acquire the weather at a specific city": "Haal het weer op in een stad",
   "Invalid City": "Ongeldige Stad",
   "Couldn't find that city in the database.": "Kon die stad niet vinden in de database.",
