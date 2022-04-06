@@ -23,8 +23,12 @@ process.exitCode = 1; //Assume error unless otherwise proven
     if (!await db.init(true)) throw new Error("Database Unavailable"); //Die if something happens when initialising the database
     modloader.init();
     handler.init();
+
+    const Intents = Eris.Constants.Intents;
+    const ERIS_OPTIONS = {intents: Intents.guilds | Intents.guildMembers | Intents.guildBans | Intents.guildMessages |
+            Intents.guildMessageReactions | Intents.directMessages | Intents.directMessageReactions};
     
-    let bot = new Eris(config.get('discord.token'));
+    let bot = new Eris(config.get('discord.token'), ERIS_OPTIONS);
     bot.on("ready", async () => {
 		// Join all threads we can find
 		let joins = [];
