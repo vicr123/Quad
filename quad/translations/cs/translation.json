@@ -115,7 +115,7 @@
   "Timestamps": "\u010Casov\u00E9 zn\u00E1mky",
   "User Information": "Informace o u\u017Eivateli",
   "User ID: {{userid}}": "ID u\u017Eivatele: {{userid}}",
-  "TRANSLATORS: Please replace this string with the name of your language (in your native language.)": "P\u0158EKLADATEL\u00C9: Pros\u00EDm nahra\u010Fte tento text jm\u00E9nem va\u0161eho jazyka (ve va\u0161em mate\u0159sk\u00E9m jazyce.)",
+  "TRANSLATORS: Please replace this string with the name of your language (in your native language.)": "\u010Ce\u0161tina",
   "**Locales**\nYou can choose from the following locales:\n{{locales}}": "**Jazyky**\nM\u016F\u017Ee\u0161 si vybrat z n\u00E1sleduj\u00EDc\u00EDch jazyk\u016F:\n{{locales}}",
   "The new locale to use": "Nov\u00FD jazyk",
   "**Invalid Locale**\nSorry, that\u0027s not a valid locale.": "**Neplatn\u00FD jazyk**\nOmlouv\u00E1m se, to nen\u00ED platn\u00FD jazyk.",
