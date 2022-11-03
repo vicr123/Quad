@@ -1,0 +1,11 @@
+{
+    "name": "Quad",
+    "subprojects": [
+        {
+            "name": "Quad Bot",
+            "type": "i18next",
+            "path": "/quad/translations/{lang}/translation.json",
+            "baseLang": "en"
+        }
+    ]
+}
