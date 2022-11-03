@@ -3,7 +3,7 @@
     "subprojects": [
         {
             "name": "Quad Bot",
-            "type": "i18next",
+            "type": "i18next-dual",
             "path": "/quad/translations/{lang}/translation.json",
             "baseLang": "en"
         }
