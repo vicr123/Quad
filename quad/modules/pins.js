@@ -9,8 +9,6 @@ let confirmationCache = [];
 const getUserById = (userId) => bot.users.find(user => user.id === userId);
 
 // Utilities
-
-const dumbtruncate = (str, n) => str.length <= n + 50 ? str : `${str.slice(0, n)} …`;
 const truncate = (str, n) => {
     if (str.length <= n) return;
 
