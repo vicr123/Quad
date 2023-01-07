@@ -10,10 +10,11 @@ const getUserById = (userId) => bot.users.find(user => user.id === userId);
 
 // Utilities
 const truncate = (str, n) => {
-    if (str.length <= n) return;
+    if (str.length <= n) return str;
 
     // Avoid removing only a few words and try to cut off at whitespace
-    return str.slice(0, n - 30).slice(0, Math.max(str.search(/\s\S*$/g), n - 50)) + " …";
+    str = str.slice(0, n - 30);
+    return str.slice(0, Math.max(str.search(/\s\S*$/g), n - 50)) + " …";
 }
 
 const formatMessage = (m, allowNsfw, t) => {
@@ -29,7 +30,7 @@ const formatMessage = (m, allowNsfw, t) => {
         else if (m.attachments.length > 0 && m.embeds.length > 0)
 			res = `(${t("{{count}} attachment", {count: m.attachments.length})}, ${t("{{count}} embed", {count: m.embeds.length})})`;
         if (m.content)
-            res += "\n" + truncate(m.content, 300);
+            res += "\n" + truncate(m.content, 400);
 
         res += `\n— ${m.author.mention} ([${t("Jump")}](https://discordapp.com/channels/${m.channel.guild.id}/${m.channel.id}/${m.id}))`;
         // Messages must have contents, attachments, or embeds, so no need for a "No contents" case
