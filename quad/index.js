@@ -12,11 +12,14 @@ const handler = require('handler');
 const modloader = require("./modloader");
 const db = require("db");
 const prefix = require("prefix");
+const JobQueue = require("./jobqueue");
 require("./ctlsrv/server.js");
 const {GuildChannel} = require("eris");
 
 const t = i18n.t;
 process.exitCode = 1; //Assume error unless otherwise proven
+
+const threadQueue = new JobQueue();
 
 (async () => {
     log(t("Welcome to {{BOT_NAME}}!", {"BOT_NAME": config.get("bot.name")}));
@@ -34,15 +37,14 @@ process.exitCode = 1; //Assume error unless otherwise proven
     });
     bot.on("ready", async () => {
 		// Join all threads we can find
-		let joins = [];
 		bot.guilds.forEach(guild => {
 			guild.threads.forEach(async (thr, id) => {
-                if (!(await bot.getThreadMembers(id)).some(member => member.id === bot.user.id)) {
-				    joins.push(bot.joinThread(id));
+                const job = async () => {
+                    await bot.joinThread(id);
                 }
+                threadQueue.addJob(job)
 			});
 		});
-		await Promise.all(joins);
 
         log(t("Locked and loaded!"), log.success);
     });
@@ -50,13 +52,12 @@ process.exitCode = 1; //Assume error unless otherwise proven
 	bot.on("threadCreate", channel => bot.joinThread(channel.id));
 	// When we can see new threads, simply try to join all threads
 	bot.on("threadListSync", guild => {
-		let joins = [];
 		guild.threads.forEach(async (thr, id) => {
-            if (!(await bot.getThreadMembers(id)).some(member => member.id === bot.user.id)) {
-                joins.push(bot.joinThread(id));
+            const job = async () => {
+                await bot.joinThread(id);
             }
+            threadQueue.addJob(job)
 		});
-		return Promise.all(joins);
 	});
 
     bot.on("messageCreate", async (msg) => {
