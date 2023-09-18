@@ -29,6 +29,9 @@ process.exitCode = 1; //Assume error unless otherwise proven
     const ERIS_OPTIONS = {intents: Intents.guilds | Intents.guildMembers | Intents.guildBans | Intents.guildMessages | Intents.guildMessageReactions};
     
     let bot = new Eris(config.get('discord.token'), ERIS_OPTIONS);
+    bot.on("rawREST", rq => {
+        log(`REST -> ${rq.method} ${rq.url}`, log.debug);
+    });
     bot.on("ready", async () => {
 		// Join all threads we can find
 		let joins = [];

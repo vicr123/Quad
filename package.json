@@ -9,10 +9,10 @@
   "author": "Victor Tran",
   "license": "GPL-3.0-or-later",
   "dependencies": {
-    "canvas": "^2.10.2",
+    "canvas": "^2.11.2",
     "config": "^3.3.8",
     "config-webpack": "^1.0.5",
-    "eris": "^0.16.1",
+    "eris": "^0.17.2",
     "express": "^4.18.2",
     "gulp": "^4.0.2",
     "gulp-install": "^1.1.0",
