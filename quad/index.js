@@ -36,8 +36,8 @@ process.exitCode = 1; //Assume error unless otherwise proven
 		// Join all threads we can find
 		let joins = [];
 		bot.guilds.forEach(guild => {
-			guild.threads.forEach((thr, id) => {
-                if (!bot.threadGuildMap[id]) {
+			guild.threads.forEach(async (thr, id) => {
+                if (!(await bot.getThreadMembers(id)).some(member => member.id === bot.user.id)) {
 				    joins.push(bot.joinThread(id));
                 }
 			});
@@ -51,8 +51,8 @@ process.exitCode = 1; //Assume error unless otherwise proven
 	// When we can see new threads, simply try to join all threads
 	bot.on("threadListSync", guild => {
 		let joins = [];
-		guild.threads.forEach((thr, id) => {
-            if (!bot.threadGuildMap[id]) {
+		guild.threads.forEach(async (thr, id) => {
+            if (!(await bot.getThreadMembers(id)).some(member => member.id === bot.user.id)) {
                 joins.push(bot.joinThread(id));
             }
 		});
