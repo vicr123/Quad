@@ -37,7 +37,9 @@ process.exitCode = 1; //Assume error unless otherwise proven
 		let joins = [];
 		bot.guilds.forEach(guild => {
 			guild.threads.forEach((thr, id) => {
-				joins.push(bot.joinThread(id));
+                if (!bot.channelGuildMap[id]) {
+				    joins.push(bot.joinThread(id));
+                }
 			});
 		});
 		await Promise.all(joins);
@@ -50,7 +52,9 @@ process.exitCode = 1; //Assume error unless otherwise proven
 	bot.on("threadListSync", guild => {
 		let joins = [];
 		guild.threads.forEach((thr, id) => {
-			joins.push(bot.joinThread(id));
+            if (!bot.channelGuildMap[id]) {
+                joins.push(bot.joinThread(id));
+            }
 		});
 		return Promise.all(joins);
 	});
