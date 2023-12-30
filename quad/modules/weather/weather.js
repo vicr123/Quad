@@ -54,7 +54,7 @@ async function weatherImage(data, t) {
     //Draw the main weather pane
     let mainData = data.byTime[0];
 
-    const yOffsetWhileWeDontHaveExtraData = 50;
+    const yOffsetWhileWeDontHaveExtraData = 35;
 
     ctx.drawImage(mainData.condition.image, 100, yOffsetWhileWeDontHaveExtraData + 50);
     // drawSquashedText(ctx, 10, 45, `${mainData.temp}°`, 80, data.pen, 325, false);
