@@ -59,7 +59,8 @@ async function weatherImage(data, t) {
     ctx.drawImage(mainData.condition.image, 100, yOffsetWhileWeDontHaveExtraData + 50);
     // drawSquashedText(ctx, 10, 45, `${mainData.temp}°`, 80, data.pen, 325, false);
     drawSquashedText(ctx, 350 / 2, yOffsetWhileWeDontHaveExtraData + 220, mainData.location.toUpperCase(), "bold 20", data.pen, 325);
-    drawSquashedText(ctx, 350 / 2, yOffsetWhileWeDontHaveExtraData + 250, `${mainData.temp}° - ${t(mainData.condition.text)}`, 20, data.pen, 325);
+    drawSquashedText(ctx, 350 / 2, yOffsetWhileWeDontHaveExtraData + 250, `${t(mainData.condition.text)}`, 20, data.pen, 325);
+    drawSquashedText(ctx, 350 / 2, yOffsetWhileWeDontHaveExtraData + 280, `${mainData.temp}°C • ${mainData.tempF}°F`, 20, data.pen, 325);
 
     //Draw the five aux weather panes
     for (let i = 1; i < 6; i++) {
@@ -71,7 +72,8 @@ async function weatherImage(data, t) {
         ctx.drawImage(dayData.condition.image, 380, (i - 1) * 82 + 9, 64, 64);
         // ctx.fillText((data.hasOwnProperty("maxTemperature") ? parseFloat(data.maxTemperature.value).toFixed() : "---") + "°", 450, (current - 1) * 82 + 30);
         // ctx.fillText((data.hasOwnProperty("minTemperature") ? parseFloat(data.minTemperature.value).toFixed() : "---") + "°", 450, (current - 1) * 82 + 60);
-        drawSquashedText(ctx, 450, (i - 1) * 82 + 30, `${dayData.temp}°`, 20, data.pen, 40, false);
+        drawSquashedText(ctx, 450, (i - 1) * 82 + 12, `${dayData.temp}°C`, 20, data.pen, 40, false);
+        drawSquashedText(ctx, 450, (i - 1) * 82 + 42, `${dayData.tempF}°F`, 20, data.pen, 40, false);
     }
 
 
@@ -108,7 +110,8 @@ async function handleWeather(channel, geography, coded, userName, t) {
             let firstData = timeseries[0].data;
             let condition = Conditions.conditionForSymbol(firstData.next_1_hours.summary.symbol_code);
             weatherData.push({
-                temp: firstData.instant.details.air_temperature,
+                temp: Math.round(firstData.instant.details.air_temperature),
+                tempF: Math.round(celsiusToFahrenheit(firstData.instant.details.air_temperature)),
                 location: `${coded.name}, ${coded.country}`,
                 condition: condition
             });
@@ -135,7 +138,8 @@ async function handleWeather(channel, geography, coded, userName, t) {
                 weatherData.push({
                     text: moment(timeseries[i].time).tz(coded.tz).format("HH:mm"),
                     condition: Conditions.conditionForSymbol(data.next_1_hours.summary.symbol_code),
-                    temp: data.instant.details.air_temperature,
+                    temp: Math.round(data.instant.details.air_temperature),
+                    tempF: Math.round(celsiusToFahrenheit(data.instant.details.air_temperature)),
                 });
             }
     
@@ -212,6 +216,10 @@ async function handleWeatherError(channel, title, subtitle) {
             name: "weather.png"
         }
     );
+}
+
+function celsiusToFahrenheit(temp) {
+	return (temp * 9 / 5) + 32
 }
 
 handler.register("weather", {
