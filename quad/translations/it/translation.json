@@ -9,7 +9,7 @@
   "quad: {{command}}: command not found": "quad: {{command}}: comando non trovato",
   "**Cool it, buddy!**\nYou\u0027re using {{botname}} too fast. You\u0027ll be able to use Quad again in **{{count, dp1}} seconds**.": "**Amico, datti una calmata!**\nStai usando {{botname}} troppo. Potrai ricominciare ad usarlo in **{{count, dp1}} secondo**.",
   "**Cool it, buddy!**\nYou\u0027re using {{botname}} too fast. You\u0027ll be able to use Quad again in **{{count, dp1}} seconds**._plural": "**Amico, datti una calmata!**\nStai usando {{botname}} troppo. Potrai ricominciare ad usarlo in **{{count, dp1}} secondi**.",
-  "Fulfilled.": "",
+  "Fulfilled.": "Completato.",
   "Canceled.": "Annullato.",
   "Mistake? React with {{emoji}} within {{count}} seconds.": "Ti sei sbagliato? Reagisci con {{emoji}} entro {{count}} secondo.",
   "Mistake? React with {{emoji}} within {{count}} seconds._plural": "Ti sei sbagliato? Reagisci con {{emoji}} entro {{count}} secondi.",
