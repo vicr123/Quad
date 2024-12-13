@@ -31,7 +31,7 @@
   "**Configuration**\nTo configure {{botname}}, go ahead and visit {{link}}.": "**Konfiguráció**\nA(z) {{botname}} bot konfigurálásához látogass ide: {{link}}.",
   "Acquire usage information about the bot": "Használati utasítás beszerzése a bothoz",
   "{{botname}} Help": "{{botname}} Segítség",
-  "Choose from the following commands. You can use {{prefix}}help [command] for more information about a command.": "Válassz a következő parancsok közül. Használhatod a {{prefix}}help [parancs]] parancsot, hogy több információhoz juss egy parancsról.",
+  "Choose from the following commands. You can use {{prefix}}help [command] for more information about a command.": "Válassz a következő parancsok közül. Használhatod a {{prefix}}help [parancs] parancsot, hogy több információhoz juss egy parancsról.",
   "Commands": "Parancsok",
   "Configuration": "Konfiguráció",
   "If you need to change any settings, you can visit [{{website}}]({{website}})": "Ha módosítanod kell bármelyik beállítást, meglátogathatod a [{{website}}]({{website}}) weboldalt.",
