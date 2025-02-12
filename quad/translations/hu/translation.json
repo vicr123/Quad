@@ -54,7 +54,7 @@
   "{{count}} embed_plural": "{{count}} darab beágyazott tartalom",
   "Jump": "Ugrás",
   "Done!": "Kész!",
-  "The message has been pinned.": "Az üzenet ki lett tűzve.",
+  "The message has been pinned.": "Az üzenetet kitűztük.",
   "{{USER}} pinned a message.": "{{USER}} kitűzött egy üzenetet.",
   "{{USER}}, the message could not be pinned.": "{{USER}}, az üzenetet nem sikerült kitűzni.",
   "{{USER}}, the message could not be unpinned.": "{{USER}}, az üzenetet nem sikerült levenni a kitűzöttek közül.",
