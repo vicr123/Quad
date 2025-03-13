@@ -144,28 +144,32 @@ router.get("/exportPackage", async (req, res) => {
         return;
     }
 
-    let token = authHeader.substr(6);
-    const {payload, protectedHeader} = await jwtVerify(token, exportKeySecret, {
-        issuer: "quad"
-    });
-
-    if (payload.exp < new Date().getTime()) {
-        res.status(401).send();
-        return;
-    }
-
-    let client = await db.get();
-    const subject = payload.sub;
-
+    let token = authHeader.substr(7);
     try {
-        const pinResponse = await client.query("SELECT channel, message FROM userPins WHERE id=$1", [subject]);
-        res.send({
-            pins: pinResponse.rows.map(row => ({
-                channel: row.channel,
-                message: row.message
-            }))
+        const {payload, protectedHeader} = await jwtVerify(token, exportKeySecret, {
+            issuer: "quad"
         });
+
+        if (payload.exp < new Date().getTime()) {
+            res.status(401).send();
+            return;
+        }
+
+        let client = await db.get();
+        const subject = payload.sub;
+
+        try {
+            const pinResponse = await client.query("SELECT channel, message FROM userPins WHERE id=$1", [subject]);
+            res.send({
+                pins: pinResponse.rows.map(row => ({
+                    channel: row.channel,
+                    message: row.message
+                }))
+            });
+        } catch {
+            res.status(500).send();
+        }
     } catch {
-        res.status(500).send();
+        res.status(401).send();
     }
 });
