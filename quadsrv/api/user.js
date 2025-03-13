@@ -160,6 +160,7 @@ router.get("/exportPackage", async (req, res) => {
 
         try {
             const pinResponse = await client.query("SELECT channel, message FROM userPins WHERE id=$1", [subject]);
+            res.set("Access-Control-Allow-Origin", ["*"]);
             res.send({
                 pins: pinResponse.rows.map(row => ({
                     channel: row.channel,
