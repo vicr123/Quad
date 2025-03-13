@@ -120,6 +120,9 @@ router.post("/exportToken", async (req, res) => {
             const jwt = await new SignJWT({
                 endpoint: `${config.get("server.rootAddress")}/api/user/exportPackage`
             })
+                .setProtectedHeader({
+                    alg: "HS256"
+                })
                 .setIssuer("quad")
                 .setExpirationTime(new Date().getTime() + 60 * 60 * 1000)
                 .setSubject(req.user.id)
