@@ -139,7 +139,7 @@ router.post("/exportToken", async (req, res) => {
 
 router.get("/exportPackage", async (req, res) => {
     let authHeader = req.get("Authorization");
-    if (!(authHeader && authHeader.startsWith("Token "))) {
+    if (!(authHeader && authHeader.startsWith("Bearer "))) {
         res.status(401).send();
         return;
     }
