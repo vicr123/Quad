@@ -284,12 +284,42 @@ class UserSettings extends React.Component {
         </Modal>)
     }
 
-    renderImportButton() {
-        if (this.state.settings.canImportAM) {
-            return <PaneGroup title="Advanced">
-                <Cmdlink title="Import Portable Pins from AstralMod" description="Import your old portable pins from AstralMod" onClick={this.execImportAMPopover.bind(this)}/>
-            </PaneGroup>
+    async execExportPopover() {
+        Modal.mount(<Modal title="Export Data" width={400} cancelable={false} renderBack={false}>
+            <div className="containerVertical containerPadded">
+                Please wait...
+            </div>
+        </Modal>)
+
+        try {
+            const exportToken = await Fetch.post("/user/exportToken", {});
+
+            Modal.mount(<Modal title="Export Data" width={400} cancelable={true} renderBack={true}>
+                <div className="containerVertical containerPadded">
+                    <p>In order to export data from Quad, provide the token below:</p>
+                    <code>{exportToken.token}</code>
+                    <p>This token expires in one hour. You can always return to Quad and request a new export token if
+                        required.</p>
+                    <a className="button" onClick={Modal.unmount}>Finish</a>
+                </div>
+            </Modal>)
+        } catch {
+            Modal.mount(<Modal title="Export Data" width={400} cancelable={true} renderBack={true}>
+                <div className="containerVertical containerPadded">
+                    <p>Sorry, we can't export your data right now. Please try again later.</p>
+                    <a className="button" onClick={Modal.unmount}>Sorry</a>
+                </div>
+            </Modal>)
         }
+    }
+
+    renderImportButton() {
+            return <PaneGroup title="Advanced">
+                {this.state.settings.canImportAM &&
+                    <Cmdlink title="Import Portable Pins from AstralMod" description="Import your old portable pins from AstralMod" onClick={this.execImportAMPopover.bind(this)}/>
+                }
+                <Cmdlink title="Export Data" description="Export your data to a service that supports importing data from Quad" onClick={this.execExportPopover.bind(this)}/>
+            </PaneGroup>
     }
     
     render() {
