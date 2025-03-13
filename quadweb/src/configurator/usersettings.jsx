@@ -294,12 +294,17 @@ class UserSettings extends React.Component {
         try {
             const exportToken = await Fetch.post("/user/exportToken", {});
 
+            const copy = () => {
+                navigator.clipboard.writeText(exportToken.token);
+            }
+
             Modal.mount(<Modal title="Export Data" width={400} cancelable={true} renderBack={true}>
                 <div className="containerVertical containerPadded">
                     <p>In order to export data from Quad, provide the token below:</p>
-                    <code>{exportToken.token}</code>
+                    <code style={{wordWrap: "break-word"}}>{exportToken.token}</code>
                     <p>This token expires in one hour. You can always return to Quad and request a new export token if
                         required.</p>
+                    <a className="button" onClick={copy}>Copy</a>
                     <a className="button" onClick={Modal.unmount}>Finish</a>
                 </div>
             </Modal>)
